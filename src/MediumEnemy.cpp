@@ -1,0 +1,3 @@
+#include "MediumEnemy.hpp"
+
+// MediumEnemy::

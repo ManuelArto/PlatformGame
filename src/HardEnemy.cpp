@@ -1,0 +1,3 @@
+#include "HardEnemy.hpp"
+
+// HardEnemy::
