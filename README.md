@@ -4,17 +4,19 @@ PlatformGame 2021
 
 ## Gioco
 - Ambiente:
-  - Diviso in livelli (stanze per ogni livello --> poi ogni livello sarà percorribile avanti e indietro senza stanze)
+  - Diviso in livelli (stanze per ogni livello --> poi ti muovi con l'ambiente)
+  - Generazione pseudo-random con seed ??
+  - Piattaforme / fossi
 - Giocatore:
   - spara
-  - si muove a destra e sinistra e può salire o scendere da piattaforme (no saltare)
+  - si muove a destra e sinistra e saltare(??)d
   - vita (diminuisce, GAME OVER a 0)
   - punti (aumentano quando uccidi nemici)
 - Nemici:
-  - spawning su piattaforme
+  - spawning su piattaforme o su terreno
   - diversi tipi:
 	  1. base: tipo missile (aumenta la velocità)
-	  2. medio: spara, si muove lentamente verso di te (aumenta la frequenza di fuoco, vita ??)
+	  2. medio: spara, si muove solo sulla sua piattaforma di spawn (aumenta la frequenza di fuoco, vita ??)
 	  3. avanzato: spara, si muove verso di te (aumenta frequenza di fuoco e colpi, vita ??)
 - Bonus:
   - minigun: aumenta frequenza di fuoco
