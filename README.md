@@ -9,7 +9,7 @@ PlatformGame 2021
   - Piattaforme / fossi
 - Giocatore:
   - spara
-  - si muove a destra e sinistra e saltare(??)d
+  - si muove a destra e sinistra e saltare(??)
   - vita (diminuisce, GAME OVER a 0)
   - punti (aumentano quando uccidi nemici)
 - Nemici:
@@ -18,7 +18,20 @@ PlatformGame 2021
 	  1. base: tipo missile (aumenta la velocità)
 	  2. medio: spara, si muove solo sulla sua piattaforma di spawn (aumenta la frequenza di fuoco, vita ??)
 	  3. avanzato: spara, si muove verso di te (aumenta frequenza di fuoco e colpi, vita ??)
-- Bonus:
+- Bonus a tempo:
   - minigun: aumenta frequenza di fuoco
-  - movimento più veloce: aumenta velocità movimento
   - rallenty: nemici più lenti
+  - Invulnerabilità: immune
+
+## TODO
+- Obiettivo base: layout e movimento del player (no gravity)
+	- Screen:
+		- Init
+		- test con ncurses
+		- time
+	- Character:
+		- can move (boundaries)
+		- sparo (POST)
+	- Controller:
+		- Gestione flow
+		- Refresh (frame-rate ?)
