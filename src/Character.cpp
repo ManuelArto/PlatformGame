@@ -1,11 +1,11 @@
 #include "Character.hpp"
 
-Character::Character(int x, int y, int points=0, int life=100, int damage=50) {
+Character::Character(int x, int y, int points, int life, int attack) {
     this->x = x;
     this->y = y;
 	this->points = points;
 	this->life = life;
-	this->damage = damage;
+	this->attack = attack;
 }
 
 void Character::decreaseLife(int damage) {
