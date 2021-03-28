@@ -1,4 +1,4 @@
-class Screen{
+class View{
 private:
 	int width, height;
 	const int DELAY = 50;
@@ -8,6 +8,8 @@ public:
 	void clearWindow();
 	void createWindow();
 	void exitWindow();
+	void update();
+	void drawMap();
 	void printObject(int x, int y, char *object);
-	void sleep(int delay);
+	int getKeyboardInput();
 };

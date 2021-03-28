@@ -1,30 +1,40 @@
 #include "Controller.hpp"
-#include <unistd.h>
 
 Controller::Controller() {
-	screen = new Screen();
+	view = new View();
 	player = new Player(0, 0);
+	player2 = new Player(10, 10);
 }
 
-void Controller::init() {
-	screen->clearWindow();
-	screen->createWindow();
+void Controller::run() {
+	view->createWindow();
+	bool quit = false;
 
-	int x = 0, y = 0, step = 1;	
-	while (1) {
-		screen->clearWindow();
-		screen->printObject(x, y, (char *)"o");
-		
+	do {
+		int input = view->getKeyboardInput();
+		switch (input) {
+		case 113:			// 'q'
+			quit = true;
+			break;
+		case 101:
+			player->shoots();
+			break;
+		}
+		player->move(input, view->getWidth(), view->getHeight());
+		player2->move(0405, view->getWidth(), view->getHeight());
 
-		if (x >= screen->getWidth())
-			step = -1;
-		else if (x == 0)
-			step = 1;
+		view->clearWindow();
 
-		x += step;
+		view->printObject(player->getX(), player->getY(), (char *)"S");
+		view->printObject(player2->getX(), player2->getY(), (char *)"S");
+		for (int i = 0; i < player->getNShots(); i++) {
+			p_shot shot = player->getShot(i);
+			view->printObject(shot->x, shot->y, (char *)"---");
+			player->updateShot(shot, view->getWidth());
+		}
 
-		usleep(6000);
-	}
+		view->update();
+	} while (!quit);
 	
-	screen->exitWindow();
+	view->exitWindow();
 }

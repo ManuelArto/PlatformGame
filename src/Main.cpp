@@ -2,7 +2,7 @@
 
 int main() {
 	Controller *controller = new Controller();
-	controller->init();
+	controller->run();
 
 	return 0;
 }
