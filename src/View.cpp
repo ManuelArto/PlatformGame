@@ -36,6 +36,11 @@ void View::printObject(int x, int y, const char* format, char *object) {
 	printw(format, object);
 }
 
+void View::printObject(int x, int y, const char* format, int object) {
+	move(y, x);
+	printw(format, object);
+}
+
 void View::printObject(int x, int y, const char* format, double object) {
 	move(y, x);
 	printw(format, object);

@@ -9,6 +9,7 @@ public:
 	void update();
 	void drawMap();
 	void printObject(int x, int y, const char *format, char *object);
+	void printObject(int x, int y, const char *format, int object);
 	void printObject(int x, int y, const char *format, double object);
 	int getKeyboardInput();
 	int getWidth();
