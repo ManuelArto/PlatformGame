@@ -62,10 +62,10 @@ p_shot Character::getShot(int index) {
 
 // TODO: bug multi sparo segmentation fault con current_shot
 void Character::updateShot(p_shot shot, int width) {
-	if (current_shot->x < width-3)
-		current_shot->x++;
+	if (shot->x < width-3)
+		shot->x++;
 	else
-		deleteShot(current_shot);
+		deleteShot(shot);
 }
 
 void Character::move(int input, int width, int height) {
