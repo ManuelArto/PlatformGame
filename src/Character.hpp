@@ -12,11 +12,13 @@ typedef shot_struct *p_shot;
 class Character {
 	private:
 		int x, y, life, points, attack, n_shots;
+		const double COOLDOWN = 0.5;
+		double lastshot_time;
 		p_shot shots, current_shot;
 	public:
 		Character(int x, int y, int points, int life, int attack);
 		void decreaseLife(int damage);
-		void shoots();
+		void shoots(double time);
 		void move(int input, int width, int height);
 		void updateShot(p_shot shot, int width);
 		void deleteShot(p_shot shot);

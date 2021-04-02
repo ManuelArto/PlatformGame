@@ -27,12 +27,22 @@ void View::exitWindow() {
 	endwin();
 }
 
-void View::printObject(int x, int y, char *object) {
-	mvaddstr(y, x, object);
+void View::printObject(int x, int y, const char* format, char *object) {
+	move(y, x);
+	printw(format, object);
+}
+
+void View::printObject(int x, int y, const char* format, double object) {
+	move(y, x);
+	printw(format, object);
 }
 
 void View::update() {
 	refresh();
+}
+
+int View::getDelay() {
+	return DELAY;
 }
 
 int View::getKeyboardInput() {

@@ -14,20 +14,23 @@ void Character::decreaseLife(int damage) {
     this->life -= damage;
 }
 
-void Character::shoots() {
-	p_shot shot = new shot_struct;
-	shot->x = x+1; shot->y = y;
-	shot->next = __null;
-	if (shots == __null) {
-		shots = shot;
-		current_shot = shots;
-	} else {
-		p_shot iter = shots;
-		while(iter->next != __null)
-			iter = iter->next;
-		iter->next = shot;
+void Character::shoots(double time) {
+	if (time - lastshot_time > COOLDOWN) {
+		p_shot shot = new shot_struct;
+		shot->x = x+1; shot->y = y;
+		shot->next = __null;
+		if (shots == __null) {
+			shots = shot;
+			current_shot = shots;
+		} else {
+			p_shot iter = shots;
+			while(iter->next != __null)
+				iter = iter->next;
+			iter->next = shot;
+		}
+		n_shots++;
+		lastshot_time = time;
 	}
-	n_shots++;
 }
 
 void Character::deleteShot(p_shot shot) {
@@ -60,7 +63,6 @@ p_shot Character::getShot(int index) {
 	return shot;
 }
 
-// TODO: bug multi sparo segmentation fault con current_shot
 void Character::updateShot(p_shot shot, int width) {
 	if (shot->x < width-3)
 		shot->x++;
@@ -104,7 +106,6 @@ int Character::getPoints() {
 int Character::getAttack() {
 	return attack;
 }
-
 int Character::getNShots() {
 	return n_shots;
 }
