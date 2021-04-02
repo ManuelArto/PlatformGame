@@ -47,7 +47,6 @@ int View::getDelay() {
 
 int View::getKeyboardInput() {
 	return getch();
-	return KEY_UP
 }
 
 int View::getWidth() {

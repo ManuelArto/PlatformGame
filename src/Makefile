@@ -1,8 +1,14 @@
-LDFLAGS = -lcurses
+ifeq ($(OS),Windows_NT)
+	LDFLAGS = -lpdcurses
+	OUT = Game.exe
+else
+	LDFLAGS = -lcurses
+	OUT = Game.out
+endif
 CPPFLAGS = -g
 
 Game: Main.o controller.o view.o player.o character.o
-	g++ ${CPPFLAGS} -o Game.out Main.o Controller.o View.o Player.o Character.o ${LDFLAGS}
+	g++ ${CPPFLAGS} -o ${OUT} Main.o Controller.o View.o Player.o Character.o ${LDFLAGS}
 
 main.o: Main.cpp Controller.hpp
 	g++ ${CPPFLAGS} -c Main.cpp
