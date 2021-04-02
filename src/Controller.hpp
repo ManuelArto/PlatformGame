@@ -6,6 +6,6 @@ private:
 	Player *player, *player2;
 	double time;
 public:
-	Controller();
+	Controller(View *view);
 	void run();
 };

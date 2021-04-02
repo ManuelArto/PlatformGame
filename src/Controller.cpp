@@ -1,7 +1,7 @@
 #include "Controller.hpp"
 
-Controller::Controller() {
-	view = new View();
+Controller::Controller(View *view) {
+	this->view = view;
 	player = new Player(0, 0);
 	player2 = new Player(10, 10);
 	time = 0;

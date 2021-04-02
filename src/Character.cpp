@@ -14,6 +14,27 @@ void Character::decreaseLife(int damage) {
     this->life -= damage;
 }
 
+void Character::move(int input, int width, int height) {
+	switch (input){
+		case KEY_UP:
+			if (y > 0)
+				y--;
+			break;
+		case KEY_DOWN:
+			if (y < height-1)
+				y++;
+			break;
+		case KEY_LEFT:
+			if (x > 0)
+				x--;
+			break;
+		case KEY_RIGHT:
+			if (x < width-1)
+				x++;
+			break;
+	}
+}
+
 void Character::shoots(double time) {
 	if (time - lastshot_time > COOLDOWN) {
 		p_shot shot = new shot_struct;
@@ -68,27 +89,6 @@ void Character::updateShot(p_shot shot, int width) {
 		shot->x++;
 	else
 		deleteShot(shot);
-}
-
-void Character::move(int input, int width, int height) {
-	switch (input){
-		case KEY_UP:
-			if (y > 0)
-				y--;
-			break;
-		case KEY_DOWN:
-			if (y < height-1)
-				y++;
-			break;
-		case KEY_LEFT:
-			if (x > 0)
-				x--;
-			break;
-		case KEY_RIGHT:
-			if (x < width-1)
-				x++;
-			break;
-	}
 }
 
 int Character::getX() {

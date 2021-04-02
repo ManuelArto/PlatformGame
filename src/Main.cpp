@@ -1,7 +1,8 @@
 #include "Controller.hpp"
 
 int main() {
-	Controller *controller = new Controller();
+	View *view = new View();
+	Controller *controller = new Controller(view);
 	controller->run();
 
 	return 0;
