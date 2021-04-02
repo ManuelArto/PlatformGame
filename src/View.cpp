@@ -1,6 +1,10 @@
 #include "View.hpp"
 
-#include <ncurses.h>
+#ifdef _WIN64
+	#include <curses.h>
+#elif __linux
+	#include <ncurses.h>
+#endif
 
 void View::clearWindow() {
 	clear();
