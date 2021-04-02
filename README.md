@@ -24,14 +24,16 @@ PlatformGame 2021
   - Invulnerabilità: immune
 
 ## TODO
-- Obiettivo base: layout e movimento del player (no gravity)
+- Obiettivo base:
 	- Screen:
-		- Init
-		- test con ncurses
-		- time
+		- Draw Schema
+		- Nome
+		- studiare ncurses
+		- test piattaforme
 	- Character:
-		- can move (boundaries)
-		- sparo (POST)
+		- Nome
+		- Salto
+		- test collisione sparo nemici
 	- Controller:
-		- Gestione flow
-		- Refresh (frame-rate ?)
+		- gestione nemici
+
