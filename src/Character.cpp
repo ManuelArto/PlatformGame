@@ -6,7 +6,6 @@ Character::Character(int x, int y, int points, int life, int attack) {
 	this->points = points;
 	this->life = life;
 	this->attack = attack;
-	n_shots = 0;
 	shots = __null;
 }
 
@@ -42,14 +41,12 @@ void Character::shoots(double time) {
 		shot->next = __null;
 		if (shots == __null) {
 			shots = shot;
-			current_shot = shots;
 		} else {
 			p_shot iter = shots;
 			while(iter->next != __null)
 				iter = iter->next;
 			iter->next = shot;
 		}
-		n_shots++;
 		lastshot_time = time;
 	}
 }
@@ -67,7 +64,6 @@ void Character::deleteShot(p_shot shot) {
 				delete iter;
 			}
 			found = true;
-			n_shots--;
 		} else {
 			prev = iter;
 			iter = iter->next;
@@ -75,20 +71,15 @@ void Character::deleteShot(p_shot shot) {
 	}
 }
 
-p_shot Character::getShot(int index) {
-	p_shot shot = current_shot;
-	if (index == n_shots-1)
-		current_shot = shots;
-	else
-		current_shot = current_shot->next;
-	return shot;
-}
-
 void Character::updateShot(p_shot shot, int width) {
 	if (shot->x < width-3)
 		shot->x++;
 	else
 		deleteShot(shot);
+}
+
+p_shot Character::getShotHead() {
+	return shots;
 }
 
 int Character::getX() {
@@ -105,7 +96,4 @@ int Character::getPoints() {
 } 
 int Character::getAttack() {
 	return attack;
-}
-int Character::getNShots() {
-	return n_shots;
 }
