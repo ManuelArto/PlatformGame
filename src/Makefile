@@ -7,7 +7,7 @@ else
 endif
 CPPFLAGS = -g
 
-Game: Main.o controller.o view.o player.o character.o
+Game: main.o controller.o view.o player.o character.o
 	g++ ${CPPFLAGS} -o ${OUT} Main.o Controller.o View.o Player.o Character.o ${LDFLAGS}
 
 main.o: Main.cpp Controller.hpp
