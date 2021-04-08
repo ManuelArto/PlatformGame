@@ -30,12 +30,11 @@ void Controller::run() {
 		view->printObject(player->getX(), player->getY(), (char *)"%s", (char *)"S");
 		view->printObject(player2->getX(), player2->getY(), (char *)"%s", (char *)"S");
 		p_shot shot = player->getShotHead();
-		while (shot->next != __null) {
+		while (shot != __null && shot->next != __null) {
 			view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
 			player->updateShot(shot, view->getWidth());
 			shot = shot->next;
 		}
-
 		view->update();
 		time += (double)view->getDelay() / 1000;
 	} while (!quit);
