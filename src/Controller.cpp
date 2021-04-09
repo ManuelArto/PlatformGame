@@ -13,8 +13,8 @@ void Controller::run() {
 	char *name = view->getName();
 	
 	do {
-		view->info_commands(0, 0, 20, 50, name, time);
-		view->drawMap(0, 0, 20, 50);
+		view->info_commands(2, 2, 20, 50, name, time);
+		view->drawMap(2, 2, 20, 50);
 		//view->info_commands(0, 0, view->getHeight(), view->getWidth(), name);
 		//view->drawMap(0, 0, view->getHeight(), view->getWidth());
 		int input = view->getKeyboardInput();
@@ -35,12 +35,12 @@ void Controller::run() {
 		view->clearWindow();
 
 		//view->printObject(0, view->getHeight()-1, (char *)"%.2f", time);
-		view->printObject(player->getX()+1, player->getY()+1, (char *)"%s", (char *)"S");
+		view->printObject(player->getX()+3, player->getY()+3, (char *)"%s", (char *)"S");
 		view->printObject(player2->getX()+1, player2->getY(), (char *)"%s", (char *)"F");
 		
 		p_shot tmp_shot, shot = player->getShotHead();
 		while (shot != __null) {
-			view->printObject(shot->x, shot->y+1, (char *)"%s", (char *)"---");
+			view->printObject(shot->x+3, shot->y+3, (char *)"%s", (char *)"---");
 			tmp_shot = shot->next;
 			player->updateShot(shot, view->getWidth());
 			shot = tmp_shot;

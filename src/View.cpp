@@ -53,7 +53,7 @@ void View::drawMap(int x, int y, int height, int width) {
 
 void View::info_commands(int x, int y, int height, int width, char* user, double time) {
 	//info
-	move(y+5, x+10+width);
+	move(y+5, width+10);
 	printw("PLAYER: ");
 	printw(user);
 	move(y+6, width+10);
