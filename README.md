@@ -34,4 +34,5 @@ PlatformGame 2021
 		- gestione nemici
 	- Piattaforme:
 		- test con piattaforme (classe, saltarci su)
-		
+	- Bonus
+		- classe		
