@@ -6,12 +6,12 @@ Controller::Controller(View *view) {
 	player2 = new Player(10, 10);
 	time = 0;
 }
-
+	
 void Controller::run() {
 	view->createWindow(	);
 	bool quit = false;
 	char *name = player->getName();
-	
+
 	do {
 		view->info_commands(2, 2, 20, 50, name, time);
 		view->drawMap(2, 2, 20, 50);
@@ -26,14 +26,13 @@ void Controller::run() {
 				player->shoots(time);
 				break;
 		}
-		
 		player->move(input, 48, 18);
 		player2->move(0405, 48, 18);
 		/*player->move(input, view->getWidth(), view->getHeight());
 		player2->move(0405, view->getWidth(), view->getHeight());*/
 
 		view->clearWindow();
-
+		
 		//view->printObject(0, view->getHeight()-1, (char *)"%.2f", time);
 		view->printObject(player->getX()+3, player->getY()+3, (char *)"%s", (char *)"S");
 		view->printObject(player2->getX()+1, player2->getY(), (char *)"%s", (char *)"F");
