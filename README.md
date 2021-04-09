@@ -26,14 +26,12 @@ PlatformGame 2021
 ## TODO
 - Obiettivo base:
 	- Screen:
-		- Draw Schema
-		- Nome utente
-		- studiare ncurses
-		- test piattaforme
+		- Redefined (larghezza)
 	- Character:
-		- Nome utente
 		- Salto
 		- test collisione sparo nemici
 	- Controller:
 		- gestione nemici
-
+	- Piattaforme:
+		- test con piattaforme (classe, saltarci su)
+		
