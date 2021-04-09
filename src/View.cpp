@@ -1,6 +1,5 @@
 #include "View.hpp"
-#include <iostream>
-using namespace std;
+
 
 #if defined(_WIN64) || defined(__WIN32)
 	#include <curses.h>
@@ -27,12 +26,7 @@ void View::createWindow() {
 	timeout(DELAY);
 }
 
-char* View::getName(){
-	char* name;
-	cout << "Inserire nome utente: ";
-	cin >> name;
-	return name;
-}
+
 
 void View::drawMap(int x, int y, int height, int width) {
 	for(int i=0; i<width; i++){

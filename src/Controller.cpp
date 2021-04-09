@@ -10,7 +10,7 @@ Controller::Controller(View *view) {
 void Controller::run() {
 	view->createWindow(	);
 	bool quit = false;
-	char *name = view->getName();
+	char *name = player->getName();
 	
 	do {
 		view->info_commands(2, 2, 20, 50, name, time);
