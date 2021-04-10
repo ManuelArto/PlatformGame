@@ -1,3 +1,5 @@
+#pragma once
+
 #define KEY_DOWN	0402		/* down-arrow key */
 #define KEY_UP		0403		/* up-arrow key */
 #define KEY_LEFT	0404		/* left-arrow key */
