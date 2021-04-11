@@ -45,7 +45,7 @@ void View::drawMap(int x, int y, int height, int width) {
 	}
 }
 
-void View::info_commands(int x, int y, int height, int width, char* user, double time) {
+void View::info_commands(int x, int y, int height, int width, char* user, double time, int life, int points) {
 	//info
 	move(y+5, width+10);
 	printw("PLAYER: ");
@@ -55,8 +55,10 @@ void View::info_commands(int x, int y, int height, int width, char* user, double
 	printw((char *)"%.2f", time);
 	move(y+7, width+10);
 	printw("LIFE: ");
+	printw((char *)"%d", life);
 	move(y+8, width+10);
 	printw("POINTS: ");
+	printw((char *)"%d", points);
 	move(y+9, width+10);
 	printw("LEVEL: ");
 	move(y+10, width+10);
@@ -70,6 +72,13 @@ void View::info_commands(int x, int y, int height, int width, char* user, double
 	printw("E = shoot || Space = jump || Arrows = move || q = quit");
 }
 
+void View::drawPlatform(int x, int y, int length){
+	move(y,x);
+	for(int i=1; i<=length; i++){
+		printw("-");
+		move(y, x+i);
+	}	
+}
 
 void View::exitWindow() {
 	endwin();

@@ -3,6 +3,8 @@
 #include "EasyEnemy.hpp"
 #include "MediumEnemy.hpp"
 #include "HardEnemy.hpp"
+#include "Bonus.hpp"
+#include "Platform.hpp"
 
 class Controller {
 private:
@@ -12,7 +14,8 @@ private:
 	EasyEnemy *e;
 	MediumEnemy *m;
 	HardEnemy *h;
-
+	Bonus *b;
+	Platform *platform;
 public:
 	Controller(View *view);
 	void run();

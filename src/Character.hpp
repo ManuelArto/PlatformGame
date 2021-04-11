@@ -14,7 +14,7 @@ typedef shot_struct *p_shot;
 class Character {
 	private:
 		int x, y, life, points, attack;
-		const double COOLDOWN = 0.5;
+		double COOLDOWN = 0.5;
 		double lastshot_time;
 		p_shot shots;
 	public:

@@ -6,4 +6,5 @@ class Bonus{
         Bonus(int points, int life);
         void bonus_life(int life);
         void bonus_points(int points);
+        void bonus_shoot();
 };

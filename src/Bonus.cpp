@@ -13,6 +13,6 @@ void Bonus::bonus_points(int points){
     points += this->b_points;
 }
 
-void bonus_shoot(){
+void Bonus::bonus_shoot(){
     
 }
