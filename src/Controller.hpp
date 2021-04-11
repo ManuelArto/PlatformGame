@@ -1,3 +1,5 @@
+#pragma once
+
 #include "View.hpp"
 #include "Player.hpp"
 #include "EasyEnemy.hpp"

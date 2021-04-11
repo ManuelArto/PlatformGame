@@ -4,23 +4,25 @@ Platform::Platform(){
     plat = __null;
 }
 
-void Platform::create_platform(int x, int y, int length){
-    p_plat p = new platform;
-    p -> x = x;
-    p -> y = y;
-    p -> lenght = length;
-    p -> next = __null;
-
+p_plat Platform::create_platform(int x, int y, int length, p_plat plat){     //inserimento in coda delle piattaforme
     if(plat == __null){
-        plat = p;
+        plat -> x = x;
+        plat -> y = y;
+        plat -> length = length;
+        plat -> next = __null;
     }else{
         p_plat iter = plat;
         while(iter->next != __null){
             iter = iter -> next;
         }
-        iter -> next = p;
+        iter -> next = new platform;
+        iter = iter -> next;
+        iter -> x = x;
+        iter -> y = y;
+        iter -> length = length;
+        iter -> next = __null;
     }
-    view->drawPlatform(x, y, length);
+    return plat;
 }
 
 bool Platform::checkPlatform(int player_x, int player_y){

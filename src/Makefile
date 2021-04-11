@@ -16,7 +16,7 @@ main.o: Main.cpp Controller.hpp
 controller.o: Controller.cpp Controller.hpp View.hpp Player.hpp EasyEnemy.hpp MediumEnemy.hpp HardEnemy.hpp Platform.hpp Bonus.hpp
 	g++ ${CPPFLAGS} -c Controller.cpp
 
-view.o: View.cpp View.hpp
+view.o: View.cpp View.hpp Platform.hpp
 	g++ ${CPPFLAGS} -c View.cpp
 
 player.o: Player.cpp Player.hpp Character.hpp
@@ -34,7 +34,7 @@ hardenemy.o: HardEnemy.cpp HardEnemy.hpp Character.hpp
 character.o: Character.cpp Character.hpp
 	g++ ${CPPFLAGS} -c Character.cpp
 
-platform.o: Platform.cpp Platform.hpp View.hpp
+platform.o: Platform.cpp Platform.hpp
 	g++ ${CPPFLAGS} -c Platform.cpp
 
 bonus.o: Bonus.cpp Bonus.hpp 

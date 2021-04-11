@@ -12,6 +12,8 @@ void Controller::run() {
 	view->createWindow(	);
 	bool quit = false;
 	char* name = player->getName();
+	int c=0;
+	p_plat p = __null;
 
 	do {
 		view->info_commands(2, 2, 20, 50, name, time, player->getLife(), player->getPoints());
@@ -26,11 +28,18 @@ void Controller::run() {
 				break;
 		}
 
+		/*if(c<3){		//per stampare 3 piattaforme
+			p = platform -> create_platform(rand()%45, rand()%45, 5, p);
+			view->drawPlatform(p);
+			c++;
+		}*/
+
+		view->drawPlatform(p);
+
 		player->move(input, 48, 18);
 
 		view->clearWindow();
 
-		view->drawPlatform(10,10, 6);
 		view->printObject(player->getX()+3, player->getY()+3, (char *)"%s", (char *)"S");
 		
 		p_shot tmp_shot, shot = player->getShotHead();

@@ -72,12 +72,16 @@ void View::info_commands(int x, int y, int height, int width, char* user, double
 	printw("E = shoot || Space = jump || Arrows = move || q = quit");
 }
 
-void View::drawPlatform(int x, int y, int length){
-	move(y,x);
-	for(int i=1; i<=length; i++){
-		printw("-");
-		move(y, x+i);
-	}	
+void View::drawPlatform(p_plat plat){
+	while(plat != __null){
+		move(plat->y, plat->x);
+		for(int i=1; i<=plat->length; i++){
+			printw("=");
+			move(plat->y, plat->x+i);
+		}	
+		plat = plat -> next;
+	}
+	
 }
 
 void View::exitWindow() {
