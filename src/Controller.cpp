@@ -28,15 +28,13 @@ void Controller::run() {
 		}
 		player->move(input, 48, 18);
 		player2->move(0405, 48, 18);
-		/*player->move(input, view->getWidth(), view->getHeight());
-		player2->move(0405, view->getWidth(), view->getHeight());*/
 
 		view->clearWindow();
 		
-		//view->printObject(0, view->getHeight()-1, (char *)"%.2f", time);
 		view->printObject(player->getX()+3, player->getY()+3, (char *)"%s", (char *)"S");
 		view->printObject(player2->getX()+1, player2->getY(), (char *)"%s", (char *)"F");
 		
+
 		p_shot tmp_shot, shot = player->getShotHead();
 		while (shot != __null) {
 			view->printObject(shot->x+3, shot->y+3, (char *)"%s", (char *)"---");

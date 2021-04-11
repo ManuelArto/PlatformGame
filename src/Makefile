@@ -35,4 +35,4 @@ character.o: Character.cpp Character.hpp
 	g++ ${CPPFLAGS} -c Character.cpp
 
 clean:
-	rm -f *.o Game.out
+	rm *.o ${OUT}

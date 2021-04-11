@@ -18,4 +18,5 @@ public:
 	int getWidth();
 	int getHeight();
 	int getDelay();
+	void game_over(int x, int y);
 };
