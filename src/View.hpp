@@ -14,6 +14,7 @@ public:
 	void drawMap(int x, int y, int heigth, int width);
 	void info_commands(int x, int y, int heigth, int width, char* user, double time, int life, int points);
 	void drawPlatform(p_plat plat);
+	//void drawPlatform(int x, int y, int length);
 	void printObject(int x, int y, const char *format, char *object);
 	void printObject(int x, int y, const char *format, int object);
 	void printObject(int x, int y, const char *format, double object);

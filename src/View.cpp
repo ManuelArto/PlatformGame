@@ -81,8 +81,15 @@ void View::drawPlatform(p_plat plat){
 		}	
 		plat = plat -> next;
 	}
-	
 }
+
+/*void View::drawPlatform(int x, int y, int length){
+	move(y,x);
+	for(int i=1; i<=length; i++){
+		printw("=");
+		move(y,x+i);
+	}
+}*/
 
 void View::exitWindow() {
 	endwin();

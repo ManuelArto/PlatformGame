@@ -18,6 +18,12 @@ void Controller::run() {
 	do {
 		view->info_commands(2, 2, 20, 50, name, time, player->getLife(), player->getPoints());
 		view->drawMap(2, 2, 20, 50);
+		if(c<3){		//per stampare 3 piattaforme
+			p = platform -> create_platform(rand()%40, rand()%40, 5, p);
+			view->drawPlatform(p);
+			c++;
+		}
+		view->drawPlatform(p);
 		int input = view->getKeyboardInput();
 		switch (input) {
 			case 113:			// 'q'
@@ -28,13 +34,9 @@ void Controller::run() {
 				break;
 		}
 
-		/*if(c<3){		//per stampare 3 piattaforme
-			p = platform -> create_platform(rand()%45, rand()%45, 5, p);
-			view->drawPlatform(p);
-			c++;
-		}*/
+		if(input == 0403){
 
-		view->drawPlatform(p);
+		}
 
 		player->move(input, 48, 18);
 
