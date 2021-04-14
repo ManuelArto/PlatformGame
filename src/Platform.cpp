@@ -14,13 +14,13 @@ p_plat Platform::create_platform(int x, int y, int length, p_plat plat){     //i
     return plat;
 }
 
-bool Platform::checkPlatform(int player_x, int player_y){
+bool Platform::checkPlatform(int player_x, int player_y, p_plat plat){
     bool flag = false;
     if(plat == __null){
         flag = false;
     }else{
         while(flag == false || plat != __null){
-            if(player_x== plat->x && player_y == (plat->y)-1){
+            if(player_x == plat->x && player_y == (plat->y)+1){
                 flag = true;
             }else{
                 plat = plat -> next;

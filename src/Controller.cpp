@@ -1,9 +1,8 @@
 #include "Controller.hpp"
-#include <iostream>
 
 Controller::Controller(View *view) {
 	this->view = view;
-	player = new Player(3, 20);
+	player = new Player(1, 18);
 	time = 0;
 }
 
@@ -15,11 +14,12 @@ void Controller::run() {
 	p_plat p = __null;
 
 	do {
-		view->info_commands(2, 2, 20, 50, name, time, player->getLife(), player->getPoints());
-		view->drawMap(2, 2, 20, 50);
+		view->info_commands(0, 0, 20, 50, name, time, player->getLife(), player->getPoints());
+		view->drawMap(0, 0, 20, 50);
 
-		if(c<3){		//per stampare 3 piattaforme
-			p = platform -> create_platform(rand()%40, rand()%40, 5, p);
+		if(c<2){		//per creare 3 piattaforme
+			//p = platform -> create_platform((rand()%44)+1, (rand()%8)+10, 5, p);
+			p = platform -> create_platform(10, 17, 5, p);
 			view->drawPlatform(p);
 			c++;
 		}
@@ -35,20 +35,22 @@ void Controller::run() {
 				break;
 		}
 
-		if(input == 0403){
-
-		}
-
-		player->move(input, 48, 18);
-
+		
+		
 		view->clearWindow();
 
 		view->printObject(player->getX(), player->getY(), (char *)"%s", (char *)"S");
-		
-		p_shot tmp_shot, shot = player->getShotHead();
+		if(input == 0403){
+			if(platform->checkPlatform(player -> getX(), player -> getY(), p)){
+				player -> move(input, 49, 19);
+			}
+		}else{
+			player->move(input, 49, 19);
+		}
 
+		p_shot tmp_shot, shot = player->getShotHead();
 		while (shot != __null) {
-			view->printObject(shot->x+3, shot->y+3, (char *)"%s", (char *)"---");
+			view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
 			tmp_shot = shot->next;
 			player->updateShot(shot, view->getWidth());
 			shot = tmp_shot;

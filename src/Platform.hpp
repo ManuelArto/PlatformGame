@@ -12,5 +12,5 @@ class Platform{
     public:
         Platform();
         p_plat create_platform(int x, int y, int length, p_plat plat);
-        bool checkPlatform(int player_x, int player_y);
+        bool checkPlatform(int player_x, int player_y, p_plat plat);
 };

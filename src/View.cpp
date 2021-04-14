@@ -1,5 +1,6 @@
 #include "View.hpp"
-
+#include <iostream>
+using namespace std;
 
 #if defined(_WIN64) || defined(__WIN32)
 	#include <curses.h>
@@ -69,7 +70,7 @@ void View::info_commands(int x, int y, int height, int width, char* user, double
 	printw("S = enemy");
 	//commands
 	move(y+height, x);
-	printw("E = shoot || Space = jump || Arrows = move || q = quit");
+	printw("E = shoot || Space = jump || Arrows = move || q = quit"); 
 }
 
 void View::drawPlatform(p_plat plat){
