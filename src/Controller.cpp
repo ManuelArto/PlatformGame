@@ -3,11 +3,10 @@
 
 Controller::Controller(View *view) {
 	this->view = view;
-	player = new Player(0, 0);
-	player2 = new Player(10, 10);
+	player = new Player(3, 20);
 	time = 0;
 }
-	
+
 void Controller::run() {
 	view->createWindow(	);
 	bool quit = false;
@@ -18,11 +17,13 @@ void Controller::run() {
 	do {
 		view->info_commands(2, 2, 20, 50, name, time, player->getLife(), player->getPoints());
 		view->drawMap(2, 2, 20, 50);
+
 		if(c<3){		//per stampare 3 piattaforme
 			p = platform -> create_platform(rand()%40, rand()%40, 5, p);
 			view->drawPlatform(p);
 			c++;
 		}
+
 		view->drawPlatform(p);
 		int input = view->getKeyboardInput();
 		switch (input) {
@@ -42,7 +43,7 @@ void Controller::run() {
 
 		view->clearWindow();
 
-		view->printObject(player->getX()+3, player->getY()+3, (char *)"%s", (char *)"S");
+		view->printObject(player->getX(), player->getY(), (char *)"%s", (char *)"S");
 		
 		p_shot tmp_shot, shot = player->getShotHead();
 
