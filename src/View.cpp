@@ -67,7 +67,11 @@ void View::info_commands(int x, int y, int height, int width, char* user, double
 	move(y+13, width+10);
 	printw("@ = bonus");
 	move(y+14, width+10);
-	printw("S = enemy");
+	printw("<-- = EasyEnemy");
+	move(y+15, width+10);
+	printw("M = MediumEnemy");
+	move(y+16, width+10);
+	printw("H = HardEnemy");
 	//commands
 	move(y+height, x);
 	printw("E = shoot || Space = jump || Arrows = move || q = quit"); 

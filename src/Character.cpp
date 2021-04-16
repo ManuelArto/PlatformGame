@@ -7,6 +7,7 @@ Character::Character(int x, int y, int points, int life, int attack) {
 	this->life = life;
 	this->attack = attack;
 	shots = __null;
+	shots_enemy = __null;
 }
 
 void Character::decreaseLife(int damage) {
@@ -21,7 +22,7 @@ void Character::move(int input, int width, int height) {
 			break;
 		case KEY_DOWN:
 			if (y < height-1)
-				y++;
+				y+= 2;
 			break;
 		case KEY_LEFT:
 			if (x > 1)
@@ -51,6 +52,24 @@ void Character::shoots(double time) {
 	}
 }
 
+void Character::shoots_enemy(double time) {
+	if (time - lastshot_time > COOLDOWN_enemy) {
+		p_shot shot = new shot_struct;
+		shot->x = x-1; 
+		shot->y = y;
+		shot->next = __null;
+		if (shots_enemy == __null) {
+			shots_enemy = shot;
+		} else {
+			p_shot iter = shots_enemy;
+			while(iter->next != __null)
+				iter = iter->next;
+			iter->next = shot;
+		}
+		lastshot_time = time;
+	}
+}
+
 void Character::deleteShot(p_shot shot) {
 	p_shot prev = shots, iter = shots;
 	bool found = false;
@@ -72,14 +91,27 @@ void Character::deleteShot(p_shot shot) {
 }
 
 void Character::updateShot(p_shot shot, int width) {
-	if (shot->x < width-3)
+	if (shot->x < width-3){
 		shot->x++;
-	else
+	}else{
 		deleteShot(shot);
+	}
+}
+
+void Character::updateShotEnemy(p_shot shot){
+	if(shot -> x > 3){
+		shot->x --;
+	}else{
+		deleteShot(shot);
+	}
 }
 
 p_shot Character::getShotHead() {
 	return shots;
+}
+
+p_shot Character::getShotHeadEnemy() {
+	return shots_enemy;
 }
 
 int Character::getX() {
