@@ -14,20 +14,35 @@ p_plat Platform::create_platform(int x, int y, int length, p_plat plat){     //i
     return plat;
 }
 
-bool Platform::checkPlatform(int player_x, int player_y){
-    bool flag = false;
-    if(plat == __null){
-        flag = false;
+bool Platform::checkPlatformUp(int player_x, int player_y, p_plat plat){
+    p_plat temp = plat;
+    if(temp == __null){
+        return false;
     }else{
-        while(flag == false || plat != __null){
-            if(player_x== plat->x && player_y == (plat->y)-1){
-                flag = true;
+        while(temp != __null){
+            if((player_x >= (temp->x) && player_x <= (temp -> x + temp -> length)) && (player_y == (temp->y)+1)){
+                return true;
             }else{
-                plat = plat -> next;
+                temp = temp -> next;
             }
         }
     }
-    return flag;
+    return false;
 }
 
+bool Platform::checkPlatformDown(int player_x, int player_y, p_plat plat){
+    p_plat temp = plat;
+    if(temp == __null){
+        return false;
+    }else{
+        while(temp != __null){
+            if((player_x >= (temp->x) && player_x < (temp -> x + temp -> length)) && (player_y == (temp->y)-1)){
+                return true;
+            }else{
+                temp = temp -> next;
+            }
+        }
+    }
+    return false;
+}
 
