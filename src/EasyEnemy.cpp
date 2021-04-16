@@ -6,3 +6,4 @@ char* EasyEnemy::symbol(){
     return "<--";
 }
 
+

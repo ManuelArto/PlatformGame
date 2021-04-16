@@ -20,12 +20,11 @@ bool Platform::checkPlatformUp(int player_x, int player_y, p_plat plat){
         return false;
     }else{
         while(temp != __null){
-            for(int i=0; i<temp->length; i++){
-                if((player_x == (temp->x)+i) && (player_y == (temp->y)+1)){
-                    return true;
-                }
-            } 
-            temp = temp -> next;
+            if((player_x >= (temp->x) && player_x <= (temp -> x + temp -> length)) && (player_y == (temp->y)+1)){
+                return true;
+            }else{
+                temp = temp -> next;
+            }
         }
     }
     return false;
@@ -37,12 +36,11 @@ bool Platform::checkPlatformDown(int player_x, int player_y, p_plat plat){
         return false;
     }else{
         while(temp != __null){
-            for(int i=0; i<temp->length; i++){
-                if((player_x == (temp->x)+i) && (player_y == (temp->y)-1)){
-                    return true;
-                }
-            } 
-            temp = temp -> next;
+            if((player_x >= (temp->x) && player_x < (temp -> x + temp -> length)) && (player_y == (temp->y)-1)){
+                return true;
+            }else{
+                temp = temp -> next;
+            }
         }
     }
     return false;
