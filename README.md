@@ -24,15 +24,13 @@ PlatformGame 2021
   - Invulnerabilità: immune
 
 ## TODO
-- Obiettivo base:
-	- Screen:
-		- Redefined (larghezza)
-	- Character:
-		- Salto
-		- test collisione sparo nemici
-	- Controller:
-		- gestione nemici
-	- Piattaforme:
-		- test con piattaforme (classe, saltarci su)
-	- Bonus
-		- classe		
+- Andre:
+	- follow player
+	- sistemo il for delle piattaforme
+	- collisione nemici
+- Manu:
+	- redefined screen
+	- sistemare platform implementation
+	- reverse e sparo destra e sinistra
+	- bonus test
+    - generazione stanze e piattaforme
