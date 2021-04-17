@@ -1,13 +1,13 @@
 #include "Character.hpp"
 
-Character::Character(int x, int y, int points, int life, int attack) {
+Character::Character(int x, int y, int points, int life, int attack, double cooldown) {
     this->x = x;
     this->y = y;
 	this->points = points;
 	this->life = life;
 	this->attack = attack;
+	this->cooldown = cooldown;
 	shots = __null;
-	shots_enemy = __null;
 }
 
 void Character::decreaseLife(int damage) {
@@ -36,7 +36,7 @@ void Character::move(int input, int width, int height) {
 }
 
 void Character::shoots(double time) {
-	if (time - lastshot_time > COOLDOWN) {
+	if (time - lastshot_time > cooldown) {
 		p_shot shot = new shot_struct;
 		shot->x = x+1; shot->y = y;
 		shot->next = __null;
@@ -44,24 +44,6 @@ void Character::shoots(double time) {
 			shots = shot;
 		} else {
 			p_shot iter = shots;
-			while(iter->next != __null)
-				iter = iter->next;
-			iter->next = shot;
-		}
-		lastshot_time = time;
-	}
-}
-
-void Character::shoots_enemy(double time) {
-	if (time - lastshot_time > COOLDOWN_enemy) {
-		p_shot shot = new shot_struct;
-		shot->x = x-1; 
-		shot->y = y;
-		shot->next = __null;
-		if (shots_enemy == __null) {
-			shots_enemy = shot;
-		} else {
-			p_shot iter = shots_enemy;
 			while(iter->next != __null)
 				iter = iter->next;
 			iter->next = shot;
@@ -98,20 +80,8 @@ void Character::updateShot(p_shot shot, int width) {
 	}
 }
 
-void Character::updateShotEnemy(p_shot shot){
-	if(shot -> x > 3){
-		shot->x --;
-	}else{
-		deleteShot(shot);
-	}
-}
-
 p_shot Character::getShotHead() {
 	return shots;
-}
-
-p_shot Character::getShotHeadEnemy() {
-	return shots_enemy;
 }
 
 int Character::getX() {
@@ -128,4 +98,7 @@ int Character::getPoints() {
 } 
 int Character::getAttack() {
 	return attack;
+}
+double Character::getCoolDown() {
+	return cooldown;
 }

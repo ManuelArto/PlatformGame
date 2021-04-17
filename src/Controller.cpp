@@ -1,21 +1,20 @@
 #include "Controller.hpp"
-#include <iostream>
 Controller::Controller(View *view) {
 	this->view = view;
-	player = new Player(1, 18);
+	player = new Player (1, 18);
 	time = 0;
 }
 
 void Controller::run() {
-	view->createWindow(	);
+	view->createWindow();
+	view->askName(player->getName());
 	bool quit = false;
-	char* name = player->getName();
-	int c=0;
+	int c = 0;
 	p_plat p = __null;
 
 	do {
-		view->info_commands(0, 0, 20, 50, name, time, player->getLife(), player->getPoints());
 		view->drawMap(0, 0, 20, 50);
+		view->drawInfos(0, 0, 20, 50, player->getName(), time, player->getLife(), player->getPoints());
 
 		if(c<3){		//per creare n piattaforme
 			//p = platform -> create_platform((rand()%44)+1, (rand()%8)+10, 5, p);

@@ -1,6 +1,4 @@
 #include "View.hpp"
-#include <iostream>
-using namespace std;
 
 #if defined(_WIN64) || defined(__WIN32)
 	#include <curses.h>
@@ -8,17 +6,18 @@ using namespace std;
 	#include <ncurses.h>
 #endif
 
-void View::clearWindow() {
-	clear();
+void View::askName(char *name) {
+	WINDOW *win = newwin(1, 27, 0, 0);
+	mvwprintw(win, 0, 0, "Inserisci nome: ");
+	wrefresh(win);
+	wgetstr(win, name);
+	delwin(win);
+	noecho();
 }
-void View::initscreen() {
-	int x = 0; 
-	int y = 0;
-}
+
 void View::createWindow() {
 	// TODO: check implementation details
 	initscr();
-	noecho();
     cbreak();
     nodelay(stdscr, TRUE);
 	curs_set(FALSE);
@@ -26,8 +25,6 @@ void View::createWindow() {
 	getmaxyx(stdscr, height, width);
 	timeout(DELAY);
 }
-
-
 
 void View::drawMap(int x, int y, int height, int width) {
 	for(int i=0; i<width; i++){
@@ -46,8 +43,8 @@ void View::drawMap(int x, int y, int height, int width) {
 	}
 }
 
-void View::info_commands(int x, int y, int height, int width, char* user, double time, int life, int points) {
-	//info
+void View::drawInfos(int x, int y, int height, int width, char* user, double time, int life, int points) {
+	//infos
 	move(y+5, width+10);
 	printw("PLAYER: ");
 	printw(user);
@@ -96,10 +93,6 @@ void View::drawPlatform(p_plat plat){
 	}
 }*/
 
-void View::exitWindow() {
-	endwin();
-}
-
 void View::printObject(int x, int y, const char* format, char *object) {
 	move(y, x);
 	printw(format, object);
@@ -119,12 +112,20 @@ void View::update() {
 	refresh();
 }
 
-int View::getDelay() {
-	return DELAY;
+void View::clearWindow() {
+	clear();
+}
+
+void View::exitWindow() {
+	endwin();
 }
 
 int View::getKeyboardInput() {
 	return getch();
+}
+
+int View::getDelay() {
+	return DELAY;
 }
 
 int View::getWidth() {
@@ -133,9 +134,4 @@ int View::getWidth() {
 
 int View::getHeight() {
 	return height;
-}
-
-void View::game_over(int x, int y){
-	move(y,x);
-	printw("GAME OVER");
 }

@@ -1,7 +1,3 @@
 #include "HardEnemy.hpp"
 
-HardEnemy::HardEnemy(int x, int y, int points, int life, int attack):Character(x, y, points, life, attack){}
-
-char* HardEnemy::symbol(){
-    return "H";
-}
+HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cooldown):Character(x, y, points, life, attack, cooldown){}
