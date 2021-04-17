@@ -1,11 +1,5 @@
 #include "View.hpp"
 
-#if defined(_WIN64) || defined(__WIN32)
-	#include <curses.h>
-#elif __linux
-	#include <ncurses.h>
-#endif
-
 void View::askName(char *name) {
 	WINDOW *win = newwin(1, 27, 0, 0);
 	mvwprintw(win, 0, 0, "Inserisci nome: ");
@@ -18,102 +12,97 @@ void View::askName(char *name) {
 void View::createWindow() {
 	// TODO: check implementation details
 	initscr();
-    cbreak();
-    nodelay(stdscr, TRUE);
+	cbreak();
 	curs_set(FALSE);
 	keypad(stdscr, TRUE);
-	getmaxyx(stdscr, height, width);
 	timeout(DELAY);
+	getmaxyx(stdscr, height, width);
+	
+	start_color();
+	// init_pair(1, COLOR_RED, COLOR_BLACK);
+    // attron(A_BOLD);
+    // color_set(1, NULL);
+
+	gamewin = newwin(GAME_HEIGHT+2, GAME_WIDTH+2, Y_GAME, X_GAME);
 }
 
-void View::drawMap(int x, int y, int height, int width) {
-	for(int i=0; i<width; i++){
-		for(int j=0; j<height; j++){
-			if((i==0 && j==0) || (i==width-1 && j==0) || (i==0 && j==height-1) || (i==width-1 && j==height-1)){
-				move(y+j, x+i);
-				printw("+");				
-			}else if((i==0) || (i==width-1)){
-				move(y+j, x+i);
-				printw("|");
-			}else if((j==0) || (j==height-1)){
-				move(y+j, x+i);
-				printw("-");
-			}
-		}
-	}
+void View::drawBorders() {
+	box(gamewin, 0, 0);
+	box(stdscr, 0, 0);
 }
 
-void View::drawInfos(int x, int y, int height, int width, char* user, double time, int life, int points) {
-	//infos
-	move(y+5, width+10);
+void View::printInfos(char* user, double time, int life, int points) {
+	// Infos
+	move(Y_GAME, X_GAME + GAME_WIDTH + 8);
 	printw("PLAYER: ");
 	printw(user);
-	move(y+6, width+10);
+	move(Y_GAME + 1, X_GAME + GAME_WIDTH + 8);
 	printw("TIME: ");
 	printw((char *)"%.2f", time);
-	move(y+7, width+10);
+	move(Y_GAME + 2, X_GAME + GAME_WIDTH + 8);
 	printw("LIFE: ");
 	printw((char *)"%d", life);
-	move(y+8, width+10);
+	move(Y_GAME + 3, X_GAME + GAME_WIDTH + 8);
 	printw("POINTS: ");
 	printw((char *)"%d", points);
-	move(y+9, width+10);
+	move(Y_GAME + 4, X_GAME + GAME_WIDTH + 8);
 	printw("LEVEL: ");
-	move(y+10, width+10);
+	move(Y_GAME + 5, X_GAME + GAME_WIDTH + 8);
 	printw("ROOM: ");
-	move(y+13, width+10);
+	// Legenda
+	attron(A_UNDERLINE);
+	move(Y_GAME + 7, X_GAME + GAME_WIDTH + 8);
+	printw("Legenda:");
+	standend();
+	move(Y_GAME + 8, X_GAME + GAME_WIDTH + 8);
 	printw("@ = bonus");
-	move(y+14, width+10);
+	move(Y_GAME + 9, X_GAME + GAME_WIDTH + 8);
 	printw("<-- = EasyEnemy");
-	move(y+15, width+10);
+	move(Y_GAME + 10, X_GAME + GAME_WIDTH + 8);
 	printw("M = MediumEnemy");
-	move(y+16, width+10);
+	move(Y_GAME + 11, X_GAME + GAME_WIDTH + 8);
 	printw("H = HardEnemy");
-	//commands
-	move(y+height, x);
-	printw("E = shoot || Space = jump || Arrows = move || q = quit"); 
+	// Commands
+	attron(A_UNDERLINE);
+	move(Y_GAME + GAME_HEIGHT + 3, X_GAME + 1);
+	printw("Commands:"); 
+	standend();
+	move(Y_GAME + GAME_HEIGHT + 4, X_GAME + 1);
+	printw("E = shoot || Arrows = move || Q = quit"); 
 }
 
-void View::drawPlatform(p_plat plat){
-	while(plat != __null){
-		move(plat->y, plat->x);
-		for(int i=1; i<=plat->length; i++){
-			printw("=");
-			move(plat->y, plat->x+i);
-		}	
-		plat = plat -> next;
+void View::printPlatform(int x, int y, int length){
+	for(int i = 0; i < length; i++){
+		printObject(x+i, y, "%s", "=");
 	}
 }
-
-/*void View::drawPlatform(int x, int y, int length){
-	move(y,x);
-	for(int i=1; i<=length; i++){
-		printw("=");
-		move(y,x+i);
-	}
-}*/
 
 void View::printObject(int x, int y, const char* format, char *object) {
-	move(y, x);
-	printw(format, object);
+	wmove(gamewin, y+1, x+1);
+	wprintw(gamewin, format, object);
 }
 
 void View::printObject(int x, int y, const char* format, int object) {
-	move(y, x);
-	printw(format, object);
+	wmove(gamewin, y+1, x+1);
+	wprintw(gamewin, format, object);
 }
 
 void View::printObject(int x, int y, const char* format, double object) {
-	move(y, x);
-	printw(format, object);
+	wmove(gamewin, y+1, x+1);
+	wprintw(gamewin, format, object);
 }
 
 void View::update() {
-	refresh();
+	wnoutrefresh(stdscr);
+	wnoutrefresh(gamewin);
+	doupdate();
 }
 
 void View::clearWindow() {
-	clear();
+	werase(gamewin);
+	erase();
+	// wclear(gamewin);
+	// clear();
 }
 
 void View::exitWindow() {
@@ -134,4 +123,12 @@ int View::getWidth() {
 
 int View::getHeight() {
 	return height;
+}
+
+int View::getGameWidth() {
+	return GAME_WIDTH;
+}
+
+int View::getGameHeight() {
+	return GAME_HEIGHT;
 }

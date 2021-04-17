@@ -11,7 +11,7 @@
 class Controller {
 private:
 	View *view;
-	Player *player, *player2;
+	Player *player;
 	double time;
 	EasyEnemy *e;
 	MediumEnemy *m;

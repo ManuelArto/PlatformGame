@@ -29,7 +29,6 @@ PlatformGame 2021
 	- sistemo il for delle piattaforme
 	- collisione nemici
 - Manu:
-	- redefined screen
 	- sistemare platform implementation
 	- reverse e sparo destra e sinistra
 	- bonus test

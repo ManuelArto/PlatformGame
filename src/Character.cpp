@@ -15,17 +15,17 @@ void Character::decreaseLife(int damage) {
 }
 
 void Character::move(int input, int width, int height) {
-	switch (input){
+	switch (input) {
 		case KEY_UP:
-			if (y > 1)
+			if (y >= 2)
 				y -= 2;
 			break;
 		case KEY_DOWN:
-			if (y < height-1)
-				y+= 2;
+			if (y < height-2)
+				y += 2;
 			break;
 		case KEY_LEFT:
-			if (x > 1)
+			if (x > 0)
 				x--;
 			break;
 		case KEY_RIGHT:
