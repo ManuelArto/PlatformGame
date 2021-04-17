@@ -12,9 +12,9 @@ struct shot_struct{
 typedef shot_struct *p_shot;
 
 class Character {
-	private:
+	protected:
 		int x, y, life, points, attack;
-		double COOLDOWN = 0.5;
+		double COOLDOWN = 0.4;
 		double COOLDOWN_enemy = 0.3;
 		double lastshot_time;
 		p_shot shots;
@@ -24,7 +24,7 @@ class Character {
 		void decreaseLife(int damage);
 		void shoots(double time);
 		void shoots_enemy(double time);
-		void move(int input, int width, int height);
+		void movement(int input, int width, int height);
 		void updateShot(p_shot shot, int width);
 		void updateShotEnemy(p_shot shot);
 		void deleteShot(p_shot shot);

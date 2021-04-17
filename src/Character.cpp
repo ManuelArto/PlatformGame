@@ -1,5 +1,5 @@
 #include "Character.hpp"
-
+#include <curses.h>
 Character::Character(int x, int y, int points, int life, int attack) {
     this->x = x;
     this->y = y;
@@ -14,7 +14,7 @@ void Character::decreaseLife(int damage) {
     this->life -= damage;
 }
 
-void Character::move(int input, int width, int height) {
+void Character::movement(int input, int width, int height) {
 	switch (input){
 		case KEY_UP:
 			if (y > 1)
