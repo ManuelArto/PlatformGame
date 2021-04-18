@@ -2,7 +2,9 @@
 
 int main() {
 	View *view = new View();
-	Controller *controller = new Controller(view);
+	Generator *generator = new Generator();
+	Controller *controller = new Controller(view, generator);
+	
 	controller->run();
 
 	return 0;

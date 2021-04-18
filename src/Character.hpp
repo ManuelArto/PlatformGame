@@ -25,7 +25,7 @@ public:
 	Character(int x, int y, int points, int life, int attack, double cooldown, char *symbol, char *mir_symbol);
 	void decreaseLife(int damage);
 	void shoots(double time);
-	void move(int input, int width, int height);
+	void move(int input, int width, int height, bool platformUp, bool platformDown);
 	void updateShot(p_shot shot, int width);
 	void deleteShot(p_shot shot);
 	p_shot getShotHead();

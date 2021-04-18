@@ -1,17 +1,11 @@
-#pragma once
-
-struct platform{
-    int x, y, length;
-    platform *next;
-};
-typedef platform *p_plat;
-
 class Platform{
-    private:
-        p_plat plat;
-    public:
-        Platform();
-        p_plat create_platform(int x, int y, int length, p_plat plat);
-        bool checkPlatformUp(int player_x, int player_y, p_plat plat);
-        bool checkPlatformDown(int player_x, int player_y, p_plat plat);
+private:
+	int x, y, lenght;
+public:
+	Platform(int x, int y, int lenght);
+	int getX();
+	int getY();
+	int getLenght();
+	static bool checkPlatformUp(Platform *platforms[], int numberPlatform, int player_x, int player_y);
+	static bool checkPlatformDown(Platform *platforms[], int numberPlatform, int player_x, int player_y);
 };
