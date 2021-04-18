@@ -32,8 +32,8 @@ void Controller::run() {
 					);
 		h->follow(player->getX(), player->getY(), time, 
 					Platform::checkPlatformUp(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()), 
-					Platform::checkPlatformDown(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY())
-		);
+					Platform::checkPlatformDown(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()),
+					view->getGameWidth(), view->getGameHeight());
 
 		// DRAW MAP
 		view->clearWindow();

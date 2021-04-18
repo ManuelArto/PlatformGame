@@ -4,13 +4,16 @@ Generator::Generator(){}
 
 void Generator::createPlatforms() {
 	// STATIC ONLY FOR NOW
-	Platform *p1 = new Platform(3, 6, 4);
+	Platform *p1 = new Platform(3, 6, 5);
 	numberPlatform++;
-	Platform *p2 = new Platform(9, 6, 3);
+	Platform *p2 = new Platform(13, 6, 5);
+	numberPlatform++;
+	Platform *p3 = new Platform(16, 4, 5);
 	numberPlatform++;
 
 	platforms[0] = p1;
 	platforms[1] = p2;
+	platforms[2] = p3;
 }
 
 int Generator::getNumberPlatform() {
