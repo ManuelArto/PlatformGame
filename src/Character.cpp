@@ -17,28 +17,30 @@ void Character::decreaseLife(int damage) {
     this->life -= damage;
 }
 
-void Character::move(int input, int width, int height, bool platformUp, bool platformDown) {
-	if (!platformDown && y < height-2)
+void Character::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow) {
+	if (!hasPlatformBelow && y < height-2)
 		y += 2;
-	switch (input) {
-		case KEY_UP:
-			if (y >= 2 && platformUp)
-				y -= 2;
-			break;
-		case KEY_LEFT:
-			if (x > 0)
-				x--;
-			direction = LEFT;
-			break;
-		case KEY_RIGHT:
-			if (x < width-1)
-				x++;
-			direction = RIGHT;
-			break;
-		case KEY_DOWN:
-			if (y < height-2)
-				y += 2;
-			break;
+	else {
+		switch (input) {
+			case KEY_UP:
+				if (y >= 2 && hasPlatformAbove && (hasPlatformBelow || y == height-1))
+					y -= 2;
+				break;
+			case KEY_LEFT:
+				if (x > 0)
+					x--;
+				direction = LEFT;
+				break;
+			case KEY_RIGHT:
+				if (x < width-1)
+					x++;
+				direction = RIGHT;
+				break;
+			case KEY_DOWN:
+				if (y < height-2)
+					y += 2;
+				break;
+		}
 	}
 }
 

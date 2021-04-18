@@ -6,6 +6,6 @@ public:
 	int getX();
 	int getY();
 	int getLenght();
-	static bool checkPlatformUp(Platform *platforms[], int numberPlatform, int player_x, int player_y);
-	static bool checkPlatformDown(Platform *platforms[], int numberPlatform, int player_x, int player_y);
+	static bool checkPlatformAbove(Platform *platforms[], int numberPlatform, int player_x, int player_y);
+	static bool checkPlatformBelow(Platform *platforms[], int numberPlatform, int player_x, int player_y);
 };

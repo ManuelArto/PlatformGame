@@ -16,7 +16,7 @@ int Platform::getLenght() {
 	return lenght;
 }
 
-bool Platform::checkPlatformUp(Platform *platforms[], int numberPlatform, int player_x, int player_y){
+bool Platform::checkPlatformAbove(Platform *platforms[], int numberPlatform, int player_x, int player_y){
     bool flag = false;
 	for (int i = 0; i < numberPlatform && !flag; i++) {
 		Platform *p = platforms[i];
@@ -28,7 +28,7 @@ bool Platform::checkPlatformUp(Platform *platforms[], int numberPlatform, int pl
 	return flag;
 }
 
-bool Platform::checkPlatformDown(Platform *platforms[], int numberPlatform, int player_x, int player_y){
+bool Platform::checkPlatformBelow(Platform *platforms[], int numberPlatform, int player_x, int player_y){
     bool flag = false;
 	for (int i = 0; i < numberPlatform && !flag; i++) {
 		Platform *p = platforms[i];
