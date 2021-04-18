@@ -1,12 +1,15 @@
 #include "Character.hpp"
 
-Character::Character(int x, int y, int points, int life, int attack, double cooldown) {
+Character::Character(int x, int y, int points, int life, int attack, double cooldown, char *symbol, char *mir_symbol) {
     this->x = x;
     this->y = y;
 	this->points = points;
 	this->life = life;
 	this->attack = attack;
 	this->cooldown = cooldown;
+	this->symbol = symbol;
+	this->mir_symbol = mir_symbol;
+	direction = RIGHT;
 	shots = __null;
 }
 
@@ -27,10 +30,12 @@ void Character::move(int input, int width, int height) {
 		case KEY_LEFT:
 			if (x > 0)
 				x--;
+			direction = LEFT;
 			break;
 		case KEY_RIGHT:
 			if (x < width-1)
 				x++;
+			direction = RIGHT;
 			break;
 	}
 }
@@ -38,7 +43,8 @@ void Character::move(int input, int width, int height) {
 void Character::shoots(double time) {
 	if (time - lastshot_time > cooldown) {
 		p_shot shot = new shot_struct;
-		shot->x = x+1; shot->y = y;
+		shot->x = direction == LEFT ? x-3 : x+1; 
+		shot->y = y;
 		shot->next = __null;
 		if (shots == __null) {
 			shots = shot;
@@ -73,11 +79,12 @@ void Character::deleteShot(p_shot shot) {
 }
 
 void Character::updateShot(p_shot shot, int width) {
-	if (shot->x < width-3){
+	if (shot->x > x && shot->x < width-3){
 		shot->x++;
-	}else{
+	} else if (shot->x < x && shot->x > 0){
+		shot->x--;
+	} else
 		deleteShot(shot);
-	}
 }
 
 p_shot Character::getShotHead() {
@@ -101,4 +108,7 @@ int Character::getAttack() {
 }
 double Character::getCoolDown() {
 	return cooldown;
+}
+char *Character::getSymbol() {
+	return direction == RIGHT ? symbol : mir_symbol;
 }

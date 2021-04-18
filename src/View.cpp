@@ -10,6 +10,7 @@ void View::askName(char *name) {
 }
 
 void View::createWindow() {
+    setlocale(LC_CTYPE, "");
 	// TODO: check implementation details
 	initscr();
 	cbreak();
@@ -73,7 +74,7 @@ void View::printInfos(char* user, double time, int life, int points) {
 
 void View::printPlatform(int x, int y, int length){
 	for(int i = 0; i < length; i++){
-		printObject(x+i, y, "%s", "=");
+		printObject(x+i, y, "%s", (char *)"=");
 	}
 }
 

@@ -2,7 +2,7 @@ ifeq ($(OS),Windows_NT)
 	LDFLAGS = -lpdcurses
 	OUT = Game.exe
 else
-	LDFLAGS = -lcurses
+	LDFLAGS = -lncursesw
 	OUT = Game.out
 endif
 CPPFLAGS = -g

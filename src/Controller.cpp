@@ -55,7 +55,7 @@ void Controller::run() {
 		// }
 		// view->drawPlatform(p);
 
-		view->printObject(player->getX(), player->getY(), (char *)"%s", (char *)"S");
+		view->printObject(player->getX(), player->getY(), (char *)"%s", player->getSymbol());
 
 		p_shot tmp_shot, shot = player->getShotHead();
 		while (shot != __null) {
