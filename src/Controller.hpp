@@ -14,6 +14,8 @@ private:
 	EasyEnemy *e;
 	MediumEnemy *m;
 	HardEnemy *h;
+	void collision();
+	void shoot(p_shot tmp_shot, p_shot shot);
 public:
 	Controller(View *view, Generator *generator);
 	void run();
