@@ -54,7 +54,7 @@ void Controller::run() {
 			player->movement(0402, 49, 19);
 		}
 
-		h->follower(player->getX(), player->getY());
+		h->follower(player->getX(), player->getY(), time, p);
 
 		p_shot tmp_shot, shot = player->getShotHead();
 		while(shot != __null){
