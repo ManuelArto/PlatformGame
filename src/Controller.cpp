@@ -33,8 +33,8 @@ void Controller::run() {
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
-		//h->shoots(time);
-		collision();
+		h->shoots(time);
+		
 		// DRAW MAP
 		view->clearWindow();
 		view->drawBorders();
@@ -43,12 +43,8 @@ void Controller::run() {
 		// PRINT ENTITIES
 		view->printObject(player->getX(), player->getY(), (char *)"%s", player->getSymbol());
 		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol());
-			
-		// PRINT SHOOT PLAYER AND ENEMY
-		shoot(player->getShotHead(), player->getShotHead());
-		shoot(h->getShotHead(), h->getShotHead());
+		this->printShoots();
 		
-		// PRINT AND GENERATE PLATFORM
 		for (int i = 0; i < generator->getNumberPlatform(); i++) {
 			Platform *platf = generator->getPlatform(i);
 			view->printPlatform(platf->getX(), platf->getY(), platf->getLenght());
@@ -56,22 +52,33 @@ void Controller::run() {
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
+		this->checkCollision();
 	} while (!quit);
 	view->exitWindow();
 }
 
-void Controller::collision(){
+void Controller::checkCollision(){
 	if((player->getX() == h->getX()) && (player->getY() == h->getY())){
 		player->decreaseLife(h->getAttack());
 	}
 }
 
-//funziona solo per player, da risolvere
-void Controller::shoot(p_shot tmp_shot, p_shot shot){
+void Controller::printShoots(){
+	p_shot tmp_shot, shot;
+	// Player
+	tmp_shot, shot = player->getShotHead();
 	while(shot != __null){
-			view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
-			tmp_shot = shot->next;
-			player->updateShot(shot, view->getGameWidth());		//risolvere qui
-			shot = tmp_shot;
-		}
+		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
+		tmp_shot = shot->next;
+		player->updateShot(shot, view->getGameWidth());
+		shot = tmp_shot;
+	}
+	// HardEnemy
+	tmp_shot, shot = h->getShotHead();
+	while(shot != __null){
+		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
+		tmp_shot = shot->next;
+		h->updateShot(shot, view->getGameWidth());
+		shot = tmp_shot;
+	}
 }

@@ -6,7 +6,7 @@ HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cool
 }
 
 void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformBelow, int width, int height) {
-    if(time - lastmove_time > 0.2) {
+    if(time - lastmove_time > 0.5) {
         int direction = 0;
         if (y < player_y)
 			direction = KEY_DOWN;
