@@ -6,9 +6,9 @@ void Generator::createPlatforms() {
 	// STATIC ONLY FOR NOW
 	Platform *p1 = new Platform(3, 6, 5);
 	numberPlatform++;
-	Platform *p2 = new Platform(16, 6, 5);
+	Platform *p2 = new Platform(11, 2, 5);
 	numberPlatform++;
-	Platform *p3 = new Platform(7, 4, 9);
+	Platform *p3 = new Platform(7, 4, 5);
 	numberPlatform++;
 
 	platforms[0] = p1;
