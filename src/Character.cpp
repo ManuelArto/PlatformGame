@@ -35,10 +35,10 @@ void Character::move(int input, int width, int height, bool platformUp, bool pla
 				x++;
 			direction = RIGHT;
 			break;
-		// case KEY_DOWN:
-			// if (y < height-2 )
-				// y += 2;
-			// break;
+		case KEY_DOWN:
+			if (y < height-2)
+				y += 2;
+			break;
 	}
 }
 

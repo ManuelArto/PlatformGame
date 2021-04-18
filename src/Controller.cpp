@@ -4,6 +4,7 @@ Controller::Controller(View *view, Generator *generator) {
 	this->view = view;
 	this->generator = generator;
 	player = new Player (0, view->getGameHeight()-1);
+	h = new HardEnemy(view->getGameWidth()-1, view->getGameHeight()-1);
 	time = 0;
 }
 
@@ -29,6 +30,10 @@ void Controller::run() {
 					Platform::checkPlatformUp(generator->getPlatforms(), generator->getNumberPlatform(), player->getX(), player->getY()), 
 					Platform::checkPlatformDown(generator->getPlatforms(), generator->getNumberPlatform(), player->getX(), player->getY())
 					);
+		h->follow(player->getX(), player->getY(), time, 
+					Platform::checkPlatformUp(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()), 
+					Platform::checkPlatformDown(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY())
+		);
 
 		// DRAW MAP
 		view->clearWindow();
@@ -37,9 +42,10 @@ void Controller::run() {
 
 		// PRINT ENTITIES
 		view->printObject(player->getX(), player->getY(), (char *)"%s", player->getSymbol());
-	
+		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol());
+			
 		p_shot tmp_shot, shot = player->getShotHead();
-		while (shot != __null) {
+		while(shot != __null){
 			view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
 			tmp_shot = shot->next;
 			player->updateShot(shot, view->getGameWidth());
