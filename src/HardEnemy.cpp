@@ -6,14 +6,20 @@ char* HardEnemy::symbol(){
     return "H";
 }
 
-void HardEnemy::follower(int player_x, int player_y, double time, p_plat p){
-    bool flag = false;
-    if(time - lastshot_time > 0.05){
+void HardEnemy::follow(int player_x, int player_y, double time, p_plat p){
+    bool flag;
+    //controllo se il personaggio si trova su una piattaforma
+    if(platform -> checkPlatformDown(x-1,y,p) || platform -> checkPlatformDown(x+1,y,p)){
+        flag = true;
+    }else{
+        flag = false;
+    }
+
+    if(time - lastshot_time > 0.1){
         if(player_x < x){
             if((platform->checkPlatformDown(x,y,p) == false) && flag == true){
                 y += 2;
                 x--;
-                flag = false;
             }else{
                 x--;
             }
@@ -21,26 +27,28 @@ void HardEnemy::follower(int player_x, int player_y, double time, p_plat p){
            if((platform->checkPlatformDown(x,y,p) == false) && flag == true){
                 y += 2;
                 x++;
-                flag = false;
             }else{
                 x++;
             }
+        }else{
+            if(player_y != y && flag == true){
+                while(platform->checkPlatformDown(x,y,p)){
+                    if(x <= p->length/2){
+                        x--;
+                    }else{
+                        x++;
+                    }
+                    Sleep(100);
+                }
+            }
         }
-
         if(player_y < y){
             if(platform->checkPlatformUp(x,y,p)){
                 y -= 2;
-                flag = true;
             }
         }else if(player_y > y){
             if(platform->checkPlatformDown(x,y,p) == false){
                 y += 2;
-                flag = false;
-            }
-        }else if((player_y == y) && (player_x != x) && (flag == true)){
-            if(platform->checkPlatformDown(x,y,p) == false){
-                y += 2;
-                flag = false;
             }
         }
         lastshot_time = time;

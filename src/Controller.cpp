@@ -19,7 +19,8 @@ void Controller::run() {
 		view->drawMap(0, 0, 20, 50);
 		if(c<3){		//per creare n piattaforme
 			p = platform -> create_platform(1, 17, 5, p);
-			p = platform -> create_platform(14, 17, 5, p);
+			p = platform -> create_platform(19, 17, 5, p);
+			p = platform -> create_platform(15, 15, 5, p);
 			view->drawPlatform(p);
 			c++;
 		}
@@ -54,7 +55,7 @@ void Controller::run() {
 			player->movement(0402, 49, 19);
 		}
 
-		h->follower(player->getX(), player->getY(), time, p);
+		h->follow(player->getX(), player->getY(), time, p);
 
 		p_shot tmp_shot, shot = player->getShotHead();
 		while(shot != __null){
