@@ -94,9 +94,9 @@ void Character::deleteShot(p_shot shot) {
 }
 
 void Character::updateShot(p_shot shot, int width) {
-	if (shot->x > x && shot->x < width-3){
+	if (shot->x > x && shot->x < width-3) {
 		shot->x++;
-	} else if (shot->x < x && shot->x > 0){
+	} else if (shot->x < x && shot->x > 0) {
 		shot->x--;
 	} else
 		deleteShot(shot);

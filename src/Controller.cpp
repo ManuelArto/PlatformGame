@@ -1,10 +1,11 @@
 #include "Controller.hpp"
+
 Controller::Controller(View *view, Generator *generator) {
 	this->view = view;
 	this->generator = generator;
+	time = 0;
 	player = new Player (0, view->getGameHeight()-1);
 	h = new HardEnemy(view->getGameWidth()-1, view->getGameHeight()-1);
-	time = 0;
 }
 
 void Controller::run() {
@@ -100,7 +101,7 @@ void Controller::checkBonusType(Bonus *bonus) {
 void Controller::printShoots(Character *c) {
 	p_shot tmp_shot, shot;
 	shot = c->getShotHead();
-	while(shot != __null){
+	while(shot != __null) {
 		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
 		tmp_shot = shot->next;
 		c->updateShot(shot, view->getGameWidth());

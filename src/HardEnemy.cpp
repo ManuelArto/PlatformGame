@@ -19,7 +19,7 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
 		} else if (x != player_x && !findPlatform) {
 			direction = x < player_x ? KEY_RIGHT : KEY_LEFT;
 			last_direction = direction;
-		} else if (findPlatform || (x == player_x && y > player_y)){
+		} else if (findPlatform || (x == player_x && y > player_y)) {
 			if (x == width-1)
 				direction = KEY_LEFT;
 			else if (x == 0)

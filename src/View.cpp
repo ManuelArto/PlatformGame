@@ -72,8 +72,8 @@ void View::printInfos(char* user, double time, int life, int points) {
 	printw("E = shoot || Arrows = move || Q = quit"); 
 }
 
-void View::printPlatform(int x, int y, int length){
-	for(int i = 0; i < length; i++){
+void View::printPlatform(int x, int y, int length) {
+	for(int i = 0; i < length; i++) {
 		printObject(x+i, y, "%s", (char *)"=");
 	}
 }
@@ -117,23 +117,18 @@ void View::exitWindow() {
 int View::getKeyboardInput() {
 	return getch();
 }
-
 int View::getDelay() {
 	return DELAY;
 }
-
 int View::getWidth() {
 	return width;
 }
-
 int View::getHeight() {
 	return height;
 }
-
 int View::getGameWidth() {
 	return GAME_WIDTH;
 }
-
 int View::getGameHeight() {
 	return GAME_HEIGHT;
 }
