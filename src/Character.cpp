@@ -1,14 +1,17 @@
 #include "Character.hpp"
 
-Character::Character(int x, int y, int points, int life, int attack, double cooldown, char *symbol, char *mir_symbol) {
+Character::Character(int x, int y, int points, int life, int attack, double cooldown, double cooldown_jump, char *symbol, char *mir_symbol) {
     this->x = x;
     this->y = y;
 	this->points = points;
 	this->life = life;
 	this->attack = attack;
 	this->cooldown = cooldown;
+	this->cooldown_jump = cooldown_jump;
 	this->symbol = symbol;
 	this->mir_symbol = mir_symbol;
+	isJumping = false;
+	lastjump_time = 0.0;
 	direction = RIGHT;
 	shots = __null;
 }
@@ -17,23 +20,32 @@ void Character::decreaseLife(int damage) {
     this->life -= damage;
 }
 
-void Character::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow) {
-	if (!hasPlatformBelow && y < height-2)
+void Character::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time) {
+	if (isJumping && time - lastjump_time > cooldown_jump) {
+		y += 1;
+		isJumping = false;
+	}
+	else if (!hasPlatformBelow && y < height-2)
 		y += 2;
 	else {
 		switch (input) {
 			case KEY_UP:
 				if (y >= 2 && hasPlatformAbove && (hasPlatformBelow || y == height-1))
 					y -= 2;
+				else if (!hasPlatformAbove && !isJumping) {
+					y -= 1;
+					isJumping = true;
+					lastjump_time = time;
+				}
 				break;
 			case KEY_LEFT:
 				if (x > 0)
-					x--;
+					x += isJumping ? -2 : -1;
 				direction = LEFT;
 				break;
 			case KEY_RIGHT:
 				if (x < width-1)
-					x++;
+					x += isJumping ? 2 : 1;
 				direction = RIGHT;
 				break;
 			case KEY_DOWN:
@@ -109,9 +121,6 @@ int Character::getPoints() {
 } 
 int Character::getAttack() {
 	return attack;
-}
-double Character::getCoolDown() {
-	return cooldown;
 }
 char *Character::getSymbol() {
 	return direction == RIGHT ? symbol : mir_symbol;

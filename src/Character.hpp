@@ -16,16 +16,16 @@ typedef shot_struct *p_shot;
 class Character {
 protected:
 	int x, y, life, points, attack;
-	double cooldown;
-	double lastshot_time;
+	double cooldown, cooldown_jump, lastshot_time, lastjump_time;
+	bool isJumping;
 	Direction direction;
 	char *symbol, *mir_symbol;
 	p_shot shots;
 public:
-	Character(int x, int y, int points, int life, int attack, double cooldown, char *symbol, char *mir_symbol);
+	Character(int x, int y, int points, int life, int attack, double cooldown, double cooldown_jump, char *symbol, char *mir_symbol);
 	void decreaseLife(int damage);
 	void shoots(double time);
-	void move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow);
+	void move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time=0);
 	void updateShot(p_shot shot, int width);
 	void deleteShot(p_shot shot);
 	p_shot getShotHead();
@@ -34,6 +34,5 @@ public:
 	int getLife();
 	int getPoints();
 	int getAttack();
-	double getCoolDown();
 	char *getSymbol();
 };

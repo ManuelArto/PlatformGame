@@ -27,9 +27,10 @@ void Controller::run() {
 
 		player->move(input, view->getGameWidth(), view->getGameHeight(), 
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), player->getX(), player->getY()), 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), player->getX(), player->getY())
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), player->getX(), player->getY()),
+					time
 					);
-		h->follow(player->getX(), player->getY(), time, 
+		h->follow(player->getX(), player->getY(), time,
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());

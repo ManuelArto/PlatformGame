@@ -1,16 +1,17 @@
 #include "HardEnemy.hpp"
 
-HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cooldown, char *symbol, char *mir_symbol):Character(x, y, points, life, attack, cooldown, symbol, mir_symbol) {
+HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cooldown, double cooldown_jump, char *symbol, char *mir_symbol)
+					:Character(x, y, points, life, attack, cooldown, cooldown_jump, symbol, mir_symbol) {
 	lastmove_time = 0.0;
 	findPlatform = false;
 }
 
 void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformBelow, int width, int height) {
-    if(time - lastmove_time > 0.5) {
+    if(time - lastmove_time > cooldown) {
         int direction = 0;
         if (y < player_y)
 			direction = KEY_DOWN;
-        else if (y > player_y && hasPlatformAbove) {
+        else if ((y > player_y && hasPlatformAbove) || y == player_y+1) {
 			direction = KEY_UP;
 			findPlatform = false;
 		} else if (x != player_x && !findPlatform) {
@@ -27,7 +28,7 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
 			last_direction = direction;
 		}
 
-		move(direction, width, height, hasPlatformAbove, hasPlatformBelow);
+		move(direction, width, height, hasPlatformAbove, hasPlatformBelow, time);
 		lastmove_time = time;
     }
 }
