@@ -43,8 +43,9 @@ void Controller::run() {
 
 		// PRINT ENTITIES
 		view->printObject(player->getX(), player->getY(), (char *)"%s", player->getSymbol());
+		this->printShoots(player);
 		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol());
-		this->printShoots();
+		this->printShoots(h);
 		
 		for (int i = 0; i < generator->getNumberPlatform(); i++) {
 			Platform *platf = generator->getPlatform(i);
@@ -53,33 +54,25 @@ void Controller::run() {
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
-		this->checkCollision();
+		this->checkCollisions();
 	} while (!quit);
 	view->exitWindow();
 }
 
-void Controller::checkCollision(){
+void Controller::checkCollisions(){
+	// player - HardEnemy
 	if((player->getX() == h->getX()) && (player->getY() == h->getY())){
 		player->decreaseLife(h->getAttack());
 	}
 }
 
-void Controller::printShoots(){
+void Controller::printShoots(Character *c){
 	p_shot tmp_shot, shot;
-	// Player
-	tmp_shot, shot = player->getShotHead();
+	shot = c->getShotHead();
 	while(shot != __null){
 		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
 		tmp_shot = shot->next;
-		player->updateShot(shot, view->getGameWidth());
-		shot = tmp_shot;
-	}
-	// HardEnemy
-	tmp_shot, shot = h->getShotHead();
-	while(shot != __null){
-		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
-		tmp_shot = shot->next;
-		h->updateShot(shot, view->getGameWidth());
+		c->updateShot(shot, view->getGameWidth());
 		shot = tmp_shot;
 	}
 }
