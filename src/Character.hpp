@@ -15,14 +15,15 @@ typedef shot_struct *p_shot;
 
 class Character {
 protected:
+	const double FLIGHT_TIME = 0.3, COOLDOWN_JUMP = 0.4;
 	int x, y, life, points, attack;
-	double cooldown, cooldown_jump, lastshot_time, lastjump_time;
+	double cooldown_shoot, lastshot_time, lastjump_time;
 	bool isJumping;
 	Direction direction;
 	char *symbol, *mir_symbol;
 	p_shot shots;
 public:
-	Character(int x, int y, int points, int life, int attack, double cooldown, double cooldown_jump, char *symbol, char *mir_symbol);
+	Character(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol, char *mir_symbol);
 	void decreaseLife(int damage);
 	void shoots(double time);
 	void move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time=0);

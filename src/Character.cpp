@@ -1,13 +1,12 @@
 #include "Character.hpp"
 
-Character::Character(int x, int y, int points, int life, int attack, double cooldown, double cooldown_jump, char *symbol, char *mir_symbol) {
+Character::Character(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol, char *mir_symbol) {
     this->x = x;
     this->y = y;
 	this->points = points;
 	this->life = life;
 	this->attack = attack;
-	this->cooldown = cooldown;
-	this->cooldown_jump = cooldown_jump;
+	this->cooldown_shoot = cooldown_shoot;
 	this->symbol = symbol;
 	this->mir_symbol = mir_symbol;
 	isJumping = false;
@@ -21,7 +20,7 @@ void Character::decreaseLife(int damage) {
 }
 
 void Character::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time) {
-	if (isJumping && time - lastjump_time > cooldown_jump) {
+	if (isJumping && (time - lastjump_time > FLIGHT_TIME)) {
 		y += 1;
 		isJumping = false;
 	}
@@ -32,7 +31,7 @@ void Character::move(int input, int width, int height, bool hasPlatformAbove, bo
 			case KEY_UP:
 				if (y >= 2 && hasPlatformAbove && (hasPlatformBelow || y == height-1))
 					y -= 2;
-				else if (!hasPlatformAbove && !isJumping) {
+				else if (!hasPlatformAbove && !isJumping && (time - lastjump_time > COOLDOWN_JUMP)) {
 					y -= 1;
 					isJumping = true;
 					lastjump_time = time;
@@ -40,12 +39,12 @@ void Character::move(int input, int width, int height, bool hasPlatformAbove, bo
 				break;
 			case KEY_LEFT:
 				if (x > 0)
-					x += isJumping ? -2 : -1;
+					x += (isJumping && x > 1) ? -2 : -1;
 				direction = LEFT;
 				break;
 			case KEY_RIGHT:
 				if (x < width-1)
-					x += isJumping ? 2 : 1;
+					x += (isJumping && x < width-2) ? 2 : 1;
 				direction = RIGHT;
 				break;
 			case KEY_DOWN:
@@ -57,7 +56,7 @@ void Character::move(int input, int width, int height, bool hasPlatformAbove, bo
 }
 
 void Character::shoots(double time) {
-	if (time - lastshot_time > cooldown) {
+	if (time - lastshot_time > cooldown_shoot) {
 		p_shot shot = new shot_struct;
 		shot->x = direction == LEFT ? x-3 : x+1; 
 		shot->y = y;

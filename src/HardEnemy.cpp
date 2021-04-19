@@ -1,13 +1,15 @@
 #include "HardEnemy.hpp"
 
-HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cooldown, double cooldown_jump, char *symbol, char *mir_symbol)
-					:Character(x, y, points, life, attack, cooldown, cooldown_jump, symbol, mir_symbol) {
+HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, char *symbol, char *mir_symbol)
+					: Character(x, y, points, life, attack, cooldown_shoot, symbol, mir_symbol) {
+	direction = LEFT;
+	this->cooldown_movement = cooldown_movement;
 	lastmove_time = 0.0;
 	findPlatform = false;
 }
 
 void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformBelow, int width, int height) {
-    if(time - lastmove_time > cooldown) {
+    if(time - lastmove_time > cooldown_movement) {
         int direction = 0;
         if (y < player_y)
 			direction = KEY_DOWN;
