@@ -9,7 +9,7 @@ class View{
 private:
 	int width, height;
 	const int DELAY = 50;
-	const int X_GAME = 3, Y_GAME  = 1, GAME_WIDTH = 35, GAME_HEIGHT = 8;
+	const int X_GAME = 3, Y_GAME = 1, GAME_WIDTH = 35, GAME_HEIGHT = 8;
 	WINDOW *gamewin;
 public:
 	void askName(char *setName);
