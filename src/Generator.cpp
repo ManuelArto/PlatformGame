@@ -1,6 +1,6 @@
 #include "Generator.hpp"
 
-Generator::Generator(){}
+Generator::Generator() {}
 
 void Generator::createPlatforms() {
 	// STATIC ONLY FOR NOW
@@ -16,12 +16,28 @@ void Generator::createPlatforms() {
 	platforms[2] = p3;
 }
 
+void Generator::createBonuses() {
+	// STATIC ONLY FOR NOW
+	Bonus *p1 = new Bonus(1, 7, LIFE);
+	numberBonus++;
+
+	bonuses[0] = p1;
+}
+
 int Generator::getNumberPlatform() {
 	return numberPlatform;
-}
-Platform **Generator::getPlatforms() {
-	return platforms;
 }
 Platform *Generator::getPlatform(int index) {
 	return platforms[index];
 }
+Platform **Generator::getPlatforms() {
+	return platforms;
+}
+
+int Generator::getNumberBonus() {
+	return numberBonus;
+}
+Bonus *Generator::getBonus(int index) {
+	return bonuses[index];
+}
+	

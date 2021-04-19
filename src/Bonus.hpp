@@ -1,10 +1,17 @@
-class Bonus{
-    private:
-        int b_points, b_life;
-        const double b_cooldown = 0.2;
-    public:
-        Bonus(int points, int life);
-        void bonus_life(int life);
-        void bonus_points(int points);
-        void bonus_shoot();
+enum bonus_type {INVINCIBILITY, LIFE, MINIGUN, RALLENTY};
+
+class Bonus {
+private:
+	int x, y;
+	int bonus_life;
+	double minigun_cooldown;
+	bonus_type type;
+public:
+	Bonus(int x, int y, bonus_type type, int bonus_life=50, double minigun_cooldown=0.2);
+	bonus_type getBonusType();
+	char *getSymbol();
+	double getMinigunCooldown();
+	int getBonusLife();
+	int getX();
+	int getY();
 };

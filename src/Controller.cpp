@@ -12,9 +12,10 @@ void Controller::run() {
 	view->createWindow();
 	view->askName(player->getName());
 	generator->createPlatforms();
+	generator->createBonuses();
 
 	do {
-		// INPUT
+		// DATA MANAGEMENT
 		int input = view->getKeyboardInput();
 		switch (input) {
 			case 'q':
@@ -42,7 +43,7 @@ void Controller::run() {
 		view->printInfos(player->getName(), time, player->getLife(), player->getPoints());
 
 		// PRINT ENTITIES
-		view->printObject(player->getX(), player->getY(), (char *)"%s", player->getSymbol());
+		view->printObject(player->getX(), player->getY(), (char *)"%s", player->getSymbol(), player->hasInvincibility());
 		this->printShoots(player);
 		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol());
 		this->printShoots(h);
@@ -51,22 +52,52 @@ void Controller::run() {
 			Platform *platf = generator->getPlatform(i);
 			view->printPlatform(platf->getX(), platf->getY(), platf->getLenght());
 		}
+		for (int i = 0; i < generator->getNumberBonus(); i++) {
+			Bonus *bonus = generator->getBonus(i);
+			view->printObject(bonus->getX(), bonus->getY(), "%s", bonus->getSymbol());
+		}
+
+		// CHECKING
+		player->checkBonusesDuration(time);
+		this->checkCollisions();
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
-		this->checkCollisions();
 	} while (!quit);
 	view->exitWindow();
 }
 
-void Controller::checkCollisions(){
+void Controller::checkCollisions() {
 	// player - HardEnemy
-	if((player->getX() == h->getX()) && (player->getY() == h->getY())){
+	if(!player->hasInvincibility() && (player->getX() == h->getX() && player->getY() == h->getY())) {
 		player->decreaseLife(h->getAttack());
+	}
+	// player - Bonuses
+	for (int i = 0; i < generator->getNumberBonus(); i++) {
+		Bonus *bonus = generator->getBonus(i);
+		if (player->getX() == bonus->getX() && player->getY() == bonus->getY())
+			this->checkBonusType(bonus);	// TODO: remove bonus from game
 	}
 }
 
-void Controller::printShoots(Character *c){
+void Controller::checkBonusType(Bonus *bonus) {
+	switch (bonus->getBonusType()) {
+		case INVINCIBILITY:
+			player->setInvincibility(time);
+			break;
+		case LIFE:
+			player->increaseLife(bonus->getBonusLife());
+			break;
+		case MINIGUN:
+			player->setCooldownShoot(bonus->getMinigunCooldown(), time);
+			break;
+		case RALLENTY:
+			// TODO: cambiare cooldown_movement di TUTI i nemici
+			break;
+	}
+}
+
+void Controller::printShoots(Character *c) {
 	p_shot tmp_shot, shot;
 	shot = c->getShotHead();
 	while(shot != __null){

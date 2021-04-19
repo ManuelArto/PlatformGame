@@ -78,9 +78,13 @@ void View::printPlatform(int x, int y, int length){
 	}
 }
 
-void View::printObject(int x, int y, const char* format, char *object) {
+void View::printObject(int x, int y, const char* format, char *object, bool hasInvincibility) {
+	if (hasInvincibility) {
+		wattron(gamewin, A_UNDERLINE);	// TODO: change color
+	}
 	wmove(gamewin, y+1, x+1);
 	wprintw(gamewin, format, object);
+	wstandend(gamewin);
 }
 
 void View::printObject(int x, int y, const char* format, int object) {

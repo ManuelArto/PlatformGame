@@ -19,7 +19,7 @@ public:
 	void drawBorders();
 	void printInfos(char* user, double time, int life, int points);
 	void printPlatform(int x, int y, int length);
-	void printObject(int x, int y, const char *format, char *object);
+	void printObject(int x, int y, const char *format, char *object, bool hasInvincibility=false);
 	void printObject(int x, int y, const char *format, int object);
 	void printObject(int x, int y, const char *format, double object);
 	void update();
