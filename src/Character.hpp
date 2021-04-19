@@ -15,7 +15,7 @@ typedef shot_struct *p_shot;
 
 class Character {
 protected:
-	const double FLIGHT_TIME = 0.3, COOLDOWN_JUMP = 0.4;
+	const double FLIGHT_TIME =0.3, COOLDOWN_JUMP =0.4;
 	int x, y, life, points, attack;
 	double cooldown_shoot, lastshot_time, lastjump_time;
 	bool isJumping;

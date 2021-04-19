@@ -19,7 +19,7 @@ controller.o: Controller.cpp Controller.hpp View.hpp Generator.hpp Player.hpp Ea
 view.o: View.cpp View.hpp
 	g++ ${CPPFLAGS} -c View.cpp
 
-generator.o: Generator.cpp Generator.hpp Platform.hpp
+generator.o: Generator.cpp Generator.hpp Platform.hpp Bonus.hpp
 	g++ ${CPPFLAGS} -c Generator.cpp
 
 player.o: Player.cpp Player.hpp Character.hpp
