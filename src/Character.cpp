@@ -24,7 +24,7 @@ void Character::move(int input, int width, int height, bool hasPlatformAbove, bo
 		y += 1;
 		isJumping = false;
 	}
-	else if (!hasPlatformBelow && y < height-2)
+	else if (!isJumping && !hasPlatformBelow && y < height-2)
 		y += 2;
 	else {
 		switch (input) {

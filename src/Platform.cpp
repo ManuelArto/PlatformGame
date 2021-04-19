@@ -32,7 +32,7 @@ bool Platform::checkPlatformBelow(Platform *platforms[], int numberPlatform, int
     bool flag = false;
 	for (int i = 0; i < numberPlatform && !flag; i++) {
 		Platform *p = platforms[i];
-		if (player_y == p->y-1 || player_y == p->y-2) {
+		if (player_y == p->y-1) {
 			if (player_x >= p->x && player_x < p->x+p->lenght)
 				flag = true;
 		}
