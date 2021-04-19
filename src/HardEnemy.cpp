@@ -9,8 +9,8 @@ HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cool
 }
 
 void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformBelow, int width, int height) {
+	int direction = 0;
     if(time - lastmove_time > cooldown_movement) {
-        int direction = 0;
         if (y < player_y)
 			direction = KEY_DOWN;
         else if ((y > player_y && hasPlatformAbove) || y == player_y+1) {
@@ -30,7 +30,7 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
 			last_direction = direction;
 		}
 
-		move(direction, width, height, hasPlatformAbove, hasPlatformBelow, time);
 		lastmove_time = time;
     }
+	move(direction, width, height, hasPlatformAbove, hasPlatformBelow, time);
 }
