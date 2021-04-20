@@ -9,6 +9,7 @@ enum Direction {LEFT, RIGHT};
 
 struct shot_struct{
 	int x, y;
+	Direction direction;
 	shot_struct *next;
 };
 typedef shot_struct *p_shot;

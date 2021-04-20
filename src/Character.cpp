@@ -60,6 +60,7 @@ void Character::shoots(double time) {
 		p_shot shot = new shot_struct;
 		shot->x = direction == LEFT ? x-3 : x+1; 
 		shot->y = y;
+		shot->direction = direction;
 		shot->next = __null;
 		if (shots == __null) {
 			shots = shot;
@@ -94,10 +95,8 @@ void Character::deleteShot(p_shot shot) {
 }
 
 void Character::updateShot(p_shot shot, int width) {
-	if (shot->x > x && shot->x < width-3) {
-		shot->x++;
-	} else if (shot->x < x && shot->x > 0) {
-		shot->x--;
+	if (shot->x > 0 && shot->x < width-3) {
+		shot->x += shot->direction == LEFT ? -1 : 1;
 	} else
 		deleteShot(shot);
 }
