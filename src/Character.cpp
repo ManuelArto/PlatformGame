@@ -55,10 +55,10 @@ void Character::move(int input, int width, int height, bool hasPlatformAbove, bo
 	}
 }
 
-void Character::shoots(double time) {
+void Character::shoots(double time, int offset) {
 	if (time - lastshot_time > cooldown_shoot) {
 		p_shot shot = new shot_struct;
-		shot->x = direction == LEFT ? x-3 : x+1; 
+		shot->x = direction == LEFT ? x-offset-3 : x-offset+1; 
 		shot->y = y;
 		shot->direction = direction;
 		shot->next = __null;

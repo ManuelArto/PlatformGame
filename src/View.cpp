@@ -72,29 +72,35 @@ void View::printInfos(char* user, double time, int life, int points) {
 	printw("E = shoot || Arrows = move || Q = quit"); 
 }
 
-void View::printPlatform(int x, int y, int length) {
+void View::printPlatform(int x, int y, int length, int offset) {
 	for(int i = 0; i < length; i++) {
-		printObject(x+i, y, "%s", (char *)"=");
+		printObject(x+i, y, "%s", (char *)"=", offset);
 	}
 }
 
-void View::printObject(int x, int y, const char* format, char *object, bool hasInvincibility) {
-	if (hasInvincibility) {
-		wattron(gamewin, A_UNDERLINE);	// TODO: change color
+void View::printObject(int x, int y, const char* format, char *object, int offset, bool hasInvincibility) {
+	if (x-offset >= 0 && x-offset < width-1) {
+		if (hasInvincibility) {
+			wattron(gamewin, A_UNDERLINE);	// TODO: change color
+		}
+		wmove(gamewin, y+1, x+1-offset);
+		wprintw(gamewin, format, object);
+		wstandend(gamewin);
 	}
-	wmove(gamewin, y+1, x+1);
-	wprintw(gamewin, format, object);
-	wstandend(gamewin);
 }
 
-void View::printObject(int x, int y, const char* format, int object) {
-	wmove(gamewin, y+1, x+1);
-	wprintw(gamewin, format, object);
+void View::printObject(int x, int y, const char* format, int object, int offset) {
+	if (x-offset >= 0 && x-offset < width-1) {
+		wmove(gamewin, y+1, x+1-offset);
+		wprintw(gamewin, format, object);
+	}
 }
 
-void View::printObject(int x, int y, const char* format, double object) {
-	wmove(gamewin, y+1, x+1);
-	wprintw(gamewin, format, object);
+void View::printObject(int x, int y, const char* format, double object, int offset) {
+	if (x-offset >= 0 && x-offset < width-1) {
+		wmove(gamewin, y+1, x+1-offset);
+		wprintw(gamewin, format, object);
+	}
 }
 
 void View::update() {
