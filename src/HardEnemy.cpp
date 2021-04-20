@@ -29,7 +29,6 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
 			findPlatform = y != player_y;
 			last_direction = direction;
 		}
-
 		lastmove_time = time;
     }
 	move(direction, width, height, hasPlatformAbove, hasPlatformBelow, time);

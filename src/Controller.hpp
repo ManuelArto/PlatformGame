@@ -14,7 +14,7 @@ private:
 	EasyEnemy *e;
 	MediumEnemy *m;
 	HardEnemy *h;
-	void checkCollisions();
+	void checkCollisions(Character *c);
 	void printShoots(Character *c);
 public:
 	Controller(View *view, Generator *generator);
