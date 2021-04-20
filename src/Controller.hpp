@@ -18,7 +18,7 @@ private:
 	void generateRoom();
 	void checkCollisions();
 	void checkBonusType(Bonus *bonus);
-	void printShoots(Character *c);
+	void printShoots(Character *c, int offset);
 public:
 	Controller(View *view, Generator *generator);
 	void run();

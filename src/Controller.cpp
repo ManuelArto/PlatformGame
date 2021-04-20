@@ -23,7 +23,7 @@ void Controller::run() {
 				quit = true;
 				break;
 			case 'e':
-				player->shoots(time, player->getOffset());
+				player->shoots(time);
 				break;
 		}
 
@@ -36,7 +36,7 @@ void Controller::run() {
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
-		h->shoots(time, player->getOffset());
+		h->shoots(time);
 		
 		// DRAW MAP
 		view->clearWindow();
@@ -45,9 +45,9 @@ void Controller::run() {
 
 		// PRINT ENTITIES
 		view->printObject(player->noOffsetX(), player->getY(), (char *)"%s", player->getSymbol(), 0, player->hasInvincibility());
-		this->printShoots(player);
+		this->printShoots(player, 0);
 		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol(), player->getOffset());
-		this->printShoots(h);
+		this->printShoots(h, player->getOffset());
 		
 		for (int i = 0; i < generator->getNumberPlatform(); i++) {
 			Platform *platf = generator->getPlatform(i);
@@ -103,13 +103,13 @@ void Controller::checkBonusType(Bonus *bonus) {
 	}
 }
 
-void Controller::printShoots(Character *c) {
+void Controller::printShoots(Character *c, int offset) {
 	p_shot tmp_shot, shot;
 	shot = c->getShotHead();
 	while(shot != __null) {
-		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---", player->getOffset());
+		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---", offset);
 		tmp_shot = shot->next;
-		c->updateShot(shot, view->getGameWidth()+player->getOffset());
+		c->updateShot(shot, view->getGameWidth()+offset);
 		shot = tmp_shot;
 	}
 }

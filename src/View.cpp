@@ -79,7 +79,7 @@ void View::printPlatform(int x, int y, int length, int offset) {
 }
 
 void View::printObject(int x, int y, const char* format, char *object, int offset, bool hasInvincibility) {
-	if (x-offset >= 0 && x-offset < width-1) {
+	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
 		if (hasInvincibility) {
 			wattron(gamewin, A_UNDERLINE);	// TODO: change color
 		}
@@ -90,14 +90,14 @@ void View::printObject(int x, int y, const char* format, char *object, int offse
 }
 
 void View::printObject(int x, int y, const char* format, int object, int offset) {
-	if (x-offset >= 0 && x-offset < width-1) {
+	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
 		wmove(gamewin, y+1, x+1-offset);
 		wprintw(gamewin, format, object);
 	}
 }
 
 void View::printObject(int x, int y, const char* format, double object, int offset) {
-	if (x-offset >= 0 && x-offset < width-1) {
+	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
 		wmove(gamewin, y+1, x+1-offset);
 		wprintw(gamewin, format, object);
 	}
