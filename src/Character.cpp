@@ -38,12 +38,12 @@ void Character::move(int input, int width, int height, bool hasPlatformAbove, bo
 				}
 				break;
 			case KEY_LEFT:
-				if (x > 0)
+				if (x > 0 && (direction == LEFT || isJumping))
 					x += (isJumping && x > 1) ? -2 : -1;
 				direction = LEFT;
 				break;
 			case KEY_RIGHT:
-				if (x < width-1)
+				if (x < width-1 && (direction == RIGHT || isJumping))
 					x += (isJumping && x < width-2) ? 2 : 1;
 				direction = RIGHT;
 				break;
