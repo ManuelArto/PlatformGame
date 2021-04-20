@@ -18,7 +18,7 @@ void Generator::createPlatforms() {
 
 void Generator::createBonuses() {
 	// STATIC ONLY FOR NOW
-	Bonus *p1 = new Bonus(1, 7, MINIGUN);
+	Bonus *p1 = new Bonus(1, 7, LIFE);
 	numberBonus++;
 
 	bonuses[0] = p1;

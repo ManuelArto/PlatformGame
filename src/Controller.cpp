@@ -4,6 +4,7 @@ Controller::Controller(View *view, Generator *generator) {
 	this->view = view;
 	this->generator = generator;
 	time = 0;
+	room = 1;
 	player = new Player (0, view->getGameHeight()-1);
 	h = new HardEnemy(view->getGameWidth()-1, view->getGameHeight()-1);
 }
@@ -12,8 +13,7 @@ void Controller::run() {
 	bool quit = false;
 	view->createWindow();
 	view->askName(player->getName());
-	generator->createPlatforms();
-	generator->createBonuses();
+	this->generateRoom();
 
 	do {
 		// DATA MANAGEMENT
@@ -23,7 +23,7 @@ void Controller::run() {
 				quit = true;
 				break;
 			case 'e':
-				player->shoots(time);
+				player->shoots(time, player->getOffset());
 				break;
 		}
 
@@ -36,7 +36,7 @@ void Controller::run() {
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
-		h->shoots(time);
+		h->shoots(time, player->getOffset());
 		
 		// DRAW MAP
 		view->clearWindow();
@@ -44,18 +44,18 @@ void Controller::run() {
 		view->printInfos(player->getName(), time, player->getLife(), player->getPoints());
 
 		// PRINT ENTITIES
-		view->printObject(player->getX(), player->getY(), (char *)"%s", player->getSymbol(), player->hasInvincibility());
+		view->printObject(player->noOffsetX(), player->getY(), (char *)"%s", player->getSymbol(), 0, player->hasInvincibility());
 		this->printShoots(player);
-		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol());
+		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol(), player->getOffset());
 		this->printShoots(h);
 		
 		for (int i = 0; i < generator->getNumberPlatform(); i++) {
 			Platform *platf = generator->getPlatform(i);
-			view->printPlatform(platf->getX(), platf->getY(), platf->getLenght());
+			view->printPlatform(platf->getX(), platf->getY(), platf->getLenght(), player->getOffset());
 		}
 		for (int i = 0; i < generator->getNumberBonus(); i++) {
 			Bonus *bonus = generator->getBonus(i);
-			view->printObject(bonus->getX(), bonus->getY(), "%s", bonus->getSymbol());
+			view->printObject(bonus->getX(), bonus->getY(), "%s", bonus->getSymbol(), player->getOffset());
 		}
 
 		// CHECKING
@@ -66,6 +66,11 @@ void Controller::run() {
 		time += (double)view->getDelay() / 1000;
 	} while (!quit);
 	view->exitWindow();
+}
+
+void Controller::generateRoom() {
+	generator->createPlatforms();
+	generator->createBonuses();
 }
 
 void Controller::checkCollisions() {
@@ -102,9 +107,9 @@ void Controller::printShoots(Character *c) {
 	p_shot tmp_shot, shot;	
 	shot = c->getShotHead();
 	while(shot != __null) {
-		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");
+		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---", player->getOffset());
 		tmp_shot = shot->next;
-		c->updateShot(shot, view->getGameWidth());
+		c->updateShot(shot, view->getGameWidth()+player->getOffset());
 		shot = tmp_shot;
 	}
 }

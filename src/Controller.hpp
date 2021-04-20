@@ -11,9 +11,11 @@ private:
 	Player *player;
 	Generator *generator;
 	double time;
+	int room;
 	EasyEnemy *e;
 	MediumEnemy *m;
 	HardEnemy *h;
+	void generateRoom();
 	void checkCollisions();
 	void checkBonusType(Bonus *bonus);
 	void printShoots(Character *c);

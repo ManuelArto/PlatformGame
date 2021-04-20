@@ -2,7 +2,8 @@
 
 class Player: public Character {
 private:
-	const int MAX_NAME_LENGTH = 10;
+	const int MAX_NAME_LENGTH = 10, FIX_X = 8;
+	unsigned int offset;
 	double default_cooldown_shoot;
 	double invincibility_duration, invincibilityActivation_time, minigun_duration, minigunActivation_time;
 	bool isInvincible;
@@ -15,4 +16,9 @@ public:
 	void setInvincibility(double time);
 	bool hasInvincibility();
 	char* getName();
+	int getOffset();
+	int noOffsetX();
+	// OVERRIDE
+	void move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time);
+	int getX();
 };
