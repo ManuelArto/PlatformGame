@@ -11,12 +11,13 @@ Player::Player(int x, int y, int points, int life, int attack, double cooldown_s
 }
 
 void Player::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time) {
+	Direction last_direction = direction;
 	Character::move(input, width, height, hasPlatformAbove, hasPlatformBelow, time);
 	if (x > FIX_X) {
 		offset += x-FIX_X;
 		x = FIX_X;
-	} else if (offset > 0 && input == KEY_LEFT) {
-		offset--;
+	} else if (offset > 0 && input == KEY_LEFT && direction == last_direction) {
+		offset += isJumping ? -2 : -1;
 		x = FIX_X;
 	}
 }
