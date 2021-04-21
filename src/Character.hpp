@@ -19,7 +19,7 @@ protected:
 	const double FLIGHT_TIME = 0.3, COOLDOWN_JUMP = 0.4;
 	int x, y, life, points, attack;
 	double cooldown_shoot, lastshot_time, lastjump_time;
-	bool isJumping;
+	bool jumping;
 	Direction direction;
 	char *symbol, *mir_symbol;
 	p_shot shots;
@@ -36,5 +36,7 @@ public:
 	int getLife();
 	int getPoints();
 	int getAttack();
+	Direction getDirection();
+	bool isJumping();
 	char *getSymbol();
 };

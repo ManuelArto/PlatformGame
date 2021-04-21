@@ -17,11 +17,11 @@ public:
 	void createWindow();
 	void exitWindow();
 	void drawBorders();
-	void printInfos(char* user, double time, int life, int points);
-	void printPlatform(int x, int y, int length);
-	void printObject(int x, int y, const char *format, char *object, bool hasInvincibility=false);
-	void printObject(int x, int y, const char *format, int object);
-	void printObject(int x, int y, const char *format, double object);
+	void printInfos(char* user, double time, int life, int points, int level=0);
+	void printPlatform(int x, int y, int length, int offset);
+	void printObject(int x, int y, const char *format, char *object, int offset, bool hasInvincibility=false);
+	void printObject(int x, int y, const char *format, int object, int offset);
+	void printObject(int x, int y, const char *format, double object, int offset);
 	void update();
 	int getKeyboardInput();
 	int getWidth();
