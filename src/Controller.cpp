@@ -1,11 +1,12 @@
 #include "Controller.hpp"
+
 Controller::Controller(View *view, Generator *generator) {
 	this->view = view;
 	this->generator = generator;
 	player = new Player (0, view->getGameHeight()-1);
 	h = new HardEnemy(view->getGameWidth()-1, view->getGameHeight()-1);
 	m = new MediumEnemy(10, view->getGameHeight()-5);
-	//e = new EasyEnemy(view->getGameWidth()-3, view->getGameHeight()-3);
+	e = new EasyEnemy(view->getGameWidth()-3, player->getY());
 	time = 0;
 }
 
@@ -32,19 +33,30 @@ void Controller::run() {
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), player->getX(), player->getY()),
 					time
 					);
+
 		h->follow(player->getX(), player->getY(), time,
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
 		h->shoots(time);
 
-		//da rivedere, va fuori la piattaforma
-		m->movement(player->getX(), player->getY(), time, 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), m->getX(), m->getY()));
+		m->shoots(time);
+
+		//da sistemare
+		m->movement(player->getX(), player->getY(), time,
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), m->getX(), m->getY()), 
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), m->getX(), m->getY()),
+					view->getGameWidth(), view->getGameHeight(),
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), m->getX()+1, m->getY()),
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), m->getX()-1, m->getY()));
 		
+		// da rivedere
+		if(e != NULL){
+			e -> rocket(time, view->getGameWidth(), view->getGameHeight(), player->getY());
+		}
 		
 		// CHECK COLLISION
-		//this->checkCollisions(e);
+		this->checkCollisions(e);
 		this->checkCollisions(m);
 		this->checkCollisions(h);
 
@@ -59,7 +71,9 @@ void Controller::run() {
 		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol());
 		this->printShoots(h);
 		view->printObject(m->getX(), m->getY(), (char *)"%s", (char *) m->getSymbol());
-
+		this->printShoots(m);
+		view->printObject(e->getX(), e->getY(), (char *)"%s", (char *) e->getSymbol());
+		
 		// CREATE AND PRINT PLATFORM
 		for (int i = 0; i < generator->getNumberPlatform(); i++) {
 			Platform *platf = generator->getPlatform(i);
@@ -72,10 +86,18 @@ void Controller::run() {
 	view->exitWindow();
 }
 
+// da rivedere per easyenemy e per far sparire i colpi
 void Controller::checkCollisions(Character *c){
+	bool hit = false;
 	// PHYSICAL COLLISION
 	if((player->getX() == c->getX()) && (player->getY() == c->getY())){
 		player->decreaseLife(c->getAttack());
+	}
+	if(c == e){
+		if((player->getX() == c->getX() && player->getY() == c->getY()) || e -> getX() == -1){
+			e = NULL;
+			delete(e);
+		}
 	}
 
 	// SHOOT COLLISION
@@ -84,10 +106,14 @@ void Controller::checkCollisions(Character *c){
 	while(shot != __null){
 		if((player->getX() == shot->x) && (player->getY() == shot->y)){
 			player->decreaseLife(c->getAttack());
+			hit = true;
 		}
 		tmp_shot = shot->next;
 		c->updateShot(shot, view->getGameWidth());
 		shot = tmp_shot;
+	}
+	if(hit){
+		c -> deleteShot(shot);
 	}
 }
 
