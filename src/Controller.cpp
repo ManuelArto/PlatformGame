@@ -100,11 +100,11 @@ void Controller::checkBonusType(Bonus *bonus) {
 		case LIFE:
 			player->increaseLife(bonus->getBonusLife());
 			break;
+		case POINTS:
+			player->increasePoints(bonus->getBonusPoints());
+			break;
 		case MINIGUN:
 			player->setCooldownShoot(bonus->getMinigunCooldown(), time);
-			break;
-		case RALLENTY:
-			// TODO: cambiare cooldown_movement di TUTI i nemici
 			break;
 	}
 }

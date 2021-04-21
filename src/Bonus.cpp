@@ -1,10 +1,11 @@
 #include "Bonus.hpp"
 
-Bonus::Bonus(int x, int y, bonus_type type, int bonus_life, double minigun_cooldown) {
+Bonus::Bonus(int x, int y, bonus_type type, int bonus_life, int bonus_points, double minigun_cooldown) {
     this->x = x;
     this->y = y;
 	this->type = type;
 	this->bonus_life = bonus_life;
+	this->bonus_points = bonus_points;
 	this->minigun_cooldown = minigun_cooldown;
 }
 
@@ -17,11 +18,11 @@ char *Bonus::getSymbol() {
 		case LIFE:
 			symbol = (char *)"L";
 			break;
+		case POINTS:
+			symbol = (char *)"P";
+			break;
 		case MINIGUN:
 			symbol = (char *)"G";
-			break;
-		case RALLENTY:
-			symbol = (char *)"R";
 			break;
 	}
 	return symbol;
@@ -37,6 +38,10 @@ double Bonus::getMinigunCooldown() {
 
 int Bonus::getBonusLife() {
 	return bonus_life;
+}
+
+int Bonus::getBonusPoints() {
+	return bonus_points;
 }
 
 int Bonus::getX() {

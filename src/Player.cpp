@@ -33,6 +33,10 @@ void Player::increaseLife(int bonus_life) {
 	life += bonus_life;
 }
 
+void Player::increasePoints(int bonus_points) {
+	points += bonus_points;
+}
+
 void Player::setCooldownShoot(double minigun_cooldown, double time) {
 	this->cooldown_shoot = minigun_cooldown;
 	minigunActivation_time = time;

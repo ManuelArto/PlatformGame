@@ -54,7 +54,7 @@ void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
 
 void Generator::createBonuses() {
 	// STATIC ONLY FOR NOW
-	Bonus *p1 = new Bonus(1, 7, LIFE);
+	Bonus *p1 = new Bonus(1, 7, POINTS);
 	numberBonuses++;
 
 	bonuses[0] = p1;
