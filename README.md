@@ -25,9 +25,9 @@ PlatformGame 2021
 
 ## TODO
 - Andre:
-	- follow player
-	- sistemo il for delle piattaforme
-	- collisione nemici
+	- Sistemare EasyEnemy(delete quando arriva in fondo)
+  - Sistemare MediumEnemy
+  - Sistemare collisione (sparire proiettile quando ti colpisce)
 - Manu:
 	- bonus test
     - generazione stanze e piattaforme
