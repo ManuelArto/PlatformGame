@@ -13,7 +13,7 @@ void Controller::run() {
 	bool quit = false;
 	view->createWindow();
 	view->askName(player->getName());
-	this->generateRoom();
+	this->initGeneration();
 
 	do {
 		// DATA MANAGEMENT
@@ -28,20 +28,19 @@ void Controller::run() {
 		}
 
 		player->move(input, view->getGameWidth(), view->getGameHeight(), 
-					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), player->getX(), player->getY()), 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), player->getX(), player->getY()),
-					time
-					);
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()), 
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()),
+					time);
 		h->follow(player->getX(), player->getY(), time,
-					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()), 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), h->getX(), h->getY()),
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()), 
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
 		h->shoots(time);
 		
 		// DRAW MAP
 		view->clearWindow();
 		view->drawBorders();
-		view->printInfos(player->getName(), time, player->getLife(), player->getPoints());
+		view->printInfos(player->getName(), time, player->getLife(), player->getPoints(), room);
 
 		// PRINT ENTITIES
 		view->printObject(player->noOffsetX(), player->getY(), (char *)"%s", player->getSymbol(), 0, player->hasInvincibility());
@@ -49,11 +48,11 @@ void Controller::run() {
 		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol(), player->getOffset());
 		this->printShoots(h, player->getOffset());
 		
-		for (int i = 0; i < generator->getNumberPlatform(); i++) {
+		for (int i = 0; i < generator->getNumberPlatforms(); i++) {
 			Platform *platf = generator->getPlatform(i);
 			view->printPlatform(platf->getX(), platf->getY(), platf->getLenght(), player->getOffset());
 		}
-		for (int i = 0; i < generator->getNumberBonus(); i++) {
+		for (int i = 0; i < generator->getNumberBonuses(); i++) {
 			Bonus *bonus = generator->getBonus(i);
 			view->printObject(bonus->getX(), bonus->getY(), "%s", bonus->getSymbol(), player->getOffset());
 		}
@@ -61,6 +60,7 @@ void Controller::run() {
 		// CHECKING
 		player->checkBonusesDuration(time);
 		this->checkCollisions();
+		this->checkRoomsGeneration();
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
@@ -68,9 +68,15 @@ void Controller::run() {
 	view->exitWindow();
 }
 
-void Controller::generateRoom() {
-	generator->createPlatforms();
-	generator->createBonuses();
+void Controller::checkRoomsGeneration() {
+	room = (player->getOffset() / view->getGameWidth()) + 1;
+	if (room > generator->getCurrentRoom()) {
+		generator->deleteRoom(room, LEFT_ROOM);
+		generator->createRoom(room+1, RIGHT_ROOM, view->getGameWidth());
+	} else if (room < generator->getCurrentRoom()) {
+		generator->deleteRoom(room+1, RIGHT_ROOM);
+		generator->createRoom(room, LEFT_ROOM, view->getGameWidth());
+	}
 }
 
 void Controller::checkCollisions() {
@@ -79,7 +85,7 @@ void Controller::checkCollisions() {
 		player->decreaseLife(h->getAttack());
 	}
 	// player - Bonuses
-	for (int i = 0; i < generator->getNumberBonus(); i++) {
+	for (int i = 0; i < generator->getNumberBonuses(); i++) {
 		Bonus *bonus = generator->getBonus(i);
 		if (player->getX() == bonus->getX() && player->getY() == bonus->getY())
 			this->checkBonusType(bonus);	// TODO: remove bonus from game
@@ -112,4 +118,10 @@ void Controller::printShoots(Character *c, int offset) {
 		c->updateShot(shot, view->getGameWidth()+offset);
 		shot = tmp_shot;
 	}
+}
+
+void Controller::initGeneration() {
+	generator->createRoom(room, LEFT_ROOM, view->getGameWidth());
+	generator->createRoom(room+1, RIGHT_ROOM, view->getGameWidth());
+	generator->createBonuses();
 }

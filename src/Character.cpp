@@ -9,7 +9,7 @@ Character::Character(int x, int y, int points, int life, int attack, double cool
 	this->cooldown_shoot = cooldown_shoot;
 	this->symbol = symbol;
 	this->mir_symbol = mir_symbol;
-	isJumping = false;
+	jumping = false;
 	lastjump_time = 0.0;
 	direction = RIGHT;
 	shots = __null;
@@ -20,31 +20,31 @@ void Character::decreaseLife(int damage) {
 }
 
 void Character::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time) {
-	if (isJumping && (time - lastjump_time > FLIGHT_TIME)) {
+	if (jumping && (time - lastjump_time > FLIGHT_TIME)) {
 		y += 1;
-		isJumping = false;
+		jumping = false;
 	}
-	else if (!isJumping && !hasPlatformBelow && y < height-2)
+	else if (!jumping && !hasPlatformBelow && y < height-2)
 		y += 2;
 	else {
 		switch (input) {
 			case KEY_UP:
 				if (y >= 2 && hasPlatformAbove && (hasPlatformBelow || y == height-1))
 					y -= 2;
-				else if (!hasPlatformAbove && !isJumping && (time - lastjump_time > COOLDOWN_JUMP)) {
+				else if (!hasPlatformAbove && !jumping && (time - lastjump_time > COOLDOWN_JUMP)) {
 					y -= 1;
-					isJumping = true;
+					jumping = true;
 					lastjump_time = time;
 				}
 				break;
 			case KEY_LEFT:
-				if (x > 0 && (direction == LEFT || isJumping))
-					x += (isJumping && x > 1) ? -2 : -1;
+				if (x > 0 && (direction == LEFT || jumping))
+					x += (jumping && x > 1) ? -2 : -1;
 				direction = LEFT;
 				break;
 			case KEY_RIGHT:
-				if (direction == RIGHT || isJumping)
-					x += (isJumping && x < width-2) ? 2 : 1;
+				if (direction == RIGHT || jumping)
+					x += (jumping && x < width-2) ? 2 : 1;
 				direction = RIGHT;
 				break;
 			case KEY_DOWN:
@@ -119,6 +119,12 @@ int Character::getPoints() {
 } 
 int Character::getAttack() {
 	return attack;
+}
+Direction Character::getDirection() {
+	return direction;
+}
+bool Character::isJumping() {
+	return jumping;
 }
 char *Character::getSymbol() {
 	return direction == RIGHT ? symbol : mir_symbol;

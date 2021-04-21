@@ -11,7 +11,7 @@ HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cool
 void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformBelow, int width, int height) {
 	int direction = 0;
     if(time - lastmove_time > cooldown_movement) {
-        if (y < player_y)
+        if (y < player_y && !jumping)
 			direction = KEY_DOWN;
         else if ((y == player_y+2 && hasPlatformAbove) || (y == player_y+1 && !hasPlatformAbove)) {
 			direction = KEY_UP;

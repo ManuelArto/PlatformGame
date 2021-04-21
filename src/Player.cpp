@@ -16,8 +16,8 @@ void Player::move(int input, int width, int height, bool hasPlatformAbove, bool 
 	if (x > FIX_X) {
 		offset += x-FIX_X;
 		x = FIX_X;
-	} else if (offset > 0 && input == KEY_LEFT && direction == last_direction) {
-		offset += isJumping ? -2 : -1;
+	} else if (offset > 0 && input == KEY_LEFT && (direction == last_direction || jumping)) {
+		offset += jumping ? -2 : -1;
 		x = FIX_X;
 	}
 }

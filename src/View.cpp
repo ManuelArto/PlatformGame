@@ -32,36 +32,30 @@ void View::drawBorders() {
 	box(stdscr, 0, 0);
 }
 
-void View::printInfos(char* user, double time, int life, int points) {
+void View::printInfos(char* user, double time, int life, int points, int level) {
 	// Infos
 	move(Y_GAME, X_GAME + GAME_WIDTH + 8);
-	printw("PLAYER: ");
-	printw(user);
+	printw("PLAYER: %s", user);
 	move(Y_GAME + 1, X_GAME + GAME_WIDTH + 8);
-	printw("TIME: ");
-	printw((char *)"%.2f", time);
+	printw("TIME: %.2f", time);
 	move(Y_GAME + 2, X_GAME + GAME_WIDTH + 8);
-	printw("LIFE: ");
-	printw((char *)"%d", life);
+	printw("LIFE: %d", life);
 	move(Y_GAME + 3, X_GAME + GAME_WIDTH + 8);
-	printw("POINTS: ");
-	printw((char *)"%d", points);
+	printw("POINTS: %d", points);
 	move(Y_GAME + 4, X_GAME + GAME_WIDTH + 8);
-	printw("LEVEL: ");
-	move(Y_GAME + 5, X_GAME + GAME_WIDTH + 8);
-	printw("ROOM: ");
+	printw("LEVEL: %d", level);
 	// Legenda
 	attron(A_UNDERLINE);
-	move(Y_GAME + 7, X_GAME + GAME_WIDTH + 8);
+	move(Y_GAME + 6, X_GAME + GAME_WIDTH + 8);
 	printw("Legenda:");
 	standend();
-	move(Y_GAME + 8, X_GAME + GAME_WIDTH + 8);
+	move(Y_GAME + 7, X_GAME + GAME_WIDTH + 8);
 	printw("@ = bonus");
-	move(Y_GAME + 9, X_GAME + GAME_WIDTH + 8);
+	move(Y_GAME + 8, X_GAME + GAME_WIDTH + 8);
 	printw("<-- = EasyEnemy");
-	move(Y_GAME + 10, X_GAME + GAME_WIDTH + 8);
+	move(Y_GAME + 9, X_GAME + GAME_WIDTH + 8);
 	printw("M = MediumEnemy");
-	move(Y_GAME + 11, X_GAME + GAME_WIDTH + 8);
+	move(Y_GAME + 10, X_GAME + GAME_WIDTH + 8);
 	printw("H = HardEnemy");
 	// Commands
 	attron(A_UNDERLINE);
