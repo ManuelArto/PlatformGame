@@ -99,7 +99,7 @@ void Controller::checkBonusType(Bonus *bonus) {
 }
 
 void Controller::printShoots(Character *c) {
-	p_shot tmp_shot, shot;
+	p_shot tmp_shot, shot;	
 	shot = c->getShotHead();
 	while(shot != __null) {
 		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---");

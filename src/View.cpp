@@ -69,7 +69,7 @@ void View::printInfos(char* user, double time, int life, int points) {
 	printw("Commands:"); 
 	standend();
 	move(Y_GAME + GAME_HEIGHT + 4, X_GAME + 1);
-	printw("E = shoot || Arrows = move || Q = quit"); 
+	printw("e = shoot || Arrows = move || q = quit"); 
 }
 
 void View::printPlatform(int x, int y, int length) {
