@@ -91,20 +91,24 @@ void Controller::checkCollisions(Character *c){
 	// PHYSICAL COLLISION
 	if((player->getX() == c->getX()) && (player->getY() == c->getY())){
 		player->decreaseLife(c->getAttack());
+		if(c == e || e->getX() == 0){
+			delete(e);
+			e = __null;
+		}
 	}
 
 	// sparo contro giocatore
 	p_shot tmp_shot, shot;
 	shot = c->getShotHead();
-	while(shot != __null && !hit){
-		if((player->getX() == shot->x) && (player->getY() == shot->y)){
+	while (shot != __null && !hit) {
+		if ((player->getX() == shot->x) && (player->getY() == shot->y)) {
 			player->decreaseLife(c->getAttack());
 			c -> deleteShot(shot);
 			hit = true;
+		} else {
+			tmp_shot = shot->next;
+			shot = tmp_shot;
 		}
-		tmp_shot = shot->next;
-		c->updateShot(shot, view->getGameWidth());
-		shot = tmp_shot;
 	}
 	
 	// sparo contro nemici
@@ -112,21 +116,22 @@ void Controller::checkCollisions(Character *c){
 	while(shot2 != __null){
 		if(c->getX() == shot2->x && c->getY() == shot2->y){
 			c->decreaseLife(player->getAttack());
+			player->deleteShot(shot2);
+		}else{
+			tmp_shot = shot2->next;
+			shot2 = tmp_shot;
 		}
-		tmp_shot = shot2->next;
-		player->updateShot(shot2, view->getGameWidth());
-		shot2 = tmp_shot;
-	}
-
-	//collisione con il muro
-	if(c == e && e->getX() == 0){
-		delete(e);
-		e = __null;
+		
 	}
 
 	if(c->getLife() == 0){
 		delete(c);
 		c = __null;
+	}
+
+	if(e != __null && e->getX() == 0){
+		delete(e);
+		e = __null;
 	}
 }
 
