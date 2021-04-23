@@ -8,19 +8,11 @@ MediumEnemy::MediumEnemy(int x, int y, int points, int life, int attack, double 
 
 void MediumEnemy::movement(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformBelow, int width, int height, bool hasPlatformRight, bool hasPlatformLeft){
 	int direction = 0;
-	if(time - lastmove_time > cooldown_movement){
-		if((hasPlatformRight && hasPlatformLeft)){
-			if(x < player_x){
-				direction = KEY_RIGHT;
-			}else if(x > player_x){
-				direction = KEY_LEFT;
-			}
-		}else{
-			if(direction == KEY_RIGHT){
-				direction = KEY_LEFT;
-			}else{
-				direction = KEY_RIGHT;
-			}
+	if(time - lastmove_time > cooldown_movement) {
+		if(x < player_x && hasPlatformRight) {
+			direction = KEY_RIGHT;
+		}else if(x > player_x && hasPlatformLeft) {
+			direction = KEY_LEFT;
 		}
 		lastmove_time = time;
 	}

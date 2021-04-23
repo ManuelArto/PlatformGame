@@ -6,8 +6,8 @@ Controller::Controller(View *view, Generator *generator) {
 	player = new Player (0, view->getGameHeight()-1);
 	h = new HardEnemy(view->getGameWidth()-1, view->getGameHeight()-1);
 	m = new MediumEnemy(10, view->getGameHeight()-5);
-	e = new EasyEnemy(view->getGameWidth()-3, player->getY());
 	time = 0;
+	e = __null;
 }
 
 void Controller::run() {
@@ -17,6 +17,10 @@ void Controller::run() {
 	generator->createPlatforms();
 
 	do {
+		if(e == __null){
+			e = new EasyEnemy(view->getGameWidth()-3, player->getY());
+		}
+
 		// INPUT
 		int input = view->getKeyboardInput();
 		switch (input) {
@@ -42,7 +46,6 @@ void Controller::run() {
 
 		m->shoots(time);
 
-		//da sistemare
 		m->movement(player->getX(), player->getY(), time,
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), m->getX(), m->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), m->getX(), m->getY()),
@@ -50,15 +53,7 @@ void Controller::run() {
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), m->getX()+1, m->getY()),
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), m->getX()-1, m->getY()));
 		
-		// da rivedere
-		if(e != NULL){
-			e -> rocket(time, view->getGameWidth(), view->getGameHeight(), player->getY());
-		}
-		
-		// CHECK COLLISION
-		this->checkCollisions(e);
-		this->checkCollisions(m);
-		this->checkCollisions(h);
+		e -> rocket(time, view->getGameWidth()-3, view->getGameHeight(), player->getY());
 
 		// DRAW MAP
 		view->clearWindow();
@@ -80,38 +75,58 @@ void Controller::run() {
 			view->printPlatform(platf->getX(), platf->getY(), platf->getLenght());
 		}
 
+		// CHECK COLLISION
+		this->checkCollisions(e);
+		this->checkCollisions(m);
+		this->checkCollisions(h);
+
 		view->update();
 		time += (double)view->getDelay() / 1000;
 	} while (!quit);
 	view->exitWindow();
 }
 
-// da rivedere per easyenemy e per far sparire i colpi
 void Controller::checkCollisions(Character *c){
 	bool hit = false;
 	// PHYSICAL COLLISION
 	if((player->getX() == c->getX()) && (player->getY() == c->getY())){
 		player->decreaseLife(c->getAttack());
-		
-		//collisione con il muro
-		/*if(c == e && e->getX() == 0){
-			e = NULL;
-			delete(e);
-		}*/
 	}
 
-	// SHOOT COLLISION
+	// sparo contro giocatore
 	p_shot tmp_shot, shot;
 	shot = c->getShotHead();
 	while(shot != __null && !hit){
 		if((player->getX() == shot->x) && (player->getY() == shot->y)){
 			player->decreaseLife(c->getAttack());
-			//c -> deleteShot(shot);
+			c -> deleteShot(shot);
 			hit = true;
 		}
 		tmp_shot = shot->next;
 		c->updateShot(shot, view->getGameWidth());
 		shot = tmp_shot;
+	}
+	
+	// sparo contro nemici
+	p_shot shot2 = player->getShotHead();
+	while(shot2 != __null){
+		if(c->getX() == shot2->x && c->getY() == shot2->y){
+			c->decreaseLife(player->getAttack());
+		}
+		tmp_shot = shot2->next;
+		player->updateShot(shot2, view->getGameWidth());
+		shot2 = tmp_shot;
+	}
+
+	//collisione con il muro
+	if(c == e && e->getX() == 0){
+		delete(e);
+		e = __null;
+	}
+
+	if(c->getLife() == 0){
+		delete(c);
+		c = __null;
 	}
 }
 
