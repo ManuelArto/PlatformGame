@@ -92,9 +92,7 @@ void Controller::checkCollisions(Character *c){
 	// PHYSICAL COLLISION
 	if((player->getX() == c->getX()) && (player->getY() == c->getY())){
 		player->decreaseLife(c->getAttack());
-	}
-	if(c == e){
-		if((player->getX() == c->getX() && player->getY() == c->getY()) || e -> getX() == -1){
+		if(c == e){
 			e = NULL;
 			delete(e);
 		}
@@ -103,17 +101,15 @@ void Controller::checkCollisions(Character *c){
 	// SHOOT COLLISION
 	p_shot tmp_shot, shot;
 	shot = c->getShotHead();
-	while(shot != __null){
+	while(shot != __null && !hit){
 		if((player->getX() == shot->x) && (player->getY() == shot->y)){
 			player->decreaseLife(c->getAttack());
+			c -> deleteShot(shot);
 			hit = true;
 		}
 		tmp_shot = shot->next;
 		c->updateShot(shot, view->getGameWidth());
 		shot = tmp_shot;
-	}
-	if(hit){
-		c -> deleteShot(shot);
 	}
 }
 
