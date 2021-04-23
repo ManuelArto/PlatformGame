@@ -24,10 +24,14 @@ PlatformGame 2021
   - Invulnerabilità: immune
 
 ## TODO
-- Andre:
-	- Sistemare EasyEnemy(delete quando arriva in fondo)
-  - Sistemare MediumEnemy
-  - Sistemare collisione (sparire proiettile quando ti colpisce)
-- Manu:
-	- bonus test
-    - generazione stanze e piattaforme
+- Timer per i bonus
+- sistemare la grafica
+- game over
+- platform generation
+- regole del gioco
+- spawning bonus e nemici
+
+## REGOLE DEL GIOCO
+- Vita del giocatore: 100
+- Vita EasyEnemy: 10
+- Vita MediumEnemy: 50
