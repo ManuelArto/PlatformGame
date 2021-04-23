@@ -47,8 +47,8 @@ void Controller::run() {
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), m->getX(), m->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), m->getX(), m->getY()),
 					view->getGameWidth(), view->getGameHeight(),
-					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), m->getX()+1, m->getY()),
-					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatform(), m->getX()-1, m->getY()));
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), m->getX()+1, m->getY()),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatform(), m->getX()-1, m->getY()));
 		
 		// da rivedere
 		if(e != NULL){
@@ -92,10 +92,12 @@ void Controller::checkCollisions(Character *c){
 	// PHYSICAL COLLISION
 	if((player->getX() == c->getX()) && (player->getY() == c->getY())){
 		player->decreaseLife(c->getAttack());
-		if(c == e){
+		
+		//collisione con il muro
+		/*if(c == e && e->getX() == 0){
 			e = NULL;
 			delete(e);
-		}
+		}*/
 	}
 
 	// SHOOT COLLISION
@@ -104,7 +106,7 @@ void Controller::checkCollisions(Character *c){
 	while(shot != __null && !hit){
 		if((player->getX() == shot->x) && (player->getY() == shot->y)){
 			player->decreaseLife(c->getAttack());
-			c -> deleteShot(shot);
+			//c -> deleteShot(shot);
 			hit = true;
 		}
 		tmp_shot = shot->next;
