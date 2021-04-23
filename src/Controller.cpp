@@ -91,11 +91,11 @@ void Controller::checkCollisions(Character *c){
 	// PHYSICAL COLLISION
 	if((player->getX() == c->getX()) && (player->getY() == c->getY())){
 		player->decreaseLife(c->getAttack());
-		if(c == e && e->getX() == 0){
+		if(c == e){
 			delete(e);
 			e = __null;
 		}
-	}
+	}	
 
 	// sparo contro giocatore
 	p_shot tmp_shot, shot;

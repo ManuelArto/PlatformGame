@@ -30,6 +30,7 @@ PlatformGame 2021
 - platform generation
 - regole del gioco
 - spawning bonus e nemici
+- tempo per collisione fisica dei nemici
 
 ## REGOLE DEL GIOCO
 - Vita del giocatore: 100
