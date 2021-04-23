@@ -33,6 +33,21 @@ PlatformGame 2021
 - tempo per collisione fisica dei nemici
 
 ## REGOLE DEL GIOCO
-- Vita del giocatore: 100
-- Vita EasyEnemy: 10
-- Vita MediumEnemy: 50
+Giocatore:
+- Vita: 200
+- Attacco: 20
+
+Nemici:
+- Vita EasyEnemy: 20
+- Vita MediumEnemy: 40
+- Vita HardEnemy: 60
+- Attacco EasyEnemy: 10
+- Attacco MediumEnemy: 20
+- Attacco HardEnemy: 30
+
+4 Bonus: 
+- Punti: +50
+- Vita: +50
+- Minigun: 10 secondi 
+- Invincibilità: 10 secondi
+
