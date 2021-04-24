@@ -111,7 +111,7 @@ void Controller::checkCollisions(Character *c){
 		}
 	}
 
-	// sparo contro nemici
+	// sparo contro nemici da sistemare, si ferma il programma
 	p_shot shot2 = player->getShotHead();
 	while(shot2 != __null){
 		if(c->getX() == shot2->x && c->getY() == shot2->y){
