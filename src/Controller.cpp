@@ -3,7 +3,7 @@
 Controller::Controller(View *view, Generator *generator) {
 	this->view = view;
 	this->generator = generator;
-	time = 0;
+	time = 0.0;
 	room = 1;
 	player = new Player (0, view->getGameHeight()-1);
 	h = new HardEnemy(view->getGameWidth()-1, view->getGameHeight()-1);
@@ -58,9 +58,9 @@ void Controller::run() {
 		}
 
 		// CHECKING
-		player->checkBonusesDuration(time);
-		this->checkCollisions();
+		player->checkBonusesTimer(time);
 		this->checkRoomsGeneration();
+		this->checkCollisions();
 
 		view->update();
 		time += (double)view->getDelay() / 1000;

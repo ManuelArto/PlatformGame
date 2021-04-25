@@ -5,27 +5,24 @@ Player::Player(int x, int y, int points, int life, int attack, double cooldown_s
 	name = new char[MAX_NAME_LENGTH];
 	offset = 0;
 	isInvincible = false;
-	invincibility_duration = 5.0;
-	minigun_duration = 5.0;
+	invincibility_timer = 5.0;
+	minigun_timer = 5.0;
 	default_cooldown_shoot = cooldown_shoot;
 }
 
 void Player::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time) {
 	Direction last_direction = direction;
 	Character::move(input, width, height, hasPlatformAbove, hasPlatformBelow, time);
-	if (x > FIX_X) {
-		offset += x-FIX_X;
-		x = FIX_X;
-	} else if (offset > 0 && input == KEY_LEFT && (direction == last_direction || jumping)) {
-		offset += jumping ? -2 : -1;
-		x = FIX_X;
+	if ((offset > 0 && x < FIXED_X) || x > FIXED_X) {
+		offset += x-FIXED_X;
+		x = FIXED_X;
 	}
 }
 
-void Player::checkBonusesDuration(double time) {
-	if (time - invincibilityActivation_time > invincibility_duration)
+void Player::checkBonusesTimer(double time) {
+	if (time - invincibilityActivation_time > invincibility_timer)
 		isInvincible = false;
-	if (time - minigunActivation_time > minigun_duration)
+	if (time - minigunActivation_time > minigun_timer)
 		cooldown_shoot = default_cooldown_shoot;
 }
 

@@ -15,11 +15,11 @@ private:
 	EasyEnemy *e;
 	MediumEnemy *m;
 	HardEnemy *h;
+	void initGeneration();
 	void checkRoomsGeneration();
 	void checkCollisions();
 	void checkBonusType(Bonus *bonus);
 	void printShoots(Character *c, int offset);
-	void initGeneration();
 public:
 	Controller(View *view, Generator *generator);
 	void run();

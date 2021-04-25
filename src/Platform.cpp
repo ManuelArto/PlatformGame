@@ -16,26 +16,30 @@ int Platform::getLenght() {
 	return lenght;
 }
 
-bool Platform::checkPlatformAbove(Platform *platforms[], int numberPlatform, int character_x, int player_y) {
+bool Platform::checkPlatformAbove(Platform *platforms[], int numberPlatform, int character_x, int character_y) {
     bool flag = false;
-	for (int i = 0; i < numberPlatform && !flag; i++) {
+	int i = 0;
+	while (i < numberPlatform && !flag) {
 		Platform *p = platforms[i];
-		if (player_y == p->y+1) {
+		if (character_y == p->y+1) {
 			if (character_x >= p->x && character_x < p->x+p->lenght)
 				flag = true;
 		}
+		i++;
 	}
 	return flag;
 }
 
 bool Platform::checkPlatformBelow(Platform *platforms[], int numberPlatform, int character_x, int character_y) {
-    bool flag = false;
-	for (int i = 0; i < numberPlatform && !flag; i++) {
+	bool flag = false;
+	int i = 0;
+	while (i < numberPlatform && !flag) {
 		Platform *p = platforms[i];
 		if (character_y == p->y-1) {
 			if (character_x >= p->x && character_x < p->x+p->lenght)
 				flag = true;
 		}
+		i++;
 	}
 	return flag;
 }

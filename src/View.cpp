@@ -11,7 +11,6 @@ void View::askName(char *name) {
 
 void View::createWindow() {
     setlocale(LC_CTYPE, "");
-	// TODO: check implementation details
 	initscr();
 	cbreak();
 	curs_set(FALSE);
@@ -24,7 +23,7 @@ void View::createWindow() {
     // attron(A_BOLD);
     // color_set(1, NULL);
 
-	gamewin = newwin(GAME_HEIGHT+2, GAME_WIDTH+2, Y_GAME, X_GAME);
+	gamewin = newwin(GAME_HEIGHT+2, GAME_WIDTH+2, START_Y_GAME, START_X_GAME);
 }
 
 void View::drawBorders() {
@@ -34,35 +33,35 @@ void View::drawBorders() {
 
 void View::printInfos(char* user, double time, int life, int points, int level) {
 	// Infos
-	move(Y_GAME, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME, START_X_GAME + GAME_WIDTH + 8);
 	printw("PLAYER: %s", user);
-	move(Y_GAME + 1, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + 1, START_X_GAME + GAME_WIDTH + 8);
 	printw("TIME: %.2f", time);
-	move(Y_GAME + 2, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + 2, START_X_GAME + GAME_WIDTH + 8);
 	printw("LIFE: %d", life);
-	move(Y_GAME + 3, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + 3, START_X_GAME + GAME_WIDTH + 8);
 	printw("POINTS: %d", points);
-	move(Y_GAME + 4, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + 4, START_X_GAME + GAME_WIDTH + 8);
 	printw("LEVEL: %d", level);
 	// Legenda
 	attron(A_UNDERLINE);
-	move(Y_GAME + 6, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + 6, START_X_GAME + GAME_WIDTH + 8);
 	printw("Legenda:");
 	standend();
-	move(Y_GAME + 7, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + 7, START_X_GAME + GAME_WIDTH + 8);
 	printw("@ = bonus");
-	move(Y_GAME + 8, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + 8, START_X_GAME + GAME_WIDTH + 8);
 	printw("<-- = EasyEnemy");
-	move(Y_GAME + 9, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + 9, START_X_GAME + GAME_WIDTH + 8);
 	printw("M = MediumEnemy");
-	move(Y_GAME + 10, X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + 10, START_X_GAME + GAME_WIDTH + 8);
 	printw("H = HardEnemy");
 	// Commands
 	attron(A_UNDERLINE);
-	move(Y_GAME + GAME_HEIGHT + 3, X_GAME + 1);
+	move(START_Y_GAME + GAME_HEIGHT + 3, START_X_GAME + 1);
 	printw("Commands:"); 
 	standend();
-	move(Y_GAME + GAME_HEIGHT + 4, X_GAME + 1);
+	move(START_Y_GAME + GAME_HEIGHT + 4, START_X_GAME + 1);
 	printw("e = shoot || Arrows = move || q = quit"); 
 }
 

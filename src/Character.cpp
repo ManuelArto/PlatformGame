@@ -23,8 +23,8 @@ void Character::move(int input, int width, int height, bool hasPlatformAbove, bo
 	if (jumping && (time - lastjump_time > FLIGHT_TIME)) {
 		y += 1;
 		jumping = false;
-	}
-	else if (!jumping && !hasPlatformBelow && y < height-2)
+	} else if (!jumping && !hasPlatformBelow && y < height-2)
+		// FALLING
 		y += 2;
 	else {
 		switch (input) {
