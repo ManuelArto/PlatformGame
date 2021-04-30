@@ -46,11 +46,11 @@ void View::printInfos(char* user, double time, int life, int points, int level, 
 	printw("POINTS: \t%d", points);
 	if (invincibility_timer > 0.0) {
 		move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-		printw("I: \t%.2fs", invincibility_timer);
+		printw("I: %.2fs", invincibility_timer);
 	}
 	if (minigun_timer > 0.0) {
 		move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-		printw("G: \t%.2fs", minigun_timer);
+		printw("G: %.2fs", minigun_timer);
 	}
 	y_offset = 6;
 	// Legenda
