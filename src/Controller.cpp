@@ -89,13 +89,16 @@ void Controller::run() {
 void Controller::checkCollisions(Character *c){
 	bool hit = false;
 	// PHYSICAL COLLISION
-	if((player->getX() == c->getX()) && (player->getY() == c->getY())){
-		player->decreaseLife(c->getAttack());
-		if(c == e){
-			delete(e);
-			e = __null;
+	if (time - lastphysicdamage_time > PHYSIC_DAMAGE_COOLDOWN) {
+		if((player->getX() == c->getX()) && (player->getY() == c->getY())){
+			player->decreaseLife(c->getAttack());
+			if(c == e){
+				delete(e);
+				e = __null;
+			}
+			lastphysicdamage_time = time;
 		}
-	}	
+	}
 
 	// sparo contro giocatore
 	p_shot tmp_shot, shot;
@@ -113,7 +116,7 @@ void Controller::checkCollisions(Character *c){
 
 	// sparo contro nemici da sistemare, si ferma il programma
 	p_shot shot2 = player->getShotHead();
-	while(shot2 != __null){
+	while(shot2 != nullptr){
 		if(c->getX() == shot2->x && c->getY() == shot2->y){
 			c->decreaseLife(player->getAttack());
 			player->deleteShot(shot2);

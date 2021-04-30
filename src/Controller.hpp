@@ -10,7 +10,8 @@ private:
 	View *view;
 	Player *player;
 	Generator *generator;
-	double time;
+	double time, lastphysicdamage_time;
+	const double PHYSIC_DAMAGE_COOLDOWN = 2.0;
 	EasyEnemy *e;
 	MediumEnemy *m;
 	HardEnemy *h;
