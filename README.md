@@ -24,13 +24,8 @@ PlatformGame 2021
   - Invulnerabilità: immune
 
 ## TODO
-- Timer per i bonus
-- sistemare la grafica
-- game over
-- platform generation
-- regole del gioco
+- fare i template
 - spawning bonus e nemici
-- tempo per collisione fisica dei nemici
 
 ## REGOLE DEL GIOCO
 Giocatore:
