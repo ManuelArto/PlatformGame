@@ -24,8 +24,10 @@ PlatformGame 2021
   - Invulnerabilità: immune
 
 ## TODO
+- sistemare problema collision e fare merge
 - fare i template
 - spawning bonus e nemici
+- gestione livello difficoltà
 
 ## REGOLE DEL GIOCO
 Giocatore:
