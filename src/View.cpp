@@ -31,31 +31,44 @@ void View::drawBorders() {
 	box(stdscr, 0, 0);
 }
 
-void View::printInfos(char* user, double time, int life, int points, int level) {
-	// Infos
-	move(START_Y_GAME, START_X_GAME + GAME_WIDTH + 8);
-	printw("PLAYER: %s", user);
-	move(START_Y_GAME + 1, START_X_GAME + GAME_WIDTH + 8);
-	printw("TIME: %.2f", time);
-	move(START_Y_GAME + 2, START_X_GAME + GAME_WIDTH + 8);
-	printw("LIFE: %d", life);
-	move(START_Y_GAME + 3, START_X_GAME + GAME_WIDTH + 8);
-	printw("POINTS: %d", points);
-	move(START_Y_GAME + 4, START_X_GAME + GAME_WIDTH + 8);
-	printw("LEVEL: %d", level);
+void View::printInfos(char* user, double time, int life, int points, int level, double invincibility_timer, double minigun_timer) {
+	int y_offset = -1;
+	// Game Infos
+	move(START_Y_GAME + y_offset++, START_X_GAME + 1);
+	printw("LEVEL: %d\t\t", level);
+	printw("TIME: %.2fs", time);
+	// Player Infos
+	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
+	printw("PLAYER: \t%s", user);
+	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
+	printw("LIFE: \t%d", life);
+	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
+	printw("POINTS: \t%d", points);
+	if (invincibility_timer > 0.0) {
+		move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
+		printw("I: \t%.2fs", invincibility_timer);
+	}
+	if (minigun_timer > 0.0) {
+		move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
+		printw("G: \t%.2fs", minigun_timer);
+	}
+	y_offset = 6;
 	// Legenda
 	attron(A_UNDERLINE);
-	move(START_Y_GAME + 6, START_X_GAME + GAME_WIDTH + 8);
+	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
 	printw("Legenda:");
 	standend();
-	move(START_Y_GAME + 7, START_X_GAME + GAME_WIDTH + 8);
-	printw("@ = bonus");
-	move(START_Y_GAME + 8, START_X_GAME + GAME_WIDTH + 8);
-	printw("<-- = EasyEnemy");
-	move(START_Y_GAME + 9, START_X_GAME + GAME_WIDTH + 8);
-	printw("M = MediumEnemy");
-	move(START_Y_GAME + 10, START_X_GAME + GAME_WIDTH + 8);
-	printw("H = HardEnemy");
+	printw("\t\t\tG = Minigun");
+	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
+	printw("<-- = EasyEnemy\t\t");
+	printw("I = Invincibility");
+	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
+	printw("M = MediumEnemy\t\t");
+	printw("L = Life");
+	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
+	printw("H = HardEnemy\t\t");
+	printw("P = Points");
+
 	// Commands
 	attron(A_UNDERLINE);
 	move(START_Y_GAME + GAME_HEIGHT + 3, START_X_GAME + 1);
@@ -100,6 +113,21 @@ void View::update() {
 	wnoutrefresh(stdscr);
 	wnoutrefresh(gamewin);
 	doupdate();
+}
+
+void View::printGameOver() {
+	move(START_Y_GAME, START_X_GAME);
+	printw("\
+                   *              )               (     \n \
+ (        (      (  `          ( /(               )\\ )  \n \
+ )\\ )     )\\     )\\))(   (     )\\()) (   (   (   (()/(  \n \
+(()/(  ((((_)(  ((_)()\\  )\\   ((_)\\  )\\  )\\  )\\   /(_)) \n \
+ /(_))_ )\\ _ )\\ (_()((_)((_)    ((_)((_)((_)((_) (_))   \n \
+(_)) __|(_)_\\(_)|  \\/  || __|  / _ \\\\ \\ / / | __|| _ \\  \n \
+  | (_ | / _ \\  | |\\/| || _|  | (_) |\\ V /  | _| |   /  \n \
+   \\___|/_/ \\_\\ |_|  |_||___|  \\___/  \\_/   |___||_|_\\  \n ");
+	timeout(4000);
+	getch();
 }
 
 void View::clearWindow() {

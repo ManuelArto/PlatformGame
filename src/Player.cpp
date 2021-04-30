@@ -44,6 +44,18 @@ void Player::setInvincibility(double time) {
 	invincibilityActivation_time = time;
 }
 
+double Player::getInvincibilityTimer(double time) {
+	if (isInvincible)
+		return invincibility_timer - (time - invincibilityActivation_time);
+	else
+		return 0.0;
+}
+double Player::getMinigunTimer(double time) {
+	if (cooldown_shoot != default_cooldown_shoot)
+		return minigun_timer - (time - minigunActivation_time);
+	else
+		return 0.0;
+}
 bool Player::hasInvincibility() {
 	return isInvincible;
 }

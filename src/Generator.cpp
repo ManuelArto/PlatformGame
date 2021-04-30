@@ -54,10 +54,13 @@ void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
 
 void Generator::createBonuses() {
 	// STATIC ONLY FOR NOW
-	Bonus *p1 = new Bonus(1, 7, POINTS);
+	Bonus *p1 = new Bonus(1, 7, MINIGUN);
+	numberBonuses++;
+	Bonus *p2 = new Bonus(5, 7, INVINCIBILITY);
 	numberBonuses++;
 
 	bonuses[0] = p1;
+	bonuses[1] = p2;
 }
 
 int Generator::getNumberPlatforms() {

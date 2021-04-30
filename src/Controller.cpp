@@ -40,7 +40,7 @@ void Controller::run() {
 		// DRAW MAP
 		view->clearWindow();
 		view->drawBorders();
-		view->printInfos(player->getName(), time, player->getLife(), player->getPoints(), room);
+		view->printInfos(player->getName(), time, player->getLife(), player->getPoints(), room, player->getInvincibilityTimer(time), player->getMinigunTimer(time));
 
 		// PRINT ENTITIES
 		view->printObject(player->noOffsetX(), player->getY(), (char *)"%s", player->getSymbol(), 0, player->hasInvincibility());
@@ -64,7 +64,10 @@ void Controller::run() {
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
-	} while (!quit);
+	} while (!quit && player->getLife() > 0);
+
+	view->clearWindow();
+	view->printGameOver();
 	view->exitWindow();
 }
 
