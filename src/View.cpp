@@ -1,5 +1,7 @@
 #include "View.hpp"
 
+#define INVINCIBILITY 1
+
 void View::askName(char *name) {
 	WINDOW *win = newwin(1, 27, 0, 0);
 	mvwprintw(win, 0, 0, "Inserisci nome: ");
@@ -19,9 +21,7 @@ void View::createWindow() {
 	getmaxyx(stdscr, height, width);
 	
 	start_color();
-	// init_pair(1, COLOR_RED, COLOR_BLACK);
-    // attron(A_BOLD);
-    // color_set(1, NULL);
+	init_pair(INVINCIBILITY, COLOR_YELLOW, COLOR_BLACK);
 
 	gamewin = newwin(GAME_HEIGHT+2, GAME_WIDTH+2, START_Y_GAME, START_X_GAME);
 }
@@ -68,7 +68,6 @@ void View::printInfos(char* user, double time, int life, int points, int level, 
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
 	printw("H = HardEnemy\t\t");
 	printw("P = Points");
-
 	// Commands
 	attron(A_UNDERLINE);
 	move(START_Y_GAME + GAME_HEIGHT + 3, START_X_GAME + 1);
@@ -87,7 +86,7 @@ void View::printPlatform(int x, int y, int length, int offset) {
 void View::printObject(int x, int y, const char* format, char *object, int offset, bool hasInvincibility) {
 	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
 		if (hasInvincibility) {
-			wattron(gamewin, A_UNDERLINE);	// TODO: change color
+			wattron(gamewin, COLOR_PAIR(INVINCIBILITY));
 		}
 		wmove(gamewin, y+1, x+1-offset);
 		wprintw(gamewin, format, object);
