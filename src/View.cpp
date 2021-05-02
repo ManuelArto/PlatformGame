@@ -1,9 +1,5 @@
 #include "View.hpp"
 
-#define INVINCIBILITY_COLOR 1
-#define GAME_INFO_COLOR 2
-#define PLAYER_INFO_COLOR 3
-
 void View::createWindow() {
     setlocale(LC_CTYPE, "");
 	
@@ -45,43 +41,29 @@ void View::drawBorders() {
 void View::printInfos(char* username, double time, int life, int points, int level, double invincibility_timer, double minigun_timer) {
 	int y_offset = -1;
 	// Game Infos
-	attron(COLOR_PAIR(GAME_INFO_COLOR));
 	move(START_Y_GAME + y_offset++, START_X_GAME + 1);
-	printw("LEVEL: ");
-	standend();
+	this->printWithColor((char *)"LEVEL: ", GAME_INFO_COLOR);
 	printw("%d\t\t", level);
-	attron(COLOR_PAIR(GAME_INFO_COLOR));
-	printw("TIME: ");
-	standend();
+	this->printWithColor((char *)"TIME: ", GAME_INFO_COLOR);
 	printw("%.2fs", time);
 	// Player Infos
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-	attron(COLOR_PAIR(PLAYER_INFO_COLOR));
-	printw("PLAYER: ");
-	standend();
+	this->printWithColor((char *)"PLAYER: ", PLAYER_INFO_COLOR);
 	printw("\t%s", username);
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-	attron(COLOR_PAIR(PLAYER_INFO_COLOR));
-	printw("LIFE: ");
-	standend();
+	this->printWithColor((char *)"LIFE: ", PLAYER_INFO_COLOR);
 	printw("\t%d", life);
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-	attron(COLOR_PAIR(PLAYER_INFO_COLOR));
-	printw("POINTS: ");
-	standend();
+	this->printWithColor((char *)"POINTS: ", PLAYER_INFO_COLOR);
 	printw("\t%d", points);
 	if (invincibility_timer > 0.0) {
 		move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-		attron(COLOR_PAIR(PLAYER_INFO_COLOR));
-		printw("I: ");
-		standend();
+		this->printWithColor((char *)"I: ", PLAYER_INFO_COLOR);
 		printw("%.2fs", invincibility_timer);
 	}
 	if (minigun_timer > 0.0) {
 		move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-		attron(COLOR_PAIR(PLAYER_INFO_COLOR));
-		printw("G: ");
-		standend();
+		this->printWithColor((char *)"G: ", PLAYER_INFO_COLOR);
 		printw("%.2fs", minigun_timer);
 	}
 	y_offset = 6;
@@ -109,34 +91,40 @@ void View::printInfos(char* username, double time, int life, int points, int lev
 	printw("e = shoot || Arrows = move || q = quit"); 
 }
 
+void View::printWithColor(char *label, int color_pair) {
+	attron(COLOR_PAIR(color_pair));
+	printw(label);
+	attroff(COLOR_PAIR(color_pair));
+}
+
 void View::printPlatform(int x, int y, int length, int offset) {
 	for(int i = 0; i < length; i++) {
 		printObject(x+i, y, "%s", (char *)"=", offset);
 	}
 }
 
-void View::printObject(int x, int y, const char* format, char *object, int offset, bool hasInvincibility) {
+void View::printObject(int x, int y, const char* format, char *label, int offset, bool hasInvincibility) {
 	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
 		if (hasInvincibility) {
 			wattron(gamewin, COLOR_PAIR(INVINCIBILITY_COLOR));
 		}
 		wmove(gamewin, y+1, x+1-offset);
-		wprintw(gamewin, format, object);
+		wprintw(gamewin, format, label);
 		wstandend(gamewin);
 	}
 }
 
-void View::printObject(int x, int y, const char* format, int object, int offset) {
+void View::printObject(int x, int y, const char* format, int label, int offset) {
 	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
 		wmove(gamewin, y+1, x+1-offset);
-		wprintw(gamewin, format, object);
+		wprintw(gamewin, format, label);
 	}
 }
 
-void View::printObject(int x, int y, const char* format, double object, int offset) {
+void View::printObject(int x, int y, const char* format, double label, int offset) {
 	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
 		wmove(gamewin, y+1, x+1-offset);
-		wprintw(gamewin, format, object);
+		wprintw(gamewin, format, label);
 	}
 }
 
