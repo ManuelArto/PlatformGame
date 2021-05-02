@@ -3,7 +3,7 @@
 class Player: public Character {
 private:
 	const int MAX_NAME_LENGTH = 10, FIXED_X = 15;
-	unsigned int offset;
+	int offset;
 	double default_cooldown_shoot;
 	double invincibility_timer, invincibilityActivation_time, minigun_timer, minigunActivation_time;
 	bool isInvincible;

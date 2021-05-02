@@ -11,12 +11,13 @@ Player::Player(int x, int y, int points, int life, int attack, double cooldown_s
 }
 
 void Player::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time) {
-	Direction last_direction = direction;
 	Character::move(input, width, height, hasPlatformAbove, hasPlatformBelow, time);
 	if ((offset > 0 && x < FIXED_X) || x > FIXED_X) {
 		offset += x-FIXED_X;
 		x = FIXED_X;
 	}
+	if (offset < 0)
+		offset = 0;
 }
 
 void Player::checkBonusesTimer(double time) {
