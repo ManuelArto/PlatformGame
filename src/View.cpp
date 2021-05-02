@@ -136,30 +136,30 @@ void View::update() {
 
 void View::printLoadingGame() {
 	box(stdscr, 0, 0);
-	int y_offset = 0, x_offset = (width / 2) - 32;
-	mvprintw(START_Y_GAME + y_offset++, x_offset, " (       )       (    (       )                          *         ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, " )\\ ) ( /(  (    )\\ ) )\\ ) ( /( (        (       (     (  `        ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "(()/( )\\()) )\\  (()/((()/( )\\()))\\ )     )\\ )    )\\    )\\))(  (    ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, " /(_)|(_)((((_)( /(_))/(_)|(_)\\(()/(    (()/( ((((_)( ((_)()\\ )\\   ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "(_))   ((_)\\ _ )(_))_(_))  _((_)/(_))_   /(_))_)\\ _ )\\(_()((_|(_)  ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "| |   / _ (_)_\\(_)   \\_ _|| \\| (_)) __| (_)) __(_)_\\(_)  \\/  | __| ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "| |__| (_) / _ \\ | |) | | | .` | | (_ |   | (_ |/ _ \\ | |\\/| | _|  ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "|____|\\___/_/ \\_\\|___/___||_|\\_|  \\___|    \\___/_/ \\_\\|_|  |_|___| ");
+	int y_offset = 0, x_offset = (width / 2) - 33;
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(  (       )       (    (       )                          *         )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(  )\ ) ( /(  (    )\ ) )\ ) ( /( (        (       (     (  `        )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( (()/( )\()) )\  (()/((()/( )\()))\ )     )\ )    )\    )\))(  (    )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(  /(_)|(_)((((_)( /(_))/(_)|(_)\(()/(    (()/( ((((_)( ((_)()\ )\   )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( (_))   ((_)\ _ )(_))_(_))  _((_)/(_))_   /(_))_)\ _ )\(_()((_|(_)  )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( | |   / _ (_)_\(_)   \_ _|| \| (_)) __| (_)) __(_)_\(_)  \/  | __| )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( | |__| (_) / _ \ | |) | | | .` | | (_ |   | (_ |/ _ \ | |\/| | _|  )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( |____|\___/_/ \_\|___/___||_|\_|  \___|    \___/_/ \_\|_|  |_|___| )");
 	timeout(10000);
 	getch();
 }
 
 void View::printGameOver() {
 	box(stdscr, 0, 0);
-	int y_offset = 0, x_offset = (width / 2) - 24;
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "                 *             )            (     ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, " (       (     (  `         ( /(            )\\ )  ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, " )\\ )    )\\    )\\))(  (     )\\())(   (  (  (()/(  ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "(()/( ((((_)( ((_)()\\ )\\   ((_)\\ )\\  )\\ )\\  /(_)) ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, " /(_))_)\\ _ )\\(_()((_|(_)    ((_|(_)((_|(_)(_))   ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "(_)) __(_)_\\(_)  \\/  | __|  / _ \\ \\ / /| __| _ \\  ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "  | (_ |/ _ \\ | |\\/| | _|  | (_) \\ V / | _||   /  ");
-	mvprintw(START_Y_GAME + y_offset++, x_offset, "   \\___/_/ \\_\\|_|  |_|___|  \\___/ \\_/  |___|_|_\\  ");
+	int y_offset = 0, x_offset = (width / 2) - 25;
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(                  *             )            (     )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(  (       (     (  `         ( /(            )\ )  )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(  )\ )    )\    )\))(  (     )\())(   (  (  (()/(  )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( (()/( ((((_)( ((_)()\ )\   ((_)\ )\  )\ )\  /(_)) )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(  /(_))_)\ _ )\(_()((_|(_)    ((_|(_)((_|(_)(_))   )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( (_)) __(_)_\(_)  \/  | __|  / _ \ \ / /| __| _ \  )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(   | (_ |/ _ \ | |\/| | _|  | (_) \ V / | _||   /  )");
+	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(    \___/_/ \_\|_|  |_|___|  \___/ \_/  |___|_|_\  )");
 	timeout(4000);
 	getch();
 }
