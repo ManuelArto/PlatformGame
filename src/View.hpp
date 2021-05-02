@@ -1,3 +1,4 @@
+#include <cstring>
 #include <locale.h>
 #if defined(_WIN64) || defined(__WIN32)
 	#include <curses.h>
@@ -16,9 +17,10 @@ public:
 	void clearWindow();
 	void createWindow();
 	void exitWindow();
+	void printLoadingGame();
 	void printGameOver();
 	void drawBorders();
-	void printInfos(char* user, double time, int life, int points, int level, double invincibility_timer, double minigun_timer);
+	void printInfos(char* username, double time, int life, int points, int level, double invincibility_timer, double minigun_timer);
 	void printPlatform(int x, int y, int length, int offset);
 	void printObject(int x, int y, const char *format, char *object, int offset, bool hasInvincibility=false);
 	void printObject(int x, int y, const char *format, int object, int offset);

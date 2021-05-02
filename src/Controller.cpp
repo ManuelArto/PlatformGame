@@ -11,9 +11,7 @@ Controller::Controller(View *view, Generator *generator) {
 
 void Controller::run() {
 	bool quit = false;
-	view->createWindow();
-	view->askName(player->getName());
-	this->initGeneration();
+	this->initSetup();
 
 	do {
 		// DATA MANAGEMENT
@@ -57,7 +55,7 @@ void Controller::run() {
 			view->printObject(bonus->getX(), bonus->getY(), "%s", bonus->getSymbol(), player->getOffset());
 		}
 
-		// CHECKING
+		// CHECKS
 		player->checkBonusesTimer(time);
 		this->checkRoomsGeneration();
 		this->checkCollisions();
@@ -121,6 +119,15 @@ void Controller::printShoots(Character *c, int offset) {
 		c->updateShot(shot, view->getGameWidth()+offset);
 		shot = tmp_shot;
 	}
+}
+
+void Controller::initSetup() {
+	view->createWindow();
+	view->printLoadingGame();
+	view->clearWindow();
+	view->update();
+	view->askName(player->getName());
+	this->initGeneration();
 }
 
 void Controller::initGeneration() {

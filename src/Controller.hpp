@@ -15,6 +15,7 @@ private:
 	EasyEnemy *e;
 	MediumEnemy *m;
 	HardEnemy *h;
+	void initSetup();
 	void initGeneration();
 	void checkRoomsGeneration();
 	void checkCollisions();
