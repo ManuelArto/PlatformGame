@@ -71,7 +71,7 @@ void View::printInfos(char* username, double time, int life, int points, int lev
 	attron(A_UNDERLINE);
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
 	printw("Legenda:");
-	standend();
+	attroff(A_UNDERLINE);
 	printw("\t\t\tG = Minigun");
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
 	printw("<-- = EasyEnemy\t\t");
@@ -86,15 +86,15 @@ void View::printInfos(char* username, double time, int life, int points, int lev
 	attron(A_UNDERLINE);
 	move(START_Y_GAME + GAME_HEIGHT + 3, START_X_GAME + 1);
 	printw("Commands:"); 
-	standend();
+	attroff(A_UNDERLINE);
 	move(START_Y_GAME + GAME_HEIGHT + 4, START_X_GAME + 1);
 	printw("e = shoot || Arrows = move || q = quit"); 
 }
 
-void View::printWithColor(char *label, int color_pair) {
-	attron(COLOR_PAIR(color_pair));
-	printw(label);
-	attroff(COLOR_PAIR(color_pair));
+void View::printWithColor(char *label, int color_pair, WINDOW *win) {
+	wattron(win, COLOR_PAIR(color_pair));
+	wprintw(win, label);
+	wattroff(win, COLOR_PAIR(color_pair));
 }
 
 void View::printPlatform(int x, int y, int length, int offset) {
@@ -105,12 +105,12 @@ void View::printPlatform(int x, int y, int length, int offset) {
 
 void View::printObject(int x, int y, const char* format, char *label, int offset, bool hasInvincibility) {
 	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
-		if (hasInvincibility) {
-			wattron(gamewin, COLOR_PAIR(INVINCIBILITY_COLOR));
-		}
 		wmove(gamewin, y+1, x+1-offset);
-		wprintw(gamewin, format, label);
-		wstandend(gamewin);
+		if (hasInvincibility) {
+			this->printWithColor(label, INVINCIBILITY_COLOR, gamewin);
+		} else {
+			wprintw(gamewin, format, label);
+		}
 	}
 }
 

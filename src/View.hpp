@@ -6,7 +6,6 @@
 	#include <ncurses.h>
 #endif
 
-#define DEFAULT_COLOR 0
 #define INVINCIBILITY_COLOR 1
 #define GAME_INFO_COLOR 2
 #define PLAYER_INFO_COLOR 3
@@ -26,7 +25,7 @@ public:
 	void printGameOver();
 	void drawBorders();
 	void printInfos(char* username, double time, int life, int points, int level, double invincibility_timer, double minigun_timer);
-	void printWithColor(char *label, int color_pair=DEFAULT_COLOR);
+	void printWithColor(char *label, int color_pair, WINDOW *win=stdscr);
 	void printPlatform(int x, int y, int length, int offset);
 	void printObject(int x, int y, const char *format, char *label, int offset, bool hasInvincibility=false);
 	void printObject(int x, int y, const char *format, int label, int offset);
