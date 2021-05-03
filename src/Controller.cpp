@@ -14,6 +14,7 @@ void Controller::run() {
 	this->initSetup();
 
 	do {
+		
 		// DATA MANAGEMENT
 		int input = view->getKeyboardInput();
 		switch (input) {
@@ -22,6 +23,10 @@ void Controller::run() {
 				break;
 			case 'e':
 				player->shoots(time);
+				break;
+			case KEY_RESIZE:
+				view->clearWindow();
+				view->checkDimensions();
 				break;
 		}
 
@@ -64,7 +69,6 @@ void Controller::run() {
 		time += (double)view->getDelay() / 1000;
 	} while (!quit || player->getLife() > 0); // TODO: change || to &&
 
-	view->clearWindow();
 	view->printGameOver();
 	view->exitWindow();
 }
@@ -123,10 +127,9 @@ void Controller::printShoots(Character *c, int offset) {
 
 void Controller::initSetup() {
 	view->createWindow();
+	view->checkDimensions();
 	view->printLoadingGame();
-	view->clearWindow();
-	view->update();
-	view->askName(player->getName());
+	view->askName(player->getName(), player->getMaxNameLenght());
 	this->initGeneration();
 }
 

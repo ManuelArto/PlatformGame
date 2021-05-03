@@ -15,6 +15,7 @@ public:
 	void checkBonusesTimer(double time);
 	void setCooldownShoot(double cooldown_shoot, double time);
 	void setInvincibility(double time);
+	int getMaxNameLenght();
 	double getInvincibilityTimer(double time);
 	double getMinigunTimer(double time);
 	bool hasInvincibility();

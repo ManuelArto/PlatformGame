@@ -4,29 +4,39 @@ void View::createWindow() {
     setlocale(LC_CTYPE, "");
 	
 	initscr();
+	scrollok(stdscr, false);
 	cbreak();
 	curs_set(FALSE);
 	keypad(stdscr, TRUE);
-	getmaxyx(stdscr, height, width);
-	
+
 	start_color();
 	init_pair(INVINCIBILITY_COLOR, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(GAME_INFO_COLOR, COLOR_RED, COLOR_BLACK);
 	init_pair(PLAYER_INFO_COLOR, COLOR_BLUE, COLOR_BLACK);
+	init_pair(ERROR_MESSAGE, COLOR_RED, COLOR_BLACK);
 
-	gamewin = newwin(GAME_HEIGHT+2, GAME_WIDTH+2, START_Y_GAME, START_X_GAME);
+	gamewin = subwin(stdscr, GAME_HEIGHT+2, GAME_WIDTH+2, START_Y_GAME, START_X_GAME);
 }
 
-void View::askName(char *name) {
+void View::checkDimensions() {
+	getmaxyx(stdscr, height, width);
+	while(height < GAME_HEIGHT * 2 || width < GAME_WIDTH * 3) {
+		this->printErrorDimensions();
+		getmaxyx(stdscr, height, width);
+		wresize(gamewin, GAME_HEIGHT, GAME_WIDTH);
+		touchwin(stdscr);
+		touchwin(gamewin);
+	}
+}
+
+void View::askName(char *name, const int MAX_NAME_LENGHT) {
 	box(stdscr, 0, 0);
-	update();
-	WINDOW *win = newwin(1, 27, 2, 2);
+	this->update();
+	WINDOW *win = subwin(stdscr, 1, 17 + MAX_NAME_LENGHT, 2, 2);
+	mvwprintw(win, 0, 0, "Inserisci nome: ");
 	do {
-		mvwprintw(win, 0, 0, "Inserisci nome: ");
-		wrefresh(win);
 		wgetstr(win, name);
 	} while (!strcmp(name, ""));
-	delwin(win);
 	
 	timeout(DELAY);
 	noecho();
@@ -85,14 +95,11 @@ void View::printObject(int x, int y, const char* format, double label, int offse
 
 void View::update() {
 	wnoutrefresh(stdscr);
-	wnoutrefresh(gamewin);
 	doupdate();
 }
 
 void View::clearWindow() {
-	werase(gamewin);
 	erase();
-	// wclear(gamewin);
 	// clear();
 }
 
@@ -101,6 +108,7 @@ void View::exitWindow() {
 }
 
 void View::printLoadingGame() {
+	this->clearWindow();
 	box(stdscr, 0, 0);
 	int y_offset = 0, x_offset = (width / 2) - 33;
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(  (       )       (    (       )                          *         )");
@@ -111,11 +119,15 @@ void View::printLoadingGame() {
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( | |   / _ (_)_\(_)   \_ _|| \| (_)) __| (_)) __(_)_\(_)  \/  | __| )");
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( | |__| (_) / _ \ | |) | | | .` | | (_ |   | (_ |/ _ \ | |\/| | _|  )");
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( |____|\___/_/ \_\|___/___||_|\_|  \___|    \___/_/ \_\|_|  |_|___| )");
-	timeout(10000);
+	
+	timeout(4000);
 	getch();
+	this->clearWindow();
+	update();
 }
 
 void View::printGameOver() {
+	this->clearWindow();
 	box(stdscr, 0, 0);
 	int y_offset = 0, x_offset = (width / 2) - 25;
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(                  *             )            (     )");
@@ -130,10 +142,18 @@ void View::printGameOver() {
 	getch();
 }
 
+void View::printErrorDimensions() {
+	move(0, 0);
+	this->printWithColor((char *)"ERROR DIMENSIONS:\n", ERROR_MESSAGE);
+	printw("\tMINIMUN HEIGHT: %d, MINIMUM WIDTH: %d\n\n", GAME_HEIGHT * 2, GAME_WIDTH * 3);
+	printw("\tCurrent height: %d, Current width: %d", height, width);
+	update();
+}
+
 void View::printGameInfos(int level, double time, int &y_offset) {
 	move(START_Y_GAME + y_offset++, START_X_GAME + 1);
 	this->printWithColor((char *)"LEVEL: ", GAME_INFO_COLOR);
-	printw("%d\t\t", level);
+	printw("%d, %d\t\t", height, width);
 	this->printWithColor((char *)"TIME: ", GAME_INFO_COLOR);
 	printw("%.2fs", time);
 }
