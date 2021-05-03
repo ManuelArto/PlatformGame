@@ -16,6 +16,11 @@ private:
 	const int DELAY = 50;
 	const int START_X_GAME = 3, START_Y_GAME = 2, GAME_WIDTH = 35, GAME_HEIGHT = 8;
 	WINDOW *gamewin;
+	void printWithColor(char *label, int color_pair, WINDOW *win=stdscr);
+	void printGameInfos(int level, double time, int &y_offset);
+	void printPlayerInfos(char *username, int life, int points, double invincibility_timer, double minigun_timer, int &y_offset);
+	void printLegenda(int &y_offset);
+	void printCommands(int &y_offset);
 public:
 	void askName(char *setName);
 	void clearWindow();
@@ -25,7 +30,6 @@ public:
 	void printGameOver();
 	void drawBorders();
 	void printInfos(char* username, double time, int life, int points, int level, double invincibility_timer, double minigun_timer);
-	void printWithColor(char *label, int color_pair, WINDOW *win=stdscr);
 	void printPlatform(int x, int y, int length, int offset);
 	void printObject(int x, int y, const char *format, char *label, int offset, bool hasInvincibility=false);
 	void printObject(int x, int y, const char *format, int label, int offset);
