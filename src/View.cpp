@@ -37,7 +37,6 @@ void View::drawBorders() {
 	box(gamewin, 0, 0);
 }
 
-// TODO: redefined printObject to accept Color management
 void View::printInfos(char *username, double time, int life, int points, int level, double invincibility_timer, double minigun_timer) {
 	int y_offset = -1;
 	this->printGameInfos(level, time, y_offset);
