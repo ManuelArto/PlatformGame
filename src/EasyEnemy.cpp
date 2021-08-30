@@ -1,5 +1,6 @@
 #include "EasyEnemy.hpp"
-EasyEnemy::EasyEnemy(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol):Character(x, y, points, life, attack, cooldown_shoot=-1, symbol){
+
+EasyEnemy::EasyEnemy(int x, int y, int points, int life, int attack, char *symbol):Character(x, y, points, life, attack, cooldown_shoot=-1, symbol){
     last_attack = 0.0;
 }
 
