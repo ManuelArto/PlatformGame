@@ -1,13 +1,12 @@
 #include "View.hpp"
 
 void View::createWindow() {
-    setlocale(LC_CTYPE, "");
-	
 	initscr();
 	scrollok(stdscr, false);
 	cbreak();
 	curs_set(FALSE);
 	keypad(stdscr, TRUE);
+	getmaxyx(stdscr, height, width);
 
 	start_color();
 	init_pair(INVINCIBILITY_COLOR, COLOR_YELLOW, COLOR_BLACK);
@@ -18,8 +17,8 @@ void View::createWindow() {
 	gamewin = subwin(stdscr, GAME_HEIGHT+2, GAME_WIDTH+2, START_Y_GAME, START_X_GAME);
 }
 
+/*
 void View::checkDimensions() {
-	getmaxyx(stdscr, height, width);
 	while(height < GAME_HEIGHT * 2 || width < GAME_WIDTH * 3) {
 		this->printErrorDimensions();
 		getmaxyx(stdscr, height, width);
@@ -28,6 +27,7 @@ void View::checkDimensions() {
 		touchwin(gamewin);
 	}
 }
+*/
 
 void View::askName(char *name, const int MAX_NAME_LENGHT) {
 	box(stdscr, 0, 0);
@@ -142,6 +142,7 @@ void View::printGameOver() {
 	getch();
 }
 
+/*
 void View::printErrorDimensions() {
 	move(0, 0);
 	this->printWithColor((char *)"ERROR DIMENSIONS:\n", ERROR_MESSAGE);
@@ -149,6 +150,7 @@ void View::printErrorDimensions() {
 	printw("\tCurrent height: %d, Current width: %d", height, width);
 	update();
 }
+*/
 
 void View::printGameInfos(int level, double time, int &y_offset) {
 	move(START_Y_GAME + y_offset++, START_X_GAME + 1);

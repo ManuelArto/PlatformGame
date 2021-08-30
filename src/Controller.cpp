@@ -29,10 +29,6 @@ void Controller::run() {
 			case 'e':
 				player->shoots(time);
 				break;
-			case KEY_RESIZE:
-				view->clearWindow();
-				view->checkDimensions();
-				break;
 		}
 
 		player->move(input, view->getGameWidth(), view->getGameHeight(), 
@@ -202,7 +198,6 @@ void Controller::checkBonusType(Bonus *bonus) {
 
 void Controller::initSetup() {
 	view->createWindow();
-	view->checkDimensions();
 	view->printLoadingGame();
 	view->askName(player->getName(), player->getMaxNameLenght());
 	this->initGeneration();

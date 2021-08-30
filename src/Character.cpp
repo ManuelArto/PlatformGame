@@ -1,6 +1,6 @@
 #include "Character.hpp"
 
-Character::Character(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol, char *mir_symbol) {
+Character::Character(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol) {
     this->x = x;
     this->y = y;
 	this->points = points;
@@ -8,7 +8,6 @@ Character::Character(int x, int y, int points, int life, int attack, double cool
 	this->attack = attack;
 	this->cooldown_shoot = cooldown_shoot;
 	this->symbol = symbol;
-	this->mir_symbol = mir_symbol;
 	jumping = false;
 	lastjump_time = 0.0;
 	direction = RIGHT;
@@ -127,5 +126,5 @@ bool Character::isJumping() {
 	return jumping;
 }
 char *Character::getSymbol() {
-	return direction == RIGHT ? symbol : mir_symbol;
+	return symbol;
 }

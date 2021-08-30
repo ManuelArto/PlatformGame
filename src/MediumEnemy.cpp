@@ -1,7 +1,7 @@
 #include "MediumEnemy.hpp"
 
-MediumEnemy::MediumEnemy(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, char *symbol, char *mir_symbol)
-						:Character(x, y, points, life, attack, cooldown_shoot, symbol, mir_symbol){
+MediumEnemy::MediumEnemy(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, char *symbol)
+						:Character(x, y, points, life, attack, cooldown_shoot, symbol){
 			this->cooldown_movement = cooldown_movement;
 			lastmove_time = 0.0;
 }

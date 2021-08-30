@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-Player::Player(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol, char *mir_symbol)
-				:Character(x, y, points, life, attack, cooldown_shoot, symbol, mir_symbol) {
+Player::Player(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol)
+				:Character(x, y, points, life, attack, cooldown_shoot, symbol) {
 	name = new char[MAX_NAME_LENGTH];
 	offset = 0;
 	isInvincible = false;

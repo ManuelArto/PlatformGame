@@ -10,6 +10,7 @@ void Generator::deleteRoom(int room, RoomPosition roomPosition) {
 		delete platforms[i];
 	}
 	if (roomPosition == LEFT_ROOM) {
+		// COSA MINCHIA FA
 		currentRoom = room;
 		for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
 			platforms[i] = platforms[i+MAX_PLATFORMS_FOR_ROOM];

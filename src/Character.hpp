@@ -24,7 +24,7 @@ protected:
 	char *symbol, *mir_symbol;
 	p_shot shots;
 public:
-	Character(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol, char *mir_symbol);
+	Character(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol);
 	void decreaseLife(int damage);
 	void shoots(double time);
 	void move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time=0);

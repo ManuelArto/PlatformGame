@@ -5,8 +5,7 @@ PlatformGame 2021
 ## Gioco
 - Ambiente:
   - Diviso in livelli (stanze per ogni livello --> poi ti muovi con l'ambiente)
-  - Procedural generation con seed
-  - Piattaforme / fossi(?)
+  - Piattaforme procedural generation con seed iniziale
 - Giocatore:
   - spara
   - si muove a destra e sinistra, salta, sale e scende dalle piattaforme
@@ -14,21 +13,22 @@ PlatformGame 2021
   - punti (aumentano quando uccidi nemici e col bonus)
 - Nemici:
   - spawning su piattaforme o su terreno
-  - diversi tipi:
+  - Tipi:
 	  1. base: tipo missile (aumenta la velocità)
 	  2. medio: spara, si muove solo sulla sua piattaforma di spawn (aumenta la frequenza di fuoco, vita ??)
 	  3. avanzato: spara, si muove verso di te (aumenta frequenza di fuoco e colpi, vita ??)
 - Bonus:
   - life: aumenta la vita
   - minigun: aumenta frequenza di fuoco
-  - rallenty: nemici più lenti
+  - points: aumenta i punti
   - Invulnerabilità: immune (cambia colore)
 
 ## TODO
-- sistemare problema collision e fare merge
-- fare i template
-- spawning bonus e nemici
-- gestione livello difficoltà
+- Gestione nemici (spawing e instanziamento)
+- Generazione piattaforme per stanza
+- Collisione: timing del contatto fisico e controllo proiettile a x+-1 e remove proiettile
+- SOLO ALLA FINE:
+	- Check di tutto il codice, inserimento commenti e eventuale redefined
 
 ## REGOLE DEL GIOCO
 Giocatore:
@@ -48,4 +48,3 @@ Nemici:
 - Vita: +50
 - Minigun: 10 secondi 
 - Invincibilità: 10 secondi
-

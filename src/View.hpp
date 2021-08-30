@@ -1,5 +1,4 @@
 #include <cstring>
-#include <locale.h>
 #if defined(_WIN64) || defined(__WIN32)
 	#include <curses.h>
 #elif __linux
