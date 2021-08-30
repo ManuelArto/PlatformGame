@@ -25,8 +25,27 @@ PlatformGame 2021
   - Invulnerabilità: immune (cambia colore)
 
 ## TODO
-- Andre:
-	- collisione
-- Manu:
-	- bonus rallenty
-    - generazione stanze e piattaforme
+- sistemare problema collision e fare merge
+- fare i template
+- spawning bonus e nemici
+- gestione livello difficoltà
+
+## REGOLE DEL GIOCO
+Giocatore:
+- Vita: 200
+- Attacco: 20
+
+Nemici:
+- Vita EasyEnemy: 20
+- Vita MediumEnemy: 40
+- Vita HardEnemy: 60
+- Attacco EasyEnemy: 10
+- Attacco MediumEnemy: 20
+- Attacco HardEnemy: 30
+
+4 Bonus: 
+- Punti: +50
+- Vita: +50
+- Minigun: 10 secondi 
+- Invincibilità: 10 secondi
+
