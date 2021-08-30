@@ -24,12 +24,18 @@ PlatformGame 2021
   - Invulnerabilità: immune (cambia colore)
 
 ## TODO
-- Gestione nemici (spawing e instanziamento)
-- Generazione piattaforme per stanza
-- Collisione: timing del contatto fisico e controllo proiettile a x+-1 e remove proiettile
+NEMICI:
+	- Collisione: controllare TUTTO, timing del contatto fisico e controllo proiettile a x+-1 e remove proiettile
+	- Controllo distanza sparo nemici
+	- Controllo follow dei nemici (mediumEnemy)
+	- ALLA FINE: gestire vita, punti danno ecc..
+GENERAZIONE:
+	- Generazione piattaforme per stanza
+	- Gestione nemici (spawing e instanziamento)
 - SOLO ALLA FINE:
+	- Definire GIOCO (Gestione vita punti bonus nemici ecc..)
 	- Check di tutto il codice, inserimento commenti e eventuale redefined
-
+ 
 ## REGOLE DEL GIOCO
 Giocatore:
 - Vita: 200
