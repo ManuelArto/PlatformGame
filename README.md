@@ -43,10 +43,9 @@ Nemici:
 - Invincibilità: 10 secondi
 
 ## TODO
+COLLISIONE:
+	- controllare TUTTO, timing del contatto fisico e controllo proiettile a x+-1 e remove proiettile
 NEMICI:
-	- COLLISIONE: controllare TUTTO, timing del contatto fisico e controllo proiettile a x+-1 e remove proiettile
-	- Controllo distanza sparo nemici
-	- Controllo follow dei nemici (mediumEnemy)
 	- ALLA FINE: gestire vita, punti danno ecc..
 GENERAZIONE:
 	- Generazione piattaforme per stanza (procedural generation)
