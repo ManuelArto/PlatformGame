@@ -48,6 +48,7 @@ void View::drawBorders() {
 }
 
 void View::printInfos(char *username, double time, int life, int points, int level, double invincibility_timer, double minigun_timer) {
+	// y_offset is passed by reference
 	int y_offset = -1;
 	this->printGameInfos(level, time, y_offset);
 	this->printPlayerInfos(username, life, points, invincibility_timer, minigun_timer, y_offset);
@@ -119,7 +120,6 @@ void View::printLoadingGame() {
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( | |   / _ (_)_\(_)   \_ _|| \| (_)) __| (_)) __(_)_\(_)  \/  | __| )");
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( | |__| (_) / _ \ | |) | | | .` | | (_ |   | (_ |/ _ \ | |\/| | _|  )");
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( |____|\___/_/ \_\|___/___||_|\_|  \___|    \___/_/ \_\|_|  |_|___| )");
-	
 	timeout(4000);
 	getch();
 	this->clearWindow();

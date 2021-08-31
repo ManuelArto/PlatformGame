@@ -35,7 +35,6 @@ void Controller::run() {
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
-		
 		h->shoots(time, player->getX(), player->getFixedX());
 
 		m->follow(player->getX(), time,
@@ -63,14 +62,17 @@ void Controller::run() {
 		this->printShoots(m, player->getOffset());
 		view->printObject(e->getX(), e->getY(), (char *)"%s", (char *) e->getSymbol(), player->getOffset());
 		
-		// CREATE AND PRINT PLATFORM
+		// PRINT PLATFORM
 		for (int i = 0; i < generator->getNumberPlatforms(); i++) {
 			Platform *platf = generator->getPlatform(i);
 			view->printPlatform(platf->getX(), platf->getY(), platf->getLenght(), player->getOffset());
 		}
-		for (int i = 0; i < generator->getNumberBonuses(); i++) {
-			Bonus *bonus = generator->getBonus(i);
+		// PRINT BONUSES
+		p_bonus iter_bonus = generator->getBonuses();
+		while (iter_bonus != __null) {
+			Bonus *bonus = iter_bonus->bonus;
 			view->printObject(bonus->getX(), bonus->getY(), "%s", bonus->getSymbol(), player->getOffset());
+			iter_bonus = iter_bonus->next;
 		}
 
 		// CHECKS
@@ -101,10 +103,13 @@ void Controller::printShoots(Character *c, int offset) {
 void Controller::checkRoomsGeneration() {
 	room = (player->getOffset() / view->getGameWidth()) + 1;
 	if (room > generator->getCurrentRoom()) {
-		generator->deleteRoom(room, LEFT_ROOM);
+		generator->setCurrentRoom(room);
+		generator->deleteRoom(LEFT_ROOM);
 		generator->createRoom(room+1, RIGHT_ROOM, view->getGameWidth());
+		generator->createNewBonuses(room+1, view->getGameWidth());
 	} else if (room < generator->getCurrentRoom()) {
-		generator->deleteRoom(room+1, RIGHT_ROOM);
+		generator->setCurrentRoom(room);
+		generator->deleteRoom(RIGHT_ROOM);
 		generator->createRoom(room, LEFT_ROOM, view->getGameWidth());
 	}
 }
@@ -169,11 +174,16 @@ void Controller::checkCollisions() {
 	// 	delete(e);
 	// 	e = __null;
 	// }
-	// player - Bonuses
-	for (int i = 0; i < generator->getNumberBonuses(); i++) {
-		Bonus *bonus = generator->getBonus(i);
-		if (player->getX() == bonus->getX() && player->getY() == bonus->getY())
-			this->checkBonusType(bonus);	// TODO: remove bonus from game
+
+	// Player - Bonuses
+	p_bonus iter_bonus = generator->getBonuses();
+	while (iter_bonus != __null) {
+		Bonus *bonus = iter_bonus->bonus;
+		iter_bonus = iter_bonus->next;
+		if (player->getX() == bonus->getX() && player->getY() == bonus->getY()) {
+			this->checkBonusType(bonus);
+			generator->deleteBonus(bonus);
+		}
 	}
 }
 
@@ -204,5 +214,6 @@ void Controller::initSetup() {
 void Controller::initGeneration() {
 	generator->createRoom(room, LEFT_ROOM, view->getGameWidth());
 	generator->createRoom(room+1, RIGHT_ROOM, view->getGameWidth());
-	generator->createBonuses();
+	generator->createNewBonuses(room, view->getGameWidth());
+	generator->createNewBonuses(room+1, view->getGameWidth());
 }

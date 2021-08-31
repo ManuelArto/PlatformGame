@@ -2,16 +2,15 @@
 
 Generator::Generator() {
 	currentRoom = 1;
+	max_room_generated = 0;
 }
 
-void Generator::deleteRoom(int room, RoomPosition roomPosition) {
-	int index = roomPosition == LEFT_ROOM ? 0 : MAX_PLATFORMS_FOR_ROOM;
+void Generator::deleteRoom(RoomPosition roomPosition) {
+	int index = (roomPosition == LEFT_ROOM) ? 0 : MAX_PLATFORMS_FOR_ROOM;
 	for (int i = index; i < index+MAX_PLATFORMS_FOR_ROOM; i++) {
 		delete platforms[i];
 	}
 	if (roomPosition == LEFT_ROOM) {
-		// COSA MINCHIA FA
-		currentRoom = room;
 		for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
 			platforms[i] = platforms[i+MAX_PLATFORMS_FOR_ROOM];
 		}
@@ -43,7 +42,6 @@ void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
 	}
 	int index = roomPosition == LEFT_ROOM ? 0 : MAX_PLATFORMS_FOR_ROOM;
 	if (roomPosition == LEFT_ROOM && numberPlatforms == 6) {
-		currentRoom = room;
 		for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
 			platforms[i+MAX_PLATFORMS_FOR_ROOM] = platforms[i];
 		}
@@ -53,15 +51,52 @@ void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
 	platforms[2+index] = p3;
 }
 
-void Generator::createBonuses() {
-	// STATIC ONLY FOR NOW
-	Bonus *p1 = new Bonus(1, 7, MINIGUN);
-	numberBonuses++;
-	Bonus *p2 = new Bonus(5, 7, INVINCIBILITY);
-	numberBonuses++;
+// PRIVATE
+void Generator::addBonus(Bonus *bonus) {
+	p_bonus tmp = new bonus_struct;
+	tmp->bonus = bonus;
+	tmp->next = __null;
 
-	bonuses[0] = p1;
-	bonuses[1] = p2;
+	if (bonuses == __null)
+		bonuses = tmp;
+	else {
+		p_bonus iter = bonuses;
+		while (iter->next != __null)
+			iter = iter->next;
+		iter->next = tmp;
+		tmp->prev = iter;
+	}
+}
+
+void Generator::createNewBonuses(int room, int width) {
+	if (room > max_room_generated) {
+		int offset = width * (room-1);
+		// STATIC ONLY FOR NOW
+		Bonus *p1 = new Bonus(1+offset, 7, MINIGUN);
+		this->addBonus(p1);
+		Bonus *p2 = new Bonus(5+offset, 7, INVINCIBILITY);
+		this->addBonus(p2);
+		max_room_generated = room;
+	}
+}
+
+void Generator::deleteBonus(Bonus *bonus) {
+	p_bonus iter = bonuses;
+	bool found = false;
+	while (!found) {
+		if (iter->bonus == bonus) {
+			if (iter == bonuses) {
+				bonuses = iter->next;
+				delete iter;
+			} else {
+				iter->prev->next = iter->next;
+				delete iter;
+			}
+			found = true;
+		} else {
+			iter = iter->next;
+		}
+	}
 }
 
 int Generator::getNumberPlatforms() {
@@ -74,17 +109,21 @@ Platform **Generator::getPlatforms() {
 	return platforms;
 }
 
-int Generator::getNumberBonuses() {
-	return numberBonuses;
-}
-Bonus *Generator::getBonus(int index) {
-	return bonuses[index];
+p_bonus Generator::getBonuses() {
+	return bonuses;
 }
 
+void Generator::setCurrentRoom(int room) {
+	this->currentRoom = room;
+}
 int Generator::getCurrentRoom() {
 	return currentRoom;
 }
 
+// STATIC
 int Generator::getMaxPlatformsForRoom() {
 	return MAX_PLATFORMS_FOR_ROOM;
+}
+int Generator::getMaxBonusesForRoom() {
+	return MAX_BONUSES_FOR_ROOM;
 }
