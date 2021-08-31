@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
 Player::Player(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol)
-				:Character(x, y, points, life, attack, cooldown_shoot, symbol) {
+				:Character(x, y, points, life, attack, cooldown_shoot, cooldown_movement=-1, symbol) {
 	name = new char[MAX_NAME_LENGTH];
 	offset = 0;
 	isInvincible = false;
@@ -10,8 +10,8 @@ Player::Player(int x, int y, int points, int life, int attack, double cooldown_s
 	default_cooldown_shoot = cooldown_shoot;
 }
 
-void Player::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time) {
-	Character::move(input, width, height, hasPlatformAbove, hasPlatformBelow, time);
+void Player::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformBelow) {
+	Character::move(input, width, height, time, hasPlatformAbove, hasPlatformBelow);
 	if ((offset > 0 && x < FIXED_X) || x > FIXED_X) {
 		offset += x-FIXED_X;
 		x = FIXED_X;

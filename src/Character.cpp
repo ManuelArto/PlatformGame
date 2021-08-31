@@ -1,12 +1,13 @@
 #include "Character.hpp"
 
-Character::Character(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol) {
+Character::Character(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, char *symbol) {
     this->x = x;
     this->y = y;
 	this->points = points;
 	this->life = life;
 	this->attack = attack;
 	this->cooldown_shoot = cooldown_shoot;
+	this->cooldown_movement = cooldown_movement;
 	this->symbol = symbol;
 	jumping = false;
 	lastjump_time = 0.0;
@@ -18,7 +19,7 @@ void Character::decreaseLife(int damage) {
     this->life -= damage;
 }
 
-void Character::move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time) {
+void Character::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformBelow) {
 	if (jumping && (time - lastjump_time > FLIGHT_TIME)) {
 		y += 1;
 		jumping = false;

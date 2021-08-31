@@ -13,9 +13,9 @@ private:
 	double time, lastphysicdamage_time;
 	const double PHYSIC_DAMAGE_COOLDOWN = 2.0;
 	int room;
-	EasyEnemy *e;
 	MediumEnemy *m;
 	HardEnemy *h;
+	EasyEnemy *e;
 	void initSetup();
 	void initGeneration();
 	void checkRoomsGeneration();

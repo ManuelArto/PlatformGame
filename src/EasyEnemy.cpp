@@ -1,21 +1,14 @@
 #include "EasyEnemy.hpp"
 
-EasyEnemy::EasyEnemy(int x, int y, int points, int life, int attack, char *symbol):Character(x, y, points, life, attack, cooldown_shoot=-1, symbol){
-    last_attack = 0.0;
+EasyEnemy::EasyEnemy(int x, int y, int points, int life, int attack, double cooldown_movement, char *symbol)
+			:Character(x, y, points, life, attack, cooldown_shoot=-1, cooldown_movement, symbol) {
+	lastmove_time = 0.0;
 }
 
-// da modificare
-void EasyEnemy::rocket(double time, int width, int height, int player_y){
-    bool flag = false;
-        if(x == -2){
-            flag = true;
-        }else{
-            x--;
-        }
-            
-        if(time - last_attack > cooldown_shoot && flag){
-            x = width;
-            y = player_y;
-            last_attack = time;
-        }
+//Override
+void EasyEnemy::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformBelow) {
+	if(time - lastmove_time > cooldown_movement){
+		lastmove_time = time;
+		Character::move(input, width, height, time);
+	}
 }

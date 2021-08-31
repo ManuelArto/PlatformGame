@@ -18,9 +18,6 @@ void Controller::run() {
 	do {
 		
 		// DATA MANAGEMENT
-		if(e == __null){
-			e = new EasyEnemy(view->getGameWidth()-3, player->getY());
-		}
 		int input = view->getKeyboardInput();
 		switch (input) {
 			case 'q':
@@ -31,10 +28,9 @@ void Controller::run() {
 				break;
 		}
 
-		player->move(input, view->getGameWidth(), view->getGameHeight(), 
+		player->move(input, view->getGameWidth(), view->getGameHeight(), time,
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()), 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()),
-					time);
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()));
 		h->follow(player->getX(), player->getY(), time,
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
@@ -42,15 +38,15 @@ void Controller::run() {
 		h->shoots(time);
 
 		m->shoots(time);
-
-		m->follow(player->getX(), player->getY(), time,
-					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()), 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()),
+		m->follow(player->getX(), time,
 					view->getGameWidth(), view->getGameHeight(),
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY()),
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY()));
 		
-		e -> rocket(time, view->getGameWidth()-3, view->getGameHeight(), player->getY());
+		if(e == __null) {
+			e = new EasyEnemy(view->getGameWidth()-3, player->getY());
+		}
+		e->move(KEY_LEFT, view->getGameWidth(), view->getGameHeight(), time);
 
 		// DRAW MAP
 		view->clearWindow();
@@ -116,6 +112,7 @@ void Controller::checkRoomsGeneration() {
 			- Contatto fisico: Player - Enemies
 			- Player (piattaforme o spari) - Spari Enemies
 			- Player spari - Enemies (piattaforme o spari)
+			- EasyEnemies - Muro (Piattaforme o muri)
 			- Player - bonuses
 */
 void Controller::checkCollisions() {

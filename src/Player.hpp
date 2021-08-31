@@ -23,6 +23,6 @@ public:
 	int getOffset();
 	int noOffsetX();
 	// OVERRIDE
-	void move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time);
+	void move(int input, int width, int height, double time, bool hasPlatformAbove=false, bool hasPlatformBelow=true);
 	int getX();
 };

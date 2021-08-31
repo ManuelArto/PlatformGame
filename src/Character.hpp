@@ -18,16 +18,16 @@ class Character {
 protected:
 	const double FLIGHT_TIME = 0.3, COOLDOWN_JUMP = 0.4;
 	int x, y, life, points, attack;
-	double cooldown_shoot, lastshot_time, lastjump_time;
+	double cooldown_movement, cooldown_shoot, lastmove_time, lastshot_time, lastjump_time;
 	bool jumping;
 	Direction direction;
-	char *symbol, *mir_symbol;
+	char *symbol;
 	p_shot shots;
 public:
-	Character(int x, int y, int points, int life, int attack, double cooldown_shoot, char *symbol);
+	Character(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, char *symbol);
 	void decreaseLife(int damage);
 	void shoots(double time);
-	void move(int input, int width, int height, bool hasPlatformAbove, bool hasPlatformBelow, double time=0);
+	void move(int input, int width, int height, double time, bool hasPlatformAbove=false, bool hasPlatformBelow=true);
 	void updateShot(p_shot shot, int width);
 	void deleteShot(p_shot shot);
 	p_shot getShotHead();

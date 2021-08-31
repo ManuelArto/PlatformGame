@@ -1,9 +1,8 @@
 #include "Character.hpp"
 
 class EasyEnemy : public Character{
-private:
-    double last_attack;
 public:
-    EasyEnemy(int x=46, int y=18, int points=10, int life=5, int attack=5, char *symbol=(char *)"<--");
-    void rocket(double time, int width, int height, int player_y);
+    EasyEnemy(int x, int y, int points=10, int life=5, int attack=5, double cooldown_movement=0.1, char *symbol=(char *)"<--");
+	// OVERRIDE
+	void move(int input, int width, int height, double time, bool hasPlatformAbove=false, bool hasPlatformBelow=true);
 };
