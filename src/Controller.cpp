@@ -35,13 +35,14 @@ void Controller::run() {
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()), 
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
-		h->shoots(time);
+		
+		h->shoots(time, player->getX(), player->getFixedX());
 
-		m->shoots(time);
 		m->follow(player->getX(), time,
 					view->getGameWidth(), view->getGameHeight(),
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY()),
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY()));
+		m->shoots(time, player->getX(), player->getFixedX());
 		
 		if(e == __null) {
 			e = new EasyEnemy(view->getGameWidth()-3, player->getY());

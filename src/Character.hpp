@@ -1,3 +1,5 @@
+#include <cmath>
+
 #pragma once
 
 #define KEY_DOWN	0402		/* down-arrow key */

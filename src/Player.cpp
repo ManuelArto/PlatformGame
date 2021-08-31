@@ -76,3 +76,6 @@ int Player::noOffsetX() {
 int Player::getX() {
 	return offset+Character::getX();
 }
+int Player::getFixedX() {
+	return FIXED_X;
+}

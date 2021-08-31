@@ -15,3 +15,8 @@ void MediumEnemy::follow(int player_x, double time, int width, int height, bool 
 		lastmove_time = time;
 	}
 }
+
+void MediumEnemy::shoots(double time, int player_x, double distance) {
+	if (abs(x - player_x) <= distance)
+		Character::shoots(time);
+}

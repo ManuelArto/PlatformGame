@@ -22,6 +22,7 @@ public:
 	char* getName();
 	int getOffset();
 	int noOffsetX();
+	int getFixedX();
 	// OVERRIDE
 	void move(int input, int width, int height, double time, bool hasPlatformAbove=false, bool hasPlatformBelow=true);
 	int getX();

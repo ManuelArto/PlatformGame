@@ -27,3 +27,8 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
 		move(movement, width, height, time, hasPlatformAbove, hasPlatformBelow);
     }
 }
+
+void HardEnemy::shoots(double time, int player_x, double distance) {
+	if (abs(x - player_x) <= distance)
+		Character::shoots(time);
+}
