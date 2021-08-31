@@ -80,7 +80,7 @@ void Controller::run() {
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
-	} while (!quit || player->getLife() > 0); // TODO: change || to &&
+	} while (!quit && player->getLife() > 0); // TODO: change || to &&
 
 	view->printGameOver();
 	view->exitWindow();
