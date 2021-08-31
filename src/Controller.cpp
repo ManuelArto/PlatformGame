@@ -117,36 +117,36 @@ void Controller::checkRoomsGeneration() {
 			- Player - bonuses
 */
 void Controller::checkCollisions() {
-	// // player - HardEnemy
-	// if(!player->hasInvincibility() && (player->getX() == h->getX() && player->getY() == h->getY()))
-	// 	player->decreaseLife(h->getAttack());
+	// collisione fisica e spari di enemy e giocatore
+	bool hit = false;
+	p_shot tmp_shot, shot;
+	shot = h->getShotHead();
+	if(!player->hasInvincibility()){
+		if (time - lastphysicdamage_time > PHYSIC_DAMAGE_COOLDOWN) {
+			if((player->getX() == h->getX()) && (player->getY() == h->getY())){
+				player->decreaseLife(h->getAttack());
+				lastphysicdamage_time = time;
+			}
+			while (shot != __null && !hit) {
+				if ((player->getX() == shot->x) && (player->getY() == shot->y)) {
+					player->decreaseLife(h->getAttack());
+					lastphysicdamage_time = time;
+					h -> deleteShot(shot);
+					hit = true;
+				} else {
+					tmp_shot = shot->next;
+					shot = tmp_shot;
+				}
+			}
+			if((player->getX() == e->getX()) && (player->getY() == e->getY())){
+				player->decreaseLife(e->getAttack());
+				delete e;
+				e = __null;
+				lastphysicdamage_time = time;
+			}
+		}
+	}// da migliorare, inoltre manca controllo contro muro e piattaforme 
 
-	// bool hit = false;
-	// // PHYSICAL COLLISION
-	// if (time - lastphysicdamage_time > PHYSIC_DAMAGE_COOLDOWN) {
-	// 	if((player->getX() == c->getX()) && (player->getY() == c->getY())){
-	// 		player->decreaseLife(c->getAttack());
-	// 		if(c == e){
-	// 			delete(e);
-	// 			e = __null;
-	// 		}
-	// 		lastphysicdamage_time = time;
-	// 	}
-	// }
-
-	// // sparo contro giocatore
-	// p_shot tmp_shot, shot;
-	// shot = c->getShotHead();
-	// while (shot != __null && !hit) {
-	// 	if ((player->getX() == shot->x) && (player->getY() == shot->y)) {
-	// 		player->decreaseLife(c->getAttack());
-	// 		c -> deleteShot(shot);
-	// 		hit = true;
-	// 	} else {
-	// 		tmp_shot = shot->next;
-	// 		shot = tmp_shot;
-	// 	}
-	// }
 
 	// // sparo contro nemici da sistemare, si ferma il programma
 	// p_shot shot2 = player->getShotHead();
@@ -169,6 +169,7 @@ void Controller::checkCollisions() {
 	// 	delete(e);
 	// 	e = __null;
 	// }
+
 	// player - Bonuses
 	for (int i = 0; i < generator->getNumberBonuses(); i++) {
 		Bonus *bonus = generator->getBonus(i);

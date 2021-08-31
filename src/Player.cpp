@@ -45,7 +45,6 @@ void Player::setInvincibility(double time) {
 	invincibilityActivation_time = time;
 }
 
-
 int Player::getMaxNameLenght() {
 	return MAX_NAME_LENGTH;
 }
