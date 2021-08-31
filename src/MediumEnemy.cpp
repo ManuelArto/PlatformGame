@@ -8,11 +8,10 @@ MediumEnemy::MediumEnemy(int x, int y, int points, int life, int attack, double 
 void MediumEnemy::follow(int player_x, double time, int width, int height, bool hasPlatformRight, bool hasPlatformLeft) {
 	if(time - lastmove_time > cooldown_movement) {
 		if (x < player_x && hasPlatformRight) {
-			movement = KEY_RIGHT;
+			move(KEY_RIGHT, width, height, time);
 		} else if (x > player_x && hasPlatformLeft) {
-			movement = KEY_LEFT;
+			move(KEY_LEFT, width, height, time);
 		}
 		lastmove_time = time;
-		move(movement, width, height, time);
 	}
 }

@@ -16,16 +16,12 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
 			findPlatform = false;
 		} else if (x != player_x && !findPlatform) {
 			movement = x < player_x ? KEY_RIGHT : KEY_LEFT;
-			last_movement = movement;
 		} else if (findPlatform || (x == player_x && y > player_y)) {
 			if (x == width-1)
 				movement = KEY_LEFT;
 			else if (x == 0)
 				movement = KEY_RIGHT;
-			else
-				movement = last_movement;
 			findPlatform = (y != player_y);
-			last_movement = movement;
 		}
 		lastmove_time = time;
 		move(movement, width, height, time, hasPlatformAbove, hasPlatformBelow);
