@@ -1,7 +1,8 @@
 #include "HardEnemy.hpp"
 
-HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, char *symbol)
+HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, double min_distance_shoot, char *symbol)
 					:Character(x, y, points, life, attack, cooldown_shoot, cooldown_movement, symbol) {
+	this->min_distance_shoot = min_distance_shoot;
 	direction = LEFT;
 	lastmove_time = 0.0;
 	findPlatform = false;
@@ -28,7 +29,7 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
     }
 }
 
-void HardEnemy::shoots(double time, int player_x, double distance) {
-	if (abs(x - player_x) <= distance)
+void HardEnemy::shoots(double time, int player_x) {
+	if (abs(x - player_x) <= min_distance_shoot)
 		Character::shoots(time);
 }

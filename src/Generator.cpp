@@ -27,7 +27,7 @@ void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
 	case 1:
 		p1 = new Platform(3+offset, 6, 7);
 		numberPlatforms++;
-		p2 = new Platform(7+offset, 4, 7);
+		p2 = new Platform(7+offset, 5, 7);
 		numberPlatforms++;
 		p3 = new Platform(25+offset, 6, 9);
 		numberPlatforms++;

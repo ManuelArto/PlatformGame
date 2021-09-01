@@ -44,13 +44,18 @@ Nemici:
 
 ## TODO
 COLLISIONE:
-	- controllare TUTTO, timing del contatto fisico e controllo proiettile a x+-1 e remove proiettile
+	- Contatto fisico: Player - Enemies					✔
+	- Spari between shooter and character				✔	
+	- Spari - Piattaforme								✔
+	- EasyEnemies - Piattaforme o Muro					✔
+	- Spari - Spari										
+	- Player - Bonus									✔
+	- Controllo proiettile x+-1
 NEMICI:
 	- ALLA FINE: gestire vita, punti danno ecc..
 GENERAZIONE:
 	- Generazione piattaforme per stanza (procedural generation)
 	- Nemici e bonus pseudo-random (spawning su punteggio/livello)
-	- Gestione bonus (spawning e instanziamento lista dinamica)
 	- Gestione nemici (spawning e instanziamento lista dinamica)
 SOLO ALLA FINE:
 	- Definire GIOCO (Gestione vita punti bonus nemici ecc..)

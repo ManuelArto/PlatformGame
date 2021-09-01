@@ -45,6 +45,10 @@ void Player::setInvincibility(double time) {
 	invincibilityActivation_time = time;
 }
 
+void Player::setLastDamageTime(double time) {
+	lastdamage_time = time;
+}
+
 int Player::getMaxNameLenght() {
 	return MAX_NAME_LENGTH;
 }
@@ -59,6 +63,12 @@ double Player::getMinigunTimer(double time) {
 		return minigun_timer - (time - minigunActivation_time);
 	else
 		return 0.0;
+}
+double Player::getCooldownDamage() {
+	return COOLDOWN_DAMAGE;
+}
+double Player::getLastDamageTime() {
+	return lastdamage_time;
 }
 bool Player::hasInvincibility() {
 	return isInvincible;

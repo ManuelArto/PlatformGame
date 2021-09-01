@@ -20,21 +20,21 @@ void Character::decreaseLife(int damage) {
 }
 
 void Character::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformBelow) {
-	if (jumping && (time - lastjump_time > FLIGHT_TIME)) {
-		y += 1;
+	if (jumping && (time - lastjump_time > FLIGHT_TIME))
 		jumping = false;
-	} else if (!jumping && !hasPlatformBelow && y < height-2)
-		// FALLING
+	else if (!jumping && !hasPlatformBelow && y < height-2)
 		y += 2;
 	else {
 		switch (input) {
 			case KEY_UP:
-				if (y >= 2 && hasPlatformAbove && (hasPlatformBelow || y == height-1))
-					y -= 2;
-				else if (!hasPlatformAbove && !jumping && (time - lastjump_time > COOLDOWN_JUMP)) {
-					y -= 1;
-					jumping = true;
-					lastjump_time = time;
+				if (y >= 2) {
+					if (hasPlatformAbove && (hasPlatformBelow || y == height-1)) {
+						y -= 2;
+					} else if (!jumping) {
+						y -= 2;
+						jumping = true;
+						lastjump_time = time;
+					}
 				}
 				break;
 			case KEY_LEFT:
@@ -58,7 +58,7 @@ void Character::move(int input, int width, int height, double time, bool hasPlat
 void Character::shoots(double time) {
 	if (time - lastshot_time > cooldown_shoot) {
 		p_shot shot = new shot_struct;
-		shot->x = direction == LEFT ? x-3 : x+1;
+		shot->x = direction == LEFT ? this->getX()-3 : this->getX()+1;
 		shot->y = y;
 		shot->direction = direction;
 		shot->next = __null;

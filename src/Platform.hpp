@@ -1,3 +1,5 @@
+#pragma once
+
 class Platform{
 private:
 	int x, y, lenght;

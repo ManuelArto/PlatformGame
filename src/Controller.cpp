@@ -6,6 +6,7 @@ Controller::Controller(View *view, Generator *generator) {
 	time = 0.0;
 	room = 1;
 	player = new Player (0, view->getGameHeight()-1);
+	collisions = new Collisions(player);
 	h = new HardEnemy(view->getGameWidth()-1, view->getGameHeight()-1);
 	m = new MediumEnemy(10, view->getGameHeight()-5);
 	e = __null;
@@ -24,6 +25,7 @@ void Controller::run() {
 				quit = true;
 				break;
 			case 'e':
+				// TODO: error with x of shoot
 				player->shoots(time);
 				break;
 		}
@@ -36,13 +38,13 @@ void Controller::run() {
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
 		
-		h->shoots(time, player->getX(), player->getFixedX());
+		h->shoots(time, player->getX());
 
 		m->follow(player->getX(), time,
 					view->getGameWidth(), view->getGameHeight(),
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY()),
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY()));
-		m->shoots(time, player->getX(), player->getFixedX());
+		m->shoots(time, player->getX());
 		
 		if(e == __null) {
 			e = new EasyEnemy(view->getGameWidth()-3, player->getY());
@@ -80,7 +82,7 @@ void Controller::run() {
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
-	} while (!quit && player->getLife() > 0); // TODO: change || to &&
+	} while (!quit || player->getLife() > 0); // TODO: change || to &&
 
 	view->printGameOver();
 	view->exitWindow();
@@ -109,71 +111,46 @@ void Controller::checkRoomsGeneration() {
 	}
 }
 
-/* TODO: Check every collisions
-			- Contatto fisico: Player - Enemies
-			- Player (piattaforme o spari) - Spari Enemies
-			- Player spari - Enemies (piattaforme o spari)
-			- EasyEnemies - Muro (Piattaforme o muri)
-			- Player - bonuses
-*/
 void Controller::checkCollisions() {
-	// collisione fisica e spari di enemy e giocatore
-	bool hit = false;
-	p_shot tmp_shot, shot;
-	shot = h->getShotHead();
-	if(!player->hasInvincibility()){
-		if (time - lastphysicdamage_time > PHYSIC_DAMAGE_COOLDOWN) {
-			if((player->getX() == h->getX()) && (player->getY() == h->getY())){
-				player->decreaseLife(h->getAttack());
-				lastphysicdamage_time = time;
-			}
-			while (shot != __null && !hit) {
-				if ((player->getX() == shot->x) && (player->getY() == shot->y)) {
-					player->decreaseLife(h->getAttack());
-					lastphysicdamage_time = time;
-					h -> deleteShot(shot);
-					hit = true;
-				} else {
-					tmp_shot = shot->next;
-					shot = tmp_shot;
-				}
-			}
-			if((player->getX() == e->getX()) && (player->getY() == e->getY())){
-				player->decreaseLife(e->getAttack());
-				delete e;
-				e = __null;
-				lastphysicdamage_time = time;
-			}
+	// PHYSICAL: Player - Enemies
+		// TODO: WHILE for enemies and !hit (now only for hardEnemy)
+		// TODO: when checking with easyenemy remove it if hit
+	if (collisions->checkPhysicalDamage(h)) {
+		if (!player->hasInvincibility() && (time - player->getLastDamageTime() > player->getCooldownDamage())) {
+			player->decreaseLife(h->getAttack());
+			player->setLastDamageTime(time);
 		}
-	}// da migliorare, inoltre manca controllo contro muro e piattaforme 
+	}
+	// Player - Enemies shoots
+		// TODO: WHILE for enemies and !hit (now only for hardEnemy)
+	if (collisions->checkPlayerShootsDamage(h)) {
+		if (!player->hasInvincibility() && (time - player->getLastDamageTime() > player->getCooldownDamage())) {
+			player->decreaseLife(h->getAttack());
+			player->setLastDamageTime(time);
+		}
+	}
 
+	// Shoots between player and enemies
+		// TODO: WHILE for enemies (now only for hardEnemy)
+	if (collisions->checkEnemyShootsDamage(h)) {
+		h->decreaseLife(player->getAttack());	// TODO: check if dead
+	}
+	
+	// - Spari - Piattaforme
+	collisions->checkShootsPlatformsCollision(player, generator->getPlatforms(), generator->getNumberPlatforms());
+		// TODO: WHILE for all enemies (now only for hardEnemy)
+	collisions->checkShootsPlatformsCollision(h, generator->getPlatforms(), generator->getNumberPlatforms());
 
-	// // sparo contro nemici da sistemare, si ferma il programma
-	// p_shot shot2 = player->getShotHead();
-	// while(shot2 != nullptr){
-	// 	if(c->getX() == shot2->x && c->getY() == shot2->y){
-	// 		c->decreaseLife(player->getAttack());
-	// 		player->deleteShot(shot2);
-	// 	}else{
-	// 		tmp_shot = shot2->next;
-	// 		shot2 = tmp_shot;
-	// 	}
-	// }
+	// - EasyEnemies - Piattaforme o Muro
+	if (collisions->checkEasyEnemyCollision(e, generator->getPlatforms(), generator->getNumberPlatforms())) {
+		delete e;
+		e = __null;
+	}
 
-	// if(c->getLife() == 0){
-	// 	delete(c);
-	// 	c = __null;
-	// }
-
-	// if(e != __null && e->getX() == 0){
-	// 	delete(e);
-	// 	e = __null;
-	// }
-
-	// player - Bonuses
+	// Player - Bonuses
 	for (int i = 0; i < generator->getNumberBonuses(); i++) {
 		Bonus *bonus = generator->getBonus(i);
-		if (player->getX() == bonus->getX() && player->getY() == bonus->getY())
+		if (collisions->checkBonusColission(bonus))
 			this->checkBonusType(bonus);	// TODO: remove bonus from game
 	}
 }

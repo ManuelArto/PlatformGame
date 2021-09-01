@@ -1,7 +1,8 @@
 #include "MediumEnemy.hpp"
 
-MediumEnemy::MediumEnemy(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, char *symbol)
+MediumEnemy::MediumEnemy(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, double min_distance_shoot, char *symbol)
 						:Character(x, y, points, life, attack, cooldown_shoot, cooldown_movement, symbol) {
+	this->min_distance_shoot = min_distance_shoot;
 	lastmove_time = 0.0;
 }
 
@@ -16,7 +17,7 @@ void MediumEnemy::follow(int player_x, double time, int width, int height, bool 
 	}
 }
 
-void MediumEnemy::shoots(double time, int player_x, double distance) {
-	if (abs(x - player_x) <= distance)
+void MediumEnemy::shoots(double time, int player_x) {
+	if (abs(x - player_x) <= min_distance_shoot)
 		Character::shoots(time);
 }

@@ -14,7 +14,7 @@ class View{
 private:
 	int width, height;
 	const int DELAY = 50;
-	const int START_X_GAME = 3, START_Y_GAME = 2, GAME_WIDTH = 35, GAME_HEIGHT = 8;
+	const int START_X_GAME = 3, START_Y_GAME = 2, GAME_WIDTH = 50, GAME_HEIGHT = 8;
 	WINDOW *gamewin;
 	void printWithColor(char *label, int color_pair, WINDOW *win=stdscr);
 	void printErrorDimensions();
