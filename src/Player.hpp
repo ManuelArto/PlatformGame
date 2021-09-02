@@ -29,6 +29,6 @@ public:
 	int noOffsetX();
 	int getFixedX();
 	// OVERRIDE
-	void move(int input, int width, int height, double time, bool hasPlatformAbove=false, bool hasPlatformBelow=true);
+	void move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformAboveOne, bool hasPlatformBelow, bool hasPlatformBelowOne, bool hasPlatformRight, bool hasPlatformLeft);
 	int getX();
 };

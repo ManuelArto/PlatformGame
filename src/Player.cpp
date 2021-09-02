@@ -10,8 +10,8 @@ Player::Player(int x, int y, int points, int life, int attack, double cooldown_s
 	default_cooldown_shoot = cooldown_shoot;
 }
 
-void Player::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformBelow) {
-	Character::move(input, width, height, time, hasPlatformAbove, hasPlatformBelow);
+void Player::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformAboveOne, bool hasPlatformBelow, bool hasPlatformBelowOne, bool hasPlatformRight, bool hasPlatformLeft) {
+	Character::move(input, width, height, time, hasPlatformAbove, hasPlatformAboveOne, hasPlatformBelow, hasPlatformBelowOne, hasPlatformRight, hasPlatformLeft);
 	if ((offset > 0 && x < FIXED_X) || x > FIXED_X) {
 		offset += x-FIXED_X;
 		x = FIXED_X;

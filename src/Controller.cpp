@@ -31,19 +31,29 @@ void Controller::run() {
 		}
 
 		player->move(input, view->getGameWidth(), view->getGameHeight(), time,
-					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()), 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()));
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()),
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()-1),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY(), view->getGameHeight()),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()+1, view->getGameHeight()),
+					Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()),
+					Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()));
 		h->follow(player->getX(), player->getY(), time,
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()), 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()-1), 
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY(), view->getGameHeight()),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()+1, view->getGameHeight()),
+					Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
+					Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
 		
 		h->shoots(time, player->getX());
 
 		m->follow(player->getX(), time,
 					view->getGameWidth(), view->getGameHeight(),
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY()),
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY()));
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY(), view->getGameHeight()),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY(), view->getGameHeight()),
+					Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()),
+					Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()));
 		m->shoots(time, player->getX());
 		
 		if(e == __null) {

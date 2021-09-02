@@ -8,13 +8,14 @@ HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cool
 	findPlatform = false;
 }
 
-void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformBelow, int width, int height) {
+void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformAboveOne, bool hasPlatformBelow, bool hasPlatformBelowOne, bool hasPlatformRight, bool hasPlatformLeft, int width, int height) {
     if(time - lastmove_time > cooldown_movement) {
-        if (y < player_y)
+        if (y <= player_y-2)
 			movement = KEY_DOWN;
-        else if ((y >= player_y+2 && hasPlatformAbove) || (y == player_y+1 && !hasPlatformAbove)) {
+		else if (y == player_y+1 || (hasPlatformAbove && !hasPlatformAboveOne) && movement != KEY_DOWN) {
 			movement = KEY_UP;
-			findPlatform = false;
+			if (hasPlatformAbove)
+				findPlatform = false;
 		} else if (x != player_x && !findPlatform) {
 			movement = x < player_x ? KEY_RIGHT : KEY_LEFT;
 		} else if (findPlatform || (x == player_x && y > player_y)) {
@@ -25,7 +26,7 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
 			findPlatform = (y != player_y);
 		}
 		lastmove_time = time;
-		move(movement, width, height, time, hasPlatformAbove, hasPlatformBelow);
+		move(movement, width, height, time, hasPlatformAbove, hasPlatformAboveOne, hasPlatformBelow, hasPlatformBelowOne, hasPlatformRight, hasPlatformLeft);
     }
 }
 

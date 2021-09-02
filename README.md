@@ -52,6 +52,7 @@ COLLISIONE:
 	- Player - Bonus									✔
 	- Controllo proiettile x+-1
 NEMICI:
+	- ELIMINARE SPARI DOPO UN PO'
 	- ALLA FINE: gestire vita, punti danno ecc..
 GENERAZIONE:
 	- Generazione piattaforme per stanza (procedural generation)
