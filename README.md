@@ -52,12 +52,12 @@ COLLISIONE:
 	- Player - Bonus									✔
 	- Controllo proiettile x+-1
 NEMICI:
-	- ELIMINARE SPARI DOPO UN PO'
+	- Fixing HardEnemy
 	- ALLA FINE: gestire vita, punti danno ecc..
 GENERAZIONE:
 	- Generazione piattaforme per stanza (procedural generation)
-	- Nemici e bonus pseudo-random (spawning su punteggio/livello)
 	- Gestione nemici (spawning e instanziamento lista dinamica)
+	- Nemici e bonus pseudo-random (spawning su punteggio/livello)
 SOLO ALLA FINE:
 	- Definire GIOCO (Gestione vita punti bonus nemici ecc..)
 	- Check di tutto il codice, inserimento commenti e eventuale redefined
