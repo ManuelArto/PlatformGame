@@ -1,3 +1,5 @@
+#pragma once
+
 class Platform{
 private:
 	int x, y, lenght;
@@ -6,6 +8,8 @@ public:
 	int getX();
 	int getY();
 	int getLenght();
-	static bool checkPlatformAbove(Platform *platforms[], int numberPlatform, int player_x, int player_y);
-	static bool checkPlatformBelow(Platform *platforms[], int numberPlatform, int player_x, int player_y);
+	static bool checkPlatformAbove(Platform *platforms[], int numberPlatform, int character_x, int character_y);
+	static bool checkPlatformBelow(Platform *platforms[], int numberPlatform, int character_x, int character_y, double height);
+	static bool checkPlatformRight(Platform *platforms[], int numberPlatform, int character_x, int character_y);
+	static bool checkPlatformLeft(Platform *platforms[], int numberPlatform, int character_x, int character_y);
 };

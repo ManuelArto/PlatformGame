@@ -10,8 +10,8 @@ Player::Player(int x, int y, int points, int life, int attack, double cooldown_s
 	default_cooldown_shoot = cooldown_shoot;
 }
 
-void Player::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformBelow) {
-	Character::move(input, width, height, time, hasPlatformAbove, hasPlatformBelow);
+void Player::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformAboveOne, bool hasPlatformBelow, bool hasPlatformBelowOne, bool hasPlatformRight, bool hasPlatformLeft) {
+	Character::move(input, width, height, time, hasPlatformAbove, hasPlatformAboveOne, hasPlatformBelow, hasPlatformBelowOne, hasPlatformRight, hasPlatformLeft);
 	if ((offset > 0 && x < FIXED_X) || x > FIXED_X) {
 		offset += x-FIXED_X;
 		x = FIXED_X;
@@ -45,6 +45,9 @@ void Player::setInvincibility(double time) {
 	invincibilityActivation_time = time;
 }
 
+void Player::setLastDamageTime(double time) {
+	lastdamage_time = time;
+}
 
 int Player::getMaxNameLenght() {
 	return MAX_NAME_LENGTH;
@@ -60,6 +63,12 @@ double Player::getMinigunTimer(double time) {
 		return minigun_timer - (time - minigunActivation_time);
 	else
 		return 0.0;
+}
+double Player::getCooldownDamage() {
+	return COOLDOWN_DAMAGE;
+}
+double Player::getLastDamageTime() {
+	return lastdamage_time;
 }
 bool Player::hasInvincibility() {
 	return isInvincible;

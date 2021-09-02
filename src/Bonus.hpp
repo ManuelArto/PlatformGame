@@ -1,3 +1,5 @@
+#pragma once
+
 enum bonus_type {INVINCIBILITY, LIFE, POINTS, MINIGUN};
 
 class Bonus {

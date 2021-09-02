@@ -1,6 +1,7 @@
 #include "View.hpp"
 #include "Player.hpp"
 #include "Generator.hpp"
+#include "Collisions.hpp"
 #include "EasyEnemy.hpp"
 #include "MediumEnemy.hpp"
 #include "HardEnemy.hpp"
@@ -10,8 +11,8 @@ private:
 	View *view;
 	Player *player;
 	Generator *generator;
-	double time, lastphysicdamage_time;
-	const double PHYSIC_DAMAGE_COOLDOWN = 2.0;
+	Collisions *collisions;
+	double time;
 	int room;
 	MediumEnemy *m;
 	HardEnemy *h;

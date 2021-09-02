@@ -29,7 +29,7 @@ public:
 	Character(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, char *symbol);
 	void decreaseLife(int damage);
 	void shoots(double time);
-	void move(int input, int width, int height, double time, bool hasPlatformAbove=false, bool hasPlatformBelow=true);
+	void move(int input, int width, int height, double time, bool hasPlatformAbove=false, bool hasPlatformAboveOne=false, bool hasPlatformBelow=true, bool hasPlatformBelowOne=false, bool hasPlatformRight=false, bool hasPlatformLeft=false);
 	void updateShot(p_shot shot, int width);
 	void deleteShot(p_shot shot);
 	p_shot getShotHead();

@@ -19,31 +19,29 @@ void Character::decreaseLife(int damage) {
     this->life -= damage;
 }
 
-void Character::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformBelow) {
+void Character::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformAboveOne, bool hasPlatformBelow, bool hasPlatformBelowOne, bool hasPlatformRight, bool hasPlatformLeft) {
 	if (jumping && (time - lastjump_time > FLIGHT_TIME)) {
-		y += 1;
 		jumping = false;
-	} else if (!jumping && !hasPlatformBelow && y < height-2)
-		// FALLING
-		y += 2;
+	} else if (!jumping && !hasPlatformBelow)
+		y += hasPlatformBelowOne ? 1 : 2;
 	else {
 		switch (input) {
 			case KEY_UP:
-				if (y >= 2 && hasPlatformAbove && (hasPlatformBelow || y == height-1))
+				if (hasPlatformAbove && !hasPlatformAboveOne && hasPlatformBelow)
 					y -= 2;
-				else if (!hasPlatformAbove && !jumping && (time - lastjump_time > COOLDOWN_JUMP)) {
-					y -= 1;
+				else if (!jumping && !hasPlatformAbove) {
+					y -= hasPlatformAboveOne ? 1 : 2;
 					jumping = true;
 					lastjump_time = time;
 				}
 				break;
 			case KEY_LEFT:
-				if (x > 0 && (direction == LEFT || jumping))
+				if (x > 0 && (direction == LEFT || jumping) && !hasPlatformLeft)
 					x += (jumping && x > 1) ? -2 : -1;
 				direction = LEFT;
 				break;
 			case KEY_RIGHT:
-				if (direction == RIGHT || jumping)
+				if ((direction == RIGHT || jumping) && !hasPlatformRight)
 					x += (jumping && x < width-2) ? 2 : 1;
 				direction = RIGHT;
 				break;
@@ -58,7 +56,7 @@ void Character::move(int input, int width, int height, double time, bool hasPlat
 void Character::shoots(double time) {
 	if (time - lastshot_time > cooldown_shoot) {
 		p_shot shot = new shot_struct;
-		shot->x = direction == LEFT ? x-3 : x+1;
+		shot->x = direction == LEFT ? this->getX()-3 : this->getX()+1;
 		shot->y = y;
 		shot->direction = direction;
 		shot->next = __null;

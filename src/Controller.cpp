@@ -6,6 +6,7 @@ Controller::Controller(View *view, Generator *generator) {
 	time = 0.0;
 	room = 1;
 	player = new Player (0, view->getGameHeight()-1);
+	collisions = new Collisions(player);
 	h = new HardEnemy(view->getGameWidth()-1, view->getGameHeight()-1);
 	m = new MediumEnemy(10, view->getGameHeight()-5);
 	e = __null;
@@ -24,24 +25,35 @@ void Controller::run() {
 				quit = true;
 				break;
 			case 'e':
+				// TODO: error with x of shoot
 				player->shoots(time);
 				break;
 		}
 
 		player->move(input, view->getGameWidth(), view->getGameHeight(), time,
-					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()), 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()));
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()),
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()-1),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY(), view->getGameHeight()),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()+1, view->getGameHeight()),
+					Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()),
+					Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()));
 		h->follow(player->getX(), player->getY(), time,
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()), 
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()-1), 
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY(), view->getGameHeight()),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()+1, view->getGameHeight()),
+					Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
+					Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
 					view->getGameWidth(), view->getGameHeight());
-		h->shoots(time, player->getX(), player->getFixedX());
+		h->shoots(time, player->getX());
 
 		m->follow(player->getX(), time,
 					view->getGameWidth(), view->getGameHeight(),
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY()),
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY()));
-		m->shoots(time, player->getX(), player->getFixedX());
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY(), view->getGameHeight()),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY(), view->getGameHeight()),
+					Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()),
+					Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()));
+		m->shoots(time, player->getX());
 		
 		if(e == __null) {
 			e = new EasyEnemy(view->getGameWidth()-3, player->getY());
@@ -88,7 +100,6 @@ void Controller::run() {
 	view->exitWindow();
 }
 
-
 void Controller::printShoots(Character *c, int offset) {
 	p_shot tmp_shot, shot;
 	shot = c->getShotHead();
@@ -114,67 +125,42 @@ void Controller::checkRoomsGeneration() {
 	}
 }
 
-/* TODO: Check every collisions
-			- Contatto fisico: Player - Enemies
-			- Player (piattaforme o spari) - Spari Enemies
-			- Player spari - Enemies (piattaforme o spari)
-			- EasyEnemies - Muro (Piattaforme o muri)
-			- Player - bonuses
-*/
 void Controller::checkCollisions() {
-	// // player - HardEnemy
-	// if(!player->hasInvincibility() && (player->getX() == h->getX() && player->getY() == h->getY()))
-	// 	player->decreaseLife(h->getAttack());
+	// PHYSICAL: Player - Enemies
+		// TODO: WHILE for enemies and !hit (now only for hardEnemy)
+		// TODO: when checking with easyenemy remove it if hit
+	if (collisions->checkPhysicalDamage(h)) {
+		if (!player->hasInvincibility() && (time - player->getLastDamageTime() > player->getCooldownDamage())) {
+			player->decreaseLife(h->getAttack());
+			player->setLastDamageTime(time);
+		}
+	}
+	// Player - Enemies shoots
+		// TODO: WHILE for enemies and !hit (now only for hardEnemy)
+	if (collisions->checkPlayerShootsDamage(h)) {
+		if (!player->hasInvincibility() && (time - player->getLastDamageTime() > player->getCooldownDamage())) {
+			player->decreaseLife(h->getAttack());
+			player->setLastDamageTime(time);
+		}
+	}
 
-	// bool hit = false;
-	// // PHYSICAL COLLISION
-	// if (time - lastphysicdamage_time > PHYSIC_DAMAGE_COOLDOWN) {
-	// 	if((player->getX() == c->getX()) && (player->getY() == c->getY())){
-	// 		player->decreaseLife(c->getAttack());
-	// 		if(c == e){
-	// 			delete(e);
-	// 			e = __null;
-	// 		}
-	// 		lastphysicdamage_time = time;
-	// 	}
-	// }
+	// Shoots between player and enemies
+		// TODO: WHILE for enemies (now only for hardEnemy)
+	if (collisions->checkEnemyShootsDamage(h)) {
+		h->decreaseLife(player->getAttack());	// TODO: check if dead
+	}
+	
+	// - Spari - Piattaforme
+	collisions->checkShootsPlatformsCollision(player, generator->getPlatforms(), generator->getNumberPlatforms());
+		// TODO: WHILE for all enemies (now only for hardEnemy)
+	collisions->checkShootsPlatformsCollision(h, generator->getPlatforms(), generator->getNumberPlatforms());
 
-	// // sparo contro giocatore
-	// p_shot tmp_shot, shot;
-	// shot = c->getShotHead();
-	// while (shot != __null && !hit) {
-	// 	if ((player->getX() == shot->x) && (player->getY() == shot->y)) {
-	// 		player->decreaseLife(c->getAttack());
-	// 		c -> deleteShot(shot);
-	// 		hit = true;
-	// 	} else {
-	// 		tmp_shot = shot->next;
-	// 		shot = tmp_shot;
-	// 	}
-	// }
-
-	// // sparo contro nemici da sistemare, si ferma il programma
-	// p_shot shot2 = player->getShotHead();
-	// while(shot2 != nullptr){
-	// 	if(c->getX() == shot2->x && c->getY() == shot2->y){
-	// 		c->decreaseLife(player->getAttack());
-	// 		player->deleteShot(shot2);
-	// 	}else{
-	// 		tmp_shot = shot2->next;
-	// 		shot2 = tmp_shot;
-	// 	}
-	// }
-
-	// if(c->getLife() == 0){
-	// 	delete(c);
-	// 	c = __null;
-	// }
-
-	// if(e != __null && e->getX() == 0){
-	// 	delete(e);
-	// 	e = __null;
-	// }
-
+	// - EasyEnemies - Piattaforme o Muro
+	if (collisions->checkEasyEnemyCollision(e, generator->getPlatforms(), generator->getNumberPlatforms())) {
+		delete e;
+		e = __null;
+	}
+	
 	// Player - Bonuses
 	p_bonus iter_bonus = generator->getBonuses();
 	while (iter_bonus != __null) {

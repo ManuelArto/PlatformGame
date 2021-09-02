@@ -6,7 +6,7 @@ EasyEnemy::EasyEnemy(int x, int y, int points, int life, int attack, double cool
 }
 
 //Override
-void EasyEnemy::move(int input, int width, int height, double time, bool hasPlatformAbove, bool hasPlatformBelow) {
+void EasyEnemy::move(int input, int width, int height, double time) {
 	if(time - lastmove_time > cooldown_movement){
 		lastmove_time = time;
 		Character::move(input, width, height, time);
