@@ -22,25 +22,6 @@ PlatformGame 2021
   - minigun: aumenta frequenza di fuoco
   - points: aumenta i punti
   - Invulnerabilità: immune (cambia colore)
- 
-## REGOLE DEL GIOCO
-Giocatore:
-- Vita: 200
-- Attacco: 20
-
-Nemici:
-- Vita EasyEnemy: 20
-- Vita MediumEnemy: 40
-- Vita HardEnemy: 60
-- Attacco EasyEnemy: 10
-- Attacco MediumEnemy: 20
-- Attacco HardEnemy: 30
-
-4 Bonus: 
-- Punti: +50
-- Vita: +50
-- Minigun: 10 secondi 
-- Invincibilità: 10 secondi
 
 ## TODO
 COLLISIONE:
@@ -61,3 +42,26 @@ GENERAZIONE:
 SOLO ALLA FINE:
 	- Definire GIOCO (Gestione vita punti bonus nemici ecc..)
 	- Check di tutto il codice, inserimento commenti e eventuale redefined
+
+## Definizione del gioco 
+Giocatore:
+- Vita: 250
+- Attacco: 20
+
+Nemici:
+- Vita EasyEnemy: 20 (basta colpirlo con i proiettili per distruggerlo)
+- Vita MediumEnemy: 40
+- Vita HardEnemy: 60
+- Attacco EasyEnemy: 10
+- Attacco MediumEnemy: 20
+- Attacco HardEnemy: 30
+		Più si va avanti nel gioco più l'attacco dei nemici diventa più potente di 5
+		e la loro vita si allunga di 5
+
+4 Bonus:
+- Punti:+50
+- Vita:+50
+- Minigun: 5 secondi 
+- Invincibilità: 5 secondi
+
+Ogni 4 stanze si avanza di un livello, e ogni 3 livelli i nemici diventano sempre più potenti 
