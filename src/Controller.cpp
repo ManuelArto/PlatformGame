@@ -157,12 +157,12 @@ void Controller::checkCollisions() {
 		h->decreaseLife(player->getAttack());	// TODO: check if dead
 	}
 	
-	// - Spari - Piattaforme
+	// Spari - Piattaforme
 	collisions->checkShootsPlatformsCollision(player, generator->getPlatforms(), generator->getNumberPlatforms());
 		// TODO: WHILE for all enemies (now only for hardEnemy)
 	collisions->checkShootsPlatformsCollision(h, generator->getPlatforms(), generator->getNumberPlatforms());
 
-	// - EasyEnemies - Piattaforme o Muro
+	// EasyEnemies - Piattaforme o Muro
 	if (e) {
 		if (collisions->checkEasyEnemyCollision(e, generator->getPlatforms(), generator->getNumberPlatforms())) {
 			delete e;

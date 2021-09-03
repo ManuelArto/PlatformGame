@@ -28,14 +28,14 @@ NEMICI:
 	- Check HardEnemy for each template room
 	- ALLA FINE: gestire vita, punti danno ecc..
 GENERAZIONE:
-	- Generazione piattaforme per stanza (procedural generation)
 	- Gestione nemici (spawning e instanziamento lista dinamica)
+	- Generazione piattaforme per stanza (procedural generation)
 	- Nemici e bonus pseudo-random (spawning su punteggio/livello)
 SOLO ALLA FINE:
 	- Definire GIOCO (Gestione vita punti bonus nemici ecc..)
 	- Check di tutto il codice, inserimento commenti e eventuale redefined
 
-## Definizione del gioco 
+## Definizione del gioco
 Giocatore:
 - Vita: 250
 - Attacco: 20
@@ -53,7 +53,7 @@ MediumEnemy:
 HardEnemy:
 	- Vita: 60
 	- Attacco: 30
-	- Cooldown_movement: 0.5 	
+	- Cooldown_movement: 0.5
 	- Cooldown_shoot: 0.5
 
 4 Bonus:
