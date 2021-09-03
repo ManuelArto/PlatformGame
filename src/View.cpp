@@ -57,10 +57,10 @@ void View::printInfos(char *username, double time, int life, int points, int lev
 	this->printCommands(y_offset);
 }
 
-void View::printWithColor(char *label, int color_pair, WINDOW *win) {
-	wattron(win, COLOR_PAIR(color_pair));
+void View::printWithAttr(char *label, unsigned int attr, WINDOW *win) {
+	wattron(win, attr);
 	wprintw(win, label);
-	wattroff(win, COLOR_PAIR(color_pair));
+	wattroff(win, attr);
 }
 
 void View::printPlatform(int x, int y, int length, int offset) {
@@ -69,14 +69,15 @@ void View::printPlatform(int x, int y, int length, int offset) {
 	}
 }
 
-void View::printObject(int x, int y, const char* format, char *label, int offset, bool hasInvincibility) {
+void View::printObject(int x, int y, const char* format, char *label, int offset, bool hasInvincibility, bool isDamaged) {
 	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
 		wmove(gamewin, y+1, x+1-offset);
-		if (hasInvincibility) {
-			this->printWithColor(label, INVINCIBILITY_COLOR, gamewin);
-		} else {
-			wprintw(gamewin, format, label);
-		}
+		unsigned int attrs = 0;
+		if (isDamaged)
+			attrs = A_BLINK;
+		if (hasInvincibility)
+			attrs = attrs | COLOR_PAIR(INVINCIBILITY_COLOR);
+		this->printWithAttr(label, attrs, gamewin);
 	}
 }
 
@@ -145,7 +146,7 @@ void View::printGameOver() {
 /*
 void View::printErrorDimensions() {
 	move(0, 0);
-	this->printWithColor((char *)"ERROR DIMENSIONS:\n", ERROR_MESSAGE);
+	this->printWithAttr((char *)"ERROR DIMENSIONS:\nCOLOR_PAIR(",) ERROR_MESSAGE);
 	printw("\tMINIMUN HEIGHT: %d, MINIMUM WIDTH: %d\n\n", GAME_HEIGHT * 2, GAME_WIDTH * 3);
 	printw("\tCurrent height: %d, Current width: %d", height, width);
 	update();
@@ -154,39 +155,37 @@ void View::printErrorDimensions() {
 
 void View::printGameInfos(int level, double time, int &y_offset) {
 	move(START_Y_GAME + y_offset++, START_X_GAME + 1);
-	this->printWithColor((char *)"LEVEL: ", GAME_INFO_COLOR);
+	this->printWithAttr((char *)"LEVEL: ", COLOR_PAIR(GAME_INFO_COLOR));
 	printw("%d, %d\t\t", height, width);
-	this->printWithColor((char *)"TIME: ", GAME_INFO_COLOR);
+	this->printWithAttr((char *)"TIME: ", COLOR_PAIR(GAME_INFO_COLOR));
 	printw("%.2fs", time);
 }
 
 void View::printPlayerInfos(char *username, int life, int points, double invincibility_timer, double minigun_timer, int &y_offset) {
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-	this->printWithColor((char *)"PLAYER: ", PLAYER_INFO_COLOR);
+	this->printWithAttr((char *)"PLAYER: ", COLOR_PAIR(PLAYER_INFO_COLOR));
 	printw("\t%s", username);
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-	this->printWithColor((char *)"LIFE: ", PLAYER_INFO_COLOR);
+	this->printWithAttr((char *)"LIFE: ", COLOR_PAIR(PLAYER_INFO_COLOR));
 	printw("\t%d", life);
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-	this->printWithColor((char *)"POINTS: ", PLAYER_INFO_COLOR);
+	this->printWithAttr((char *)"POINTS: ", COLOR_PAIR(PLAYER_INFO_COLOR));
 	printw("\t%d", points);
 	if (invincibility_timer > 0.0) {
 		move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-		this->printWithColor((char *)"I: ", PLAYER_INFO_COLOR);
+		this->printWithAttr((char *)"I: ", COLOR_PAIR(PLAYER_INFO_COLOR));
 		printw("%.2fs", invincibility_timer);
 	}
 	if (minigun_timer > 0.0) {
 		move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-		this->printWithColor((char *)"G: ", PLAYER_INFO_COLOR);
+		this->printWithAttr((char *)"G: ", COLOR_PAIR(PLAYER_INFO_COLOR));
 		printw("%.2fs", minigun_timer);
 	}
 }
 
 void View::printLegenda(int &y_offset) {
-	attron(A_UNDERLINE);
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-	printw("Legenda:");
-	attroff(A_UNDERLINE);
+	this->printWithAttr((char *)"Legenda: ", A_UNDERLINE);
 	printw("\t\t\tG = Minigun");
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
 	printw("<-- = EasyEnemy\t\t");
@@ -200,10 +199,8 @@ void View::printLegenda(int &y_offset) {
 }
 
 void View::printCommands(int &y_offset) {
-	attron(A_UNDERLINE);
 	move(START_Y_GAME + GAME_HEIGHT + 3, START_X_GAME + 1);
-	printw("Commands:"); 
-	attroff(A_UNDERLINE);
+	this->printWithAttr((char *)"Commands: ", A_UNDERLINE);
 	move(START_Y_GAME + GAME_HEIGHT + 4, START_X_GAME + 1);
 	printw("e = shoot || Arrows = move || q = quit"); 
 }
