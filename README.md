@@ -24,17 +24,11 @@ PlatformGame 2021
   - Invulnerabilità: immune (cambia colore)
 
 ## TODO
-COLLISIONE:
-	- Contatto fisico: Player - Enemies					✔
-	- Spari between shooter and character				✔	
-	- Spari - Piattaforme								✔
-	- EasyEnemies - Piattaforme o Muro					✔
-	- Spari - Spari										
-	- Player - Bonus									✔
-	- Controllo proiettile x+-1
 NEMICI:
-	- Fixing HardEnemy
+	- Check HardEnemy for each template room
 	- ALLA FINE: gestire vita, punti danno ecc..
+BONUS:
+	- Move bonus_timers from player to bonus class
 GENERAZIONE:
 	- Generazione piattaforme per stanza (procedural generation)
 	- Gestione nemici (spawning e instanziamento lista dinamica)
@@ -48,15 +42,21 @@ Giocatore:
 - Vita: 250
 - Attacco: 20
 
-Nemici:
-- Vita EasyEnemy: 20 (basta colpirlo con i proiettili per distruggerlo)
-- Vita MediumEnemy: 40
-- Vita HardEnemy: 60
-- Attacco EasyEnemy: 10
-- Attacco MediumEnemy: 20
-- Attacco HardEnemy: 30
-		Più si va avanti nel gioco più l'attacco dei nemici diventa più potente di 5
-		e la loro vita si allunga di 5
+EasyEnemy:
+	- Vita: 20
+	- Attacco: 10
+	- Cooldown_spawning: 5s (ogni 3 livelli si decrementa di 1 secondo)
+	- Cooldown_movement: 0.2s (ogni 3 livelli si decrementa di 0.1, fino ad arrivare a 0)
+MediumEnemy:
+	- Vita: 40
+	- Attacco: 20
+	- Cooldown_movement: 0.5
+	- Cooldown_shoot: 0.5
+HardEnemy:
+	- Vita: 60
+	- Attacco: 30
+	- Cooldown_movement: 0.5 	
+	- Cooldown_shoot: 0.5
 
 4 Bonus:
 - Punti:+50
@@ -64,4 +64,5 @@ Nemici:
 - Minigun: 5 secondi 
 - Invincibilità: 5 secondi
 
-Ogni 4 stanze si avanza di un livello, e ogni 3 livelli i nemici diventano sempre più potenti 
+Ogni 4 stanze si avanza di un livello, e ogni 3 livelli i nemici diventano sempre più potenti (attacco +5, vita +5)
+Ogni 3 livelli minigun e invincibilità aumentano di un secondo
