@@ -12,7 +12,7 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
     if(time - lastmove_time > cooldown_movement) {
         if (y <= player_y-2)
 			movement = KEY_DOWN;
-		else if (y == player_y+1 || (hasPlatformAbove && !hasPlatformAboveOne) && movement != KEY_DOWN) {
+		else if (y == player_y+1 || (y > player_y+1 && hasPlatformAbove && !hasPlatformAboveOne) && movement != KEY_DOWN) {
 			movement = KEY_UP;
 			if (hasPlatformAbove)
 				findPlatform = false;

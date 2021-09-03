@@ -33,7 +33,7 @@ public:
 	void updateShot(p_shot shot, int width);
 	void deleteShot(p_shot shot);
 	p_shot getShotHead();
-	int getX();
+	virtual int getX();
 	int getY();
 	int getLife();
 	int getPoints();

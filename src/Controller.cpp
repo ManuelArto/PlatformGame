@@ -25,7 +25,6 @@ void Controller::run() {
 				quit = true;
 				break;
 			case 'e':
-				// TODO: error with x of shoot
 				player->shoots(time);
 				break;
 		}
@@ -67,7 +66,7 @@ void Controller::run() {
 
 		// PRINT ENTITIES
 		view->printObject(player->noOffsetX(), player->getY(), (char *)"%s", player->getSymbol(), 0, player->hasInvincibility());
-		this->printShoots(player, 0);
+		this->printShoots(player, player->getOffset());
 		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol(), player->getOffset());
 		this->printShoots(h, player->getOffset());
 		view->printObject(m->getX(), m->getY(), (char *)"%s", (char *) m->getSymbol(), player->getOffset());
