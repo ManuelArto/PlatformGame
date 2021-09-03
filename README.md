@@ -27,8 +27,6 @@ PlatformGame 2021
 NEMICI:
 	- Check HardEnemy for each template room
 	- ALLA FINE: gestire vita, punti danno ecc..
-BONUS:
-	- Move bonus_timers from player to bonus class
 GENERAZIONE:
 	- Generazione piattaforme per stanza (procedural generation)
 	- Gestione nemici (spawning e instanziamento lista dinamica)

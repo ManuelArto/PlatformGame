@@ -189,7 +189,7 @@ void Controller::checkCollisions() {
 void Controller::checkBonusType(Bonus *bonus) {
 	switch (bonus->getBonusType()) {
 		case INVINCIBILITY:
-			player->setInvincibility(time);
+			player->setInvincibility(time, bonus->getInvincibilityTimer());
 			break;
 		case LIFE:
 			player->increaseLife(bonus->getBonusLife());
@@ -198,7 +198,7 @@ void Controller::checkBonusType(Bonus *bonus) {
 			player->increasePoints(bonus->getBonusPoints());
 			break;
 		case MINIGUN:
-			player->setCooldownShoot(bonus->getMinigunCooldown(), time);
+			player->setCooldownShoot(bonus->getMinigunCooldown(), time, bonus->getMinigunTimer());
 			break;
 	}
 }

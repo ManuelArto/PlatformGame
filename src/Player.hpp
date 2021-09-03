@@ -15,8 +15,10 @@ public:
 	void increaseLife(int bonus_life);
 	void increasePoints(int bonus_points);
 	void checkBonusesTimer(double time);
-	void setCooldownShoot(double cooldown_shoot, double time);
-	void setInvincibility(double time);
+	void setCooldownShoot(double cooldown_shoot, double time, double timer);
+	void setInvincibility(double time, double timer);
+	void setInvincibilityTimer(double time);
+	void setMinigunTimer(double time);
 	void setLastDamageTime(double time);
 	int getMaxNameLenght();
 	double getInvincibilityTimer(double time);

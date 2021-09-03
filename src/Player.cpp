@@ -5,8 +5,6 @@ Player::Player(int x, int y, int points, int life, int attack, double cooldown_s
 	name = new char[MAX_NAME_LENGTH];
 	offset = 0;
 	isInvincible = false;
-	invincibility_timer = 5.0;
-	minigun_timer = 5.0;
 	default_cooldown_shoot = cooldown_shoot;
 }
 
@@ -35,19 +33,23 @@ void Player::increasePoints(int bonus_points) {
 	points += bonus_points;
 }
 
-void Player::setCooldownShoot(double minigun_cooldown, double time) {
+void Player::setCooldownShoot(double minigun_cooldown, double time, double timer) {
 	this->cooldown_shoot = minigun_cooldown;
+	minigun_timer = timer;
 	minigunActivation_time = time;
 }
 
-void Player::setInvincibility(double time) {
+void Player::setInvincibility(double time, double timer) {
 	isInvincible = true;
+	invincibility_timer = timer;
 	invincibilityActivation_time = time;
 }
 
 void Player::setLastDamageTime(double time) {
 	lastdamage_time = time;
 }
+
+// GETTER
 
 int Player::getMaxNameLenght() {
 	return MAX_NAME_LENGTH;
@@ -79,6 +81,7 @@ int Player::getOffset() {
 int Player::noOffsetX() {
 	return x;
 }
+// OVERRIDE
 int Player::getX() {
 	return offset+Character::getX();
 }
