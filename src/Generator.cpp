@@ -55,17 +55,8 @@ void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
 void Generator::addBonus(Bonus *bonus) {
 	p_bonus tmp = new bonus_struct;
 	tmp->bonus = bonus;
-	tmp->next = __null;
-
-	if (bonuses == __null)
-		bonuses = tmp;
-	else {
-		p_bonus iter = bonuses;
-		while (iter->next != __null)
-			iter = iter->next;
-		iter->next = tmp;
-		tmp->prev = iter;
-	}
+	tmp->next = bonuses;
+	bonuses = tmp;
 }
 
 void Generator::createNewBonuses(int room, int width) {
@@ -81,7 +72,7 @@ void Generator::createNewBonuses(int room, int width) {
 }
 
 void Generator::deleteBonus(Bonus *bonus) {
-	p_bonus iter = bonuses;
+	p_bonus prev, iter = bonuses;
 	bool found = false;
 	while (!found) {
 		if (iter->bonus == bonus) {
@@ -89,11 +80,12 @@ void Generator::deleteBonus(Bonus *bonus) {
 				bonuses = iter->next;
 				delete iter;
 			} else {
-				iter->prev->next = iter->next;
+				prev->next = iter->next;
 				delete iter;
 			}
 			found = true;
 		} else {
+			prev = iter;
 			iter = iter->next;
 		}
 	}

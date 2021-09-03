@@ -7,7 +7,7 @@ enum RoomPosition {LEFT_ROOM, RIGHT_ROOM};
 
 struct bonus_struct{
 	Bonus *bonus;
-	bonus_struct *next, *prev;
+	bonus_struct *next;
 };
 typedef bonus_struct *p_bonus;
 
