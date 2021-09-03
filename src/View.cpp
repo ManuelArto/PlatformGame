@@ -185,7 +185,7 @@ void View::printPlayerInfos(char *username, int life, int points, double invinci
 
 void View::printLegenda(int &y_offset) {
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
-	this->printWithAttr((char *)"Legenda: ", A_UNDERLINE);
+	this->printWithAttr((char *)"Legenda:", A_UNDERLINE);
 	printw("\t\t\tG = Minigun");
 	move(START_Y_GAME + y_offset++, START_X_GAME + GAME_WIDTH + 8);
 	printw("<-- = EasyEnemy\t\t");
@@ -200,7 +200,7 @@ void View::printLegenda(int &y_offset) {
 
 void View::printCommands(int &y_offset) {
 	move(START_Y_GAME + GAME_HEIGHT + 3, START_X_GAME + 1);
-	this->printWithAttr((char *)"Commands: ", A_UNDERLINE);
+	this->printWithAttr((char *)"Commands:", A_UNDERLINE);
 	move(START_Y_GAME + GAME_HEIGHT + 4, START_X_GAME + 1);
 	printw("e = shoot || Arrows = move || q = quit"); 
 }
