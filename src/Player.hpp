@@ -4,7 +4,7 @@
 
 class Player: public Character {
 private:
-	const int MAX_NAME_LENGTH = 10, FIXED_X = 15, COOLDOWN_DAMAGE = 1.0;
+	const int MAX_NAME_LENGTH = 10, FIXED_X = 20, COOLDOWN_DAMAGE = 1.0;
 	int offset;
 	double default_cooldown_shoot, lastdamage_time;
 	double invincibility_timer, invincibilityActivation_time, minigun_timer, minigunActivation_time;
@@ -21,8 +21,7 @@ public:
 	int getMaxNameLenght();
 	double getInvincibilityTimer(double time);
 	double getMinigunTimer(double time);
-	double getCooldownDamage();
-	double getLastDamageTime();
+	bool isDamaged(double time);
 	bool hasInvincibility();
 	char* getName();
 	int getOffset();

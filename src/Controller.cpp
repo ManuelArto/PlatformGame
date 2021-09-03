@@ -8,7 +8,7 @@ Controller::Controller(View *view, Generator *generator) {
 	player = new Player (0, view->getGameHeight()-1);
 	collisions = new Collisions(player);
 	h = new HardEnemy(view->getGameWidth()-1, view->getGameHeight()-1);
-	m = new MediumEnemy(10, view->getGameHeight()-5);
+	m = new MediumEnemy(10, view->getGameHeight()-4);
 	e = __null;
 }
 
@@ -55,7 +55,7 @@ void Controller::run() {
 		m->shoots(time, player->getX());
 		
 		if(e == __null) {
-			e = new EasyEnemy(view->getGameWidth()-3, player->getY());
+			e = new EasyEnemy(view->getGameWidth()+player->getOffset()-3, player->getY());
 		}
 		e->move(KEY_LEFT, view->getGameWidth(), view->getGameHeight(), time);
 
@@ -65,7 +65,7 @@ void Controller::run() {
 		view->printInfos(player->getName(), time, player->getLife(), player->getPoints(), room, player->getInvincibilityTimer(time), player->getMinigunTimer(time));
 
 		// PRINT ENTITIES
-		view->printObject(player->noOffsetX(), player->getY(), (char *)"%s", player->getSymbol(), 0, player->hasInvincibility());
+		view->printObject(player->noOffsetX(), player->getY(), (char *)"%s", player->getSymbol(), 0, player->hasInvincibility(), player->isDamaged(time));
 		this->printShoots(player, player->getOffset());
 		view->printObject(h->getX(), h->getY(), (char *)"%s", (char *) h->getSymbol(), player->getOffset());
 		this->printShoots(h, player->getOffset());
@@ -125,27 +125,35 @@ void Controller::checkRoomsGeneration() {
 }
 
 void Controller::checkCollisions() {
+	// PHYSICAL: Player - EasyEnemy
+	if (collisions->checkEasyEnemyPhysicalDamage(e)) {
+		if (!player->hasInvincibility() && !player->isDamaged(time)) {
+			player->decreaseLife(e->getAttack());
+			player->setLastDamageTime(time);
+		}
+		delete e;
+		e = __null;
+	}
 	// PHYSICAL: Player - Enemies
-		// TODO: WHILE for enemies and !hit (now only for hardEnemy)
-		// TODO: when checking with easyenemy remove it if hit
+		// TODO: WHILE for enemies (now only for hardEnemy)
 	if (collisions->checkPhysicalDamage(h)) {
-		if (!player->hasInvincibility() && (time - player->getLastDamageTime() > player->getCooldownDamage())) {
+		if (!player->hasInvincibility() && !player->isDamaged(time)) {
 			player->decreaseLife(h->getAttack());
 			player->setLastDamageTime(time);
 		}
 	}
 	// Player - Enemies shoots
-		// TODO: WHILE for enemies and !hit (now only for hardEnemy)
-	if (collisions->checkPlayerShootsDamage(h)) {
-		if (!player->hasInvincibility() && (time - player->getLastDamageTime() > player->getCooldownDamage())) {
+		// TODO: WHILE for enemies (now only for hardEnemy)
+	if (collisions->checkEnemyShoots(h)) {
+		if (!player->hasInvincibility() && !player->isDamaged(time)) {
 			player->decreaseLife(h->getAttack());
 			player->setLastDamageTime(time);
 		}
 	}
 
-	// Shoots between player and enemies
+	// Player shoots - Enemies
 		// TODO: WHILE for enemies (now only for hardEnemy)
-	if (collisions->checkEnemyShootsDamage(h)) {
+	if (collisions->checkPlayerShoots(h)) {
 		h->decreaseLife(player->getAttack());	// TODO: check if dead
 	}
 	
@@ -155,10 +163,16 @@ void Controller::checkCollisions() {
 	collisions->checkShootsPlatformsCollision(h, generator->getPlatforms(), generator->getNumberPlatforms());
 
 	// - EasyEnemies - Piattaforme o Muro
-	if (collisions->checkEasyEnemyCollision(e, generator->getPlatforms(), generator->getNumberPlatforms())) {
-		delete e;
-		e = __null;
+	if (e) {
+		if (collisions->checkEasyEnemyCollision(e, generator->getPlatforms(), generator->getNumberPlatforms())) {
+			delete e;
+			e = __null;
+		}
 	}
+
+	// Player shoots - Enemies shoots
+		// TODO: WHILE for all enemies (now only for hardEnemy)
+	collisions->checkShootsCollision(h);
 	
 	// Player - Bonuses
 	p_bonus iter_bonus = generator->getBonuses();

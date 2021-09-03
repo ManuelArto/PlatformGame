@@ -8,11 +8,16 @@ bool Collisions::checkPhysicalDamage(Character *enemy) {
 	return (player->getX() == enemy->getX()) && (player->getY() == enemy->getY());
 }
 
-bool Collisions::checkEnemyShootsDamage(Character *enemy) {
+bool Collisions::checkEasyEnemyPhysicalDamage(Character *enemy) {
+	bool sameY = (enemy->getY() == player->getY());
+	return sameY && (enemy->getX() == player->getX() || enemy->getX() == player->getX()-1);
+}
+
+bool Collisions::checkEnemyShoots(Character *enemy) {
 	return this->checkShootsDamage(enemy, player, player->getX());
 }
 
-bool Collisions::checkPlayerShootsDamage(Character *enemy) {
+bool Collisions::checkPlayerShoots(Character *enemy) {
 	return this->checkShootsDamage(player, enemy, enemy->getX());
 }
 
@@ -70,7 +75,7 @@ bool Collisions::checkEasyEnemyCollision(EasyEnemy *enemy, Platform *platforms[]
 		hit = true;
 	while (i < numberPlatforms && !hit) {
 		if (enemy->getY() == platforms[i]->getY()) {
-			if (enemy->getX() == platforms[i]->getX()-1 || enemy->getX() == (platforms[i]->getX()+platforms[i]->getLenght()+1))
+			if (enemy->getX() >= platforms[i]->getX() && enemy->getX() <= platforms[i]->getX()+platforms[i]->getLenght())
 				hit = true;
 		}
 		i++;
@@ -78,7 +83,34 @@ bool Collisions::checkEasyEnemyCollision(EasyEnemy *enemy, Platform *platforms[]
 	return hit;
 }
 
-// bool checkShootsCollision(p_shot shot) {}
+void Collisions::checkShootsCollision(Character *enemy) {
+	p_shot tmp_shot_player, shot_player = player->getShotHead();
+	while (shot_player != __null) {
+		tmp_shot_player = shot_player->next;
+		p_shot tmp_shot_enemy, shot_enemy = enemy->getShotHead();
+		while (shot_enemy != __null) {
+			tmp_shot_enemy = shot_enemy->next;
+			if (shot_player->y == shot_enemy->y) {
+				switch (shot_player->direction) {
+				case LEFT:
+					if (shot_player->x == shot_enemy->x || shot_player->x == shot_enemy->x-1) {
+						player->deleteShot(shot_player);
+						enemy->deleteShot(shot_enemy);
+					}
+					break;
+				case RIGHT:
+					if (shot_player->x == shot_enemy->x-2 || shot_player->x == shot_enemy->x-1) {
+						player->deleteShot(shot_player);
+						enemy->deleteShot(shot_enemy);
+					}
+					break;
+				}
+			}
+			shot_enemy = tmp_shot_enemy;
+		}
+		shot_player = tmp_shot_player;
+	}
+}
 
 bool Collisions::checkBonusColission(Bonus *bonus) {
 	return (player->getX() == bonus->getX()) && (player->getY() == bonus->getY());

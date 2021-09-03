@@ -64,11 +64,8 @@ double Player::getMinigunTimer(double time) {
 	else
 		return 0.0;
 }
-double Player::getCooldownDamage() {
-	return COOLDOWN_DAMAGE;
-}
-double Player::getLastDamageTime() {
-	return lastdamage_time;
+bool Player::isDamaged(double time) {
+	return (time - lastdamage_time <= COOLDOWN_DAMAGE);
 }
 bool Player::hasInvincibility() {
 	return isInvincible;

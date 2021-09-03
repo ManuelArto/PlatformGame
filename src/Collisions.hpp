@@ -12,10 +12,11 @@ private:
 public:
 	Collisions(Player *player);
 	bool checkPhysicalDamage(Character *enemy);
-	bool checkEnemyShootsDamage(Character *enemy);
-	bool checkPlayerShootsDamage(Character *enemy);
-	void checkShootsPlatformsCollision(Character* character, Platform *platforms[], int numberPlatforms);
+	bool checkEasyEnemyPhysicalDamage(Character *enemy);
+	bool checkEnemyShoots(Character *enemy);
+	bool checkPlayerShoots(Character *enemy);
+	void checkShootsPlatformsCollision(Character *character, Platform *platforms[], int numberPlatforms);
 	bool checkEasyEnemyCollision(EasyEnemy *enemy, Platform *platforms[], int numberPlatforms);
-	// bool checkShootsCollision(p_shot shot);
+	void checkShootsCollision(Character *enemy);
 	bool checkBonusColission(Bonus *bonus);
 };
