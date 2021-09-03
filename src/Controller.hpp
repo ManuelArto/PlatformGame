@@ -2,9 +2,6 @@
 #include "Player.hpp"
 #include "Generator.hpp"
 #include "Collisions.hpp"
-#include "EasyEnemy.hpp"
-#include "MediumEnemy.hpp"
-#include "HardEnemy.hpp"
 
 class Controller {
 private:
@@ -12,17 +9,16 @@ private:
 	Player *player;
 	Generator *generator;
 	Collisions *collisions;
+	EasyEnemy *e; MediumEnemy *m; HardEnemy *h;		// Used for iteration
 	double time;
 	int room;
-	MediumEnemy *m;
-	HardEnemy *h;
-	EasyEnemy *e;
-	void initSetup();
-	void initGeneration();
+	void printShoots(Character *c, int offset);
+	void manageEnemies();
 	void checkRoomsGeneration();
 	void checkCollisions();
 	void checkBonusType(Bonus *bonus);
-	void printShoots(Character *c, int offset);
+	void initSetup();
+	void initGeneration();
 public:
 	Controller(View *view, Generator *generator);
 	void run();

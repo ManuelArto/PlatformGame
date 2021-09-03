@@ -51,16 +51,18 @@ void Collisions::checkShootsPlatformsCollision(Character *character, Platform *p
 	while (shot != __null) {
 		tmp_shot = shot->next;
 		for (int i = 0; i < numberPlatforms; i++) {
-			if (shot->y == platforms[i]->getY()) {
-				switch (shot->direction) {
-				case LEFT:
-					if (shot->x >= platforms[i]->getX() && shot->x <= platforms[i]->getX()+platforms[i]->getLenght())
-						character->deleteShot(shot);
-					break;
-				case RIGHT:
-					if (shot->x+3 >= platforms[i]->getX() && shot->x+3 <= platforms[i]->getX()+platforms[i]->getLenght())
-						character->deleteShot(shot);
-					break;
+			if (platforms[i] != __null) {
+				if (shot->y == platforms[i]->getY()) {
+					switch (shot->direction) {
+					case LEFT:
+						if (shot->x >= platforms[i]->getX() && shot->x <= platforms[i]->getX()+platforms[i]->getLenght())
+							character->deleteShot(shot);
+						break;
+					case RIGHT:
+						if (shot->x+3 >= platforms[i]->getX() && shot->x+3 <= platforms[i]->getX()+platforms[i]->getLenght())
+							character->deleteShot(shot);
+						break;
+					}
 				}
 			}
 		}
@@ -74,9 +76,11 @@ bool Collisions::checkEasyEnemyCollision(EasyEnemy *enemy, Platform *platforms[]
 	if (enemy->getX() == 0)		// Collision with WALL
 		hit = true;
 	while (i < numberPlatforms && !hit) {
-		if (enemy->getY() == platforms[i]->getY()) {
-			if (enemy->getX() >= platforms[i]->getX() && enemy->getX() <= platforms[i]->getX()+platforms[i]->getLenght())
-				hit = true;
+		if (platforms[i] != __null) {
+			if (enemy->getY() == platforms[i]->getY()) {
+				if (enemy->getX() >= platforms[i]->getX() && enemy->getX() <= platforms[i]->getX()+platforms[i]->getLenght())
+					hit = true;
+			}
 		}
 		i++;
 	}

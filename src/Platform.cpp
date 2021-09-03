@@ -23,9 +23,11 @@ bool Platform::checkPlatformAbove(Platform *platforms[], int numberPlatform, int
 	int i = 0;
 	while (i < numberPlatform && !hasPlatformAbove) {
 		Platform *p = platforms[i];
-		if (character_y == p->y+1) {
-			if (character_x >= p->x && character_x < p->x+p->lenght)
-				hasPlatformAbove = true;
+		if (p != __null) {
+			if (character_y == p->y+1) {
+				if (character_x >= p->x && character_x < p->x+p->lenght)
+					hasPlatformAbove = true;
+			}
 		}
 		i++;
 	}
@@ -37,9 +39,11 @@ bool Platform::checkPlatformBelow(Platform *platforms[], int numberPlatform, int
 	int i = 0;
 	while (i < numberPlatform && !hasPlatformBelow) {
 		Platform *p = platforms[i];
-		if (character_y == p->y-1) {
-			if (character_x >= p->x && character_x < p->x+p->lenght)
-				hasPlatformBelow = true;
+		if (p != __null) {
+			if (character_y == p->y-1) {
+				if (character_x >= p->x && character_x < p->x+p->lenght)
+					hasPlatformBelow = true;
+			}
 		}
 		i++;
 	}
@@ -52,8 +56,10 @@ bool Platform::checkPlatformRight(Platform *platforms[], int numberPlatform, int
 	int i = 0;
 	while (i < numberPlatform && !hasPlatformRight) {
 		Platform *p = platforms[i];
-		if (character_y == p->y && character_x == p->x-1) {
-			hasPlatformRight = true;
+		if (p != __null) {
+			if (character_y == p->y && character_x == p->x-1) {
+				hasPlatformRight = true;
+			}
 		}
 		i++;
 	}
@@ -65,8 +71,10 @@ bool Platform::checkPlatformLeft(Platform *platforms[], int numberPlatform, int 
 	int i = 0;
 	while (i < numberPlatform && !hasPlatformLeft) {
 		Platform *p = platforms[i];
-		if (character_y == p->y && character_x == p->x+p->lenght) {
-			hasPlatformLeft = true;
+		if (p != __null) {
+			if (character_y == p->y && character_x == p->x+p->lenght) {
+				hasPlatformLeft = true;
+			}
 		}
 		i++;
 	}

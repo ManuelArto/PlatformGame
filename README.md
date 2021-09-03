@@ -28,7 +28,6 @@ NEMICI:
 	- Check HardEnemy for each template room
 	- ALLA FINE: gestire vita, punti danno ecc..
 GENERAZIONE:
-	- Gestione nemici (spawning e instanziamento lista dinamica)
 	- Generazione piattaforme per stanza (procedural generation)
 	- Nemici e bonus pseudo-random (spawning su punteggio/livello)
 SOLO ALLA FINE:
