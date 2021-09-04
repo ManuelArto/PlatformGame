@@ -9,7 +9,6 @@ private:
 	Player *player;
 	Generator *generator;
 	Collisions *collisions;
-	EasyEnemy *e; MediumEnemy *m; HardEnemy *h;		// Used for iteration
 	double time;
 	int room;
 	void printShoots(Character *c, int offset);

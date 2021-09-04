@@ -218,7 +218,7 @@ void Controller::checkCollisions() {
 		if (collisions->checkPlayerShoots(m)) {
 			m->decreaseLife(player->getAttack());
 			if (m->getLife() <= 0) {
-				player->increasePoints(h->getPoints());
+				player->increasePoints(m->getPoints());
 				generator->removeMediumEnemy(m);
 			}
 		}
@@ -229,7 +229,7 @@ void Controller::checkCollisions() {
 		if (collisions->checkPlayerShoots(e)) {
 			e->decreaseLife(player->getAttack());
 			if (e->getLife() <= 0) {
-				player->increasePoints(h->getPoints());
+				player->increasePoints(e->getPoints());
 				generator->removeEasyEnemy(e);
 			}
 		}
