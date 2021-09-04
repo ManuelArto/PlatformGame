@@ -24,19 +24,13 @@ PlatformGame 2021
   - Invulnerabilità: immune (cambia colore)
 
 ## TODO
-PUNTI:
-	- Add points when kill enemies
+LIVELLO
 NEMICI:
 	- Check HardEnemy for each template room
 	- ALLA FINE: gestire vita, punti danno ecc..
 GENERAZIONE:
 	- Nemici su piattaforma random
 	- Bonus su piattaforme random, random per stanza (1: 50%, 2: 20%, 3: 10%, 0: 20%)
-VIEW:
-	- Room
-	- Modifica Screen iniziale (dove inserisci nome)
-	- Modifica Screen finale
-	- Countdown
 SOLO ALLA FINE:
 	- Check di tutto il codice, inserimento commenti e eventuale redefined
 

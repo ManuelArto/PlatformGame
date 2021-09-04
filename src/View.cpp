@@ -49,10 +49,10 @@ void View::drawBorders() {
 	box(gamewin, 0, 0);
 }
 
-void View::printInfos(char *username, double time, int life, int points, int level, double invincibility_timer, double minigun_timer) {
+void View::printInfos(char *username, int room, double time, int life, int points, int level, double invincibility_timer, double minigun_timer) {
 	// y_offset is passed by reference
 	int y_offset = -1;
-	this->printGameInfos(level, time, y_offset);
+	this->printGameInfos(level, room, time, y_offset);
 	this->printPlayerInfos(username, life, points, invincibility_timer, minigun_timer, y_offset);
 	y_offset = 6;
 	this->printLegenda(y_offset);
@@ -169,10 +169,12 @@ void View::printErrorDimensions() {
 }
 */
 
-void View::printGameInfos(int level, double time, int &y_offset) {
+void View::printGameInfos(int level, int room, double time, int &y_offset) {
 	move(START_Y_GAME + y_offset++, START_X_GAME + 1);
 	this->printWithAttr((char *)"LEVEL: ", COLOR_PAIR(GAME_INFO_COLOR));
 	printw("%d\t\t", 1);
+	this->printWithAttr((char *)"ROOM: ", COLOR_PAIR(GAME_INFO_COLOR));
+	printw("%d\t\t", room);
 	this->printWithAttr((char *)"TIME: ", COLOR_PAIR(GAME_INFO_COLOR));
 	printw("%.2fs", time);
 }

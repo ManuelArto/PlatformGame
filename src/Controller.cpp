@@ -66,7 +66,7 @@ void Controller::run() {
 		// DRAW MAP
 		view->clearWindow();
 		view->drawBorders();
-		view->printInfos(player->getName(), time, player->getLife(), player->getPoints(), room, player->getInvincibilityTimer(time), player->getMinigunTimer(time));
+		view->printInfos(player->getName(), room, time, player->getLife(), player->getPoints(), room, player->getInvincibilityTimer(time), player->getMinigunTimer(time));
 
 		// PRINT ENTITIES
 		view->printObject(player->noOffsetX(), player->getY(), (char *)"%s", player->getSymbol(), 0, player->hasInvincibility(), player->isDamaged(time));

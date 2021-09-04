@@ -18,7 +18,7 @@ private:
 	WINDOW *gamewin;
 	void printWithAttr(char *label, unsigned int attr, WINDOW *win=stdscr);
 	void printErrorDimensions();
-	void printGameInfos(int level, double time, int &y_offset);
+	void printGameInfos(int level, int room, double time, int &y_offset);
 	void printPlayerInfos(char *username, int life, int points, double invincibility_timer, double minigun_timer, int &y_offset);
 	void printLegenda(int &y_offset);
 	void printCommands(int &y_offset);
@@ -27,7 +27,7 @@ public:
 	void checkDimensions();
 	void askName(char *setName, const int MAX_NAME_LENGHT);
 	void drawBorders();
-	void printInfos(char* username, double time, int life, int points, int level, double invincibility_timer, double minigun_timer);
+	void printInfos(char* username, int room, double time, int life, int points, int level, double invincibility_timer, double minigun_timer);
 	void printPlatform(int x, int y, int length, int offset);
 	void printObject(int x, int y, const char *format, char *label, int offset, bool hasInvincibility=false, bool isDamaged=false);
 	void printObject(int x, int y, const char *format, int label, int offset);
