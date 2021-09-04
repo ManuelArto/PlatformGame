@@ -2,135 +2,110 @@
 
 #include "Platform.hpp"
 
-inline void getRoomPlatforms(int number_template, int offset, Platform *newPlatformsRoom[], const int MAX_PLATFORMS_FOR_ROOM) {
+const int NUMBER_TEMPLATES = 10;
 
-	int i = 0;
+inline void storeNewRoomPlatforms(Platform *platforms[], int index_offset, int number_template, int offset, const int MAX_PLATFORMS_FOR_ROOM) {
+
+	int i = index_offset;
 	switch (number_template) {
 	case 0:
-		newPlatformsRoom[i++] = new Platform(3+offset, 7, 7);
-		newPlatformsRoom[i++] = new Platform(8+offset, 5, 7);
-		newPlatformsRoom[i++] = new Platform(14+offset, 3, 8);
-		newPlatformsRoom[i++] = new Platform(23+offset, 5, 9);
-		newPlatformsRoom[i++] = new Platform(32+offset, 7, 8);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(3+offset, 6, 7);
+		platforms[i++] = new Platform(8+offset, 4, 7);
+		platforms[i++] = new Platform(14+offset, 2, 8);
+		platforms[i++] = new Platform(23+offset, 4, 9);
+		platforms[i++] = new Platform(32+offset, 6, 8);
 		break;
 	case 1:
-		newPlatformsRoom[i++] = new Platform(5+offset, 7, 3);
-		newPlatformsRoom[i++] = new Platform(9+offset, 5, 5);
-		newPlatformsRoom[i++] = new Platform(16+offset, 6, 5);
-		newPlatformsRoom[i++] = new Platform(22+offset, 4, 6);
-		newPlatformsRoom[i++] = new Platform(28+offset, 2, 6);
-		newPlatformsRoom[i++] = new Platform(33+offset, 6, 6);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(5+offset, 6, 3);
+		platforms[i++] = new Platform(9+offset, 4, 5);
+		platforms[i++] = new Platform(16+offset, 5, 5);
+		platforms[i++] = new Platform(22+offset, 3, 6);
+		platforms[i++] = new Platform(28+offset, 1, 6);
+		platforms[i++] = new Platform(33+offset, 5, 6);
 		break;
 	case 2:
-		newPlatformsRoom[i++] = new Platform(3+offset, 7, 2);
-		newPlatformsRoom[i++] = new Platform(5+offset, 5, 3);
-		newPlatformsRoom[i++] = new Platform(8+offset, 3, 3);
-		newPlatformsRoom[i++] = new Platform(11+offset, 5, 3);
-		newPlatformsRoom[i++] = new Platform(13+offset, 7, 2);
-		newPlatformsRoom[i++] = new Platform(18+offset, 5, 3);
-		newPlatformsRoom[i++] = new Platform(19+offset, 7, 3);
-		newPlatformsRoom[i++] = new Platform(23+offset, 6, 7);
-		newPlatformsRoom[i++] = new Platform(28+offset, 4, 5);
-		newPlatformsRoom[i++] = new Platform(32+offset, 2, 5);
-		newPlatformsRoom[i++] = new Platform(37+offset, 4, 5);
-		newPlatformsRoom[i++] = new Platform(42+offset, 6, 5);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(3+offset, 6, 2);
+		platforms[i++] = new Platform(5+offset, 4, 3);
+		platforms[i++] = new Platform(8+offset, 2, 3);
+		platforms[i++] = new Platform(11+offset, 6, 3);
+		platforms[i++] = new Platform(13+offset, 6, 2);
+		platforms[i++] = new Platform(18+offset, 4, 3);
+		platforms[i++] = new Platform(19+offset, 6, 3);
+		platforms[i++] = new Platform(23+offset, 5, 7);
+		platforms[i++] = new Platform(28+offset, 3, 5);
+		platforms[i++] = new Platform(32+offset, 1, 5);
+		platforms[i++] = new Platform(37+offset, 3, 5);
+		platforms[i++] = new Platform(42+offset, 5, 5);
 		break;
 	case 3:
-		newPlatformsRoom[i++] = new Platform(5+offset, 7, 6);
-		newPlatformsRoom[i++] = new Platform(12+offset, 6, 6);
-		newPlatformsRoom[i++] = new Platform(18+offset, 4, 6);
-		newPlatformsRoom[i++] = new Platform(19+offset, 7, 6);
-		newPlatformsRoom[i++] = new Platform(27+offset, 6, 6);
-		newPlatformsRoom[i++] = new Platform(33+offset, 4, 6);
-		newPlatformsRoom[i++] = new Platform(40+offset, 7, 6);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(5+offset, 6, 6);
+		platforms[i++] = new Platform(12+offset, 5, 6);
+		platforms[i++] = new Platform(18+offset, 3, 6);
+		platforms[i++] = new Platform(19+offset, 6, 6);
+		platforms[i++] = new Platform(27+offset, 5, 6);
+		platforms[i++] = new Platform(33+offset, 3, 6);
+		platforms[i++] = new Platform(40+offset, 6, 6);
 		break;
 	case 4:
-		newPlatformsRoom[i++] = new Platform(6+offset, 7, 6);
-		newPlatformsRoom[i++] = new Platform(11+offset, 5, 17);
-		newPlatformsRoom[i++] = new Platform(16+offset, 3, 5);
-		newPlatformsRoom[i++] = new Platform(27+offset, 3, 5);
-		newPlatformsRoom[i++] = new Platform(27+offset, 7, 5);
-		newPlatformsRoom[i++] = new Platform(33+offset, 5, 5);
-		newPlatformsRoom[i++] = new Platform(38+offset, 7, 6);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(6+offset, 6, 6);
+		platforms[i++] = new Platform(11+offset, 4, 17);
+		platforms[i++] = new Platform(16+offset, 2, 5);
+		platforms[i++] = new Platform(27+offset, 2, 5);
+		platforms[i++] = new Platform(27+offset, 6, 5);
+		platforms[i++] = new Platform(33+offset, 4, 5);
+		platforms[i++] = new Platform(38+offset, 6, 6);
 		break;
 	case 5:
-		newPlatformsRoom[i++] = new Platform(5+offset, 7, 4);
-		newPlatformsRoom[i++] = new Platform(10+offset, 5, 4);
-		newPlatformsRoom[i++] = new Platform(15+offset, 6, 5);
-		newPlatformsRoom[i++] = new Platform(20+offset, 4, 4);
-		newPlatformsRoom[i++] = new Platform(25+offset, 2, 8);
-		newPlatformsRoom[i++] = new Platform(29+offset, 6, 6);
-		newPlatformsRoom[i++] = new Platform(36+offset, 4, 6);
-		newPlatformsRoom[i++] = new Platform(41+offset, 7, 5);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(5+offset, 6, 4);
+		platforms[i++] = new Platform(10+offset, 4, 4);
+		platforms[i++] = new Platform(15+offset, 5, 5);
+		platforms[i++] = new Platform(20+offset, 3, 4);
+		platforms[i++] = new Platform(25+offset, 1, 8);
+		platforms[i++] = new Platform(29+offset, 5, 6);
+		platforms[i++] = new Platform(36+offset, 3, 6);
+		platforms[i++] = new Platform(41+offset, 6, 5);
 		break;
 	case 6:
-		newPlatformsRoom[i++] = new Platform(7+offset, 7, 4);
-		newPlatformsRoom[i++] = new Platform(12+offset, 5, 4);
-		newPlatformsRoom[i++] = new Platform(16+offset, 3, 4);
-		newPlatformsRoom[i++] = new Platform(21+offset, 3, 6);
-		newPlatformsRoom[i++] = new Platform(21+offset, 4, 6);
-		newPlatformsRoom[i++] = new Platform(21+offset, 5, 6);
-		newPlatformsRoom[i++] = new Platform(21+offset, 6, 6);
-		newPlatformsRoom[i++] = new Platform(21+offset, 7, 6);
-		newPlatformsRoom[i++] = new Platform(21+offset, 8, 6);
-		newPlatformsRoom[i++] = new Platform(28+offset, 3, 4);
-		newPlatformsRoom[i++] = new Platform(32+offset, 5, 4);
-		newPlatformsRoom[i++] = new Platform(36+offset, 7, 4);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(7+offset, 6, 4);
+		platforms[i++] = new Platform(12+offset, 4, 4);
+		platforms[i++] = new Platform(16+offset, 2, 4);
+		platforms[i++] = new Platform(21+offset, 2, 6);
+		platforms[i++] = new Platform(21+offset, 3, 6);
+		platforms[i++] = new Platform(21+offset, 4, 6);
+		platforms[i++] = new Platform(21+offset, 5, 6);
+		platforms[i++] = new Platform(21+offset, 6, 6);
+		platforms[i++] = new Platform(21+offset, 7, 6);
+		platforms[i++] = new Platform(28+offset, 2, 4);
+		platforms[i++] = new Platform(32+offset, 4, 4);
+		platforms[i++] = new Platform(36+offset, 6, 4);
 		break;
 	case 7:
-		newPlatformsRoom[i++] = new Platform(7+offset, 3, 5);
-		newPlatformsRoom[i++] = new Platform(12+offset, 5, 5);
-		newPlatformsRoom[i++] = new Platform(17+offset, 7, 16);
-		newPlatformsRoom[i++] = new Platform(33+offset, 5, 5);
-		newPlatformsRoom[i++] = new Platform(38+offset, 3, 5);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(7+offset, 2, 5);
+		platforms[i++] = new Platform(12+offset, 4, 5);
+		platforms[i++] = new Platform(17+offset, 6, 16);
+		platforms[i++] = new Platform(33+offset, 4, 5);
+		platforms[i++] = new Platform(38+offset, 2, 5);
 		break;
 	case 8:
-		newPlatformsRoom[i++] = new Platform(4+offset, 5, 5);
-		newPlatformsRoom[i++] = new Platform(10+offset, 7, 5);
-		newPlatformsRoom[i++] = new Platform(11+offset, 3, 5);
-		newPlatformsRoom[i++] = new Platform(19+offset, 4, 5);
-		newPlatformsRoom[i++] = new Platform(28+offset, 5, 5);
-		newPlatformsRoom[i++] = new Platform(36+offset, 3, 5);
-		newPlatformsRoom[i++] = new Platform(45+offset, 7, 4);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(4+offset, 4, 5);
+		platforms[i++] = new Platform(10+offset, 6, 5);
+		platforms[i++] = new Platform(11+offset, 2, 5);
+		platforms[i++] = new Platform(19+offset, 3, 5);
+		platforms[i++] = new Platform(28+offset, 4, 5);
+		platforms[i++] = new Platform(36+offset, 2, 5);
+		platforms[i++] = new Platform(45+offset, 6, 4);
 		break;
 	case 9:
-		newPlatformsRoom[i++] = new Platform(6+offset, 7, 4);
-		newPlatformsRoom[i++] = new Platform(11+offset, 5, 11);
-		newPlatformsRoom[i++] = new Platform(15+offset, 3, 4);
-		newPlatformsRoom[i++] = new Platform(26+offset, 5, 11);
-		newPlatformsRoom[i++] = new Platform(29+offset, 3, 4);
-		newPlatformsRoom[i++] = new Platform(39+offset, 7, 4);
-		while (i < MAX_PLATFORMS_FOR_ROOM) {
-			newPlatformsRoom[i++] = __null;
-		}
+		platforms[i++] = new Platform(6+offset, 6, 4);
+		platforms[i++] = new Platform(11+offset, 4, 11);
+		platforms[i++] = new Platform(15+offset, 2, 4);
+		platforms[i++] = new Platform(26+offset, 4, 11);
+		platforms[i++] = new Platform(29+offset, 2, 4);
+		platforms[i++] = new Platform(39+offset, 6, 4);
 		break;
+	}
+	while (i < MAX_PLATFORMS_FOR_ROOM+index_offset) {
+		platforms[i++] = __null;
 	}
 }
 /*

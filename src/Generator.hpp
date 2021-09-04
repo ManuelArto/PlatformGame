@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <ctime>
 
 #include "EasyEnemy.hpp"
 #include "MediumEnemy.hpp"
@@ -24,6 +25,7 @@ typedef bonus_struct *p_bonus;
 class Generator {
 private:
 	static const int MAX_PLATFORMS_FOR_ROOM = 12, MAX_BONUSES_FOR_ROOM = 3, MAX_ENEMIES_FOR_ROOM = 3;
+	int seed, a, b, c, d;	// USED FOR PRNG (Pseudo Random Number Generator)
 	int currentRoom, rooms_generated;
 	int numberPlatforms = 0;
 	double cooldown_spawn_easyenemy, lastSpawnEasyEnemy_time;
@@ -36,6 +38,7 @@ private:
 	p_enemy removeEnemy(p_enemy enemiesHead, Character *enemy);
 	void spawnEnemies(int room, int offset);
 public:
+	int getPseudoRandomTemplateNumber(int room);
 	Generator();
 	// ROOM
 	void deleteRoom(RoomPosition roomPosition);

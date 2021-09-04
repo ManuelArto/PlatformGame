@@ -7,18 +7,31 @@ Generator::Generator() {
 	easyEnemies = __null;
 	mediumEnemies = __null;
 	hardEnemies = __null;
+	// PRNG
+	seed = time(0);
+	srand(seed);
+	c = rand();
+	d = rand();
+	a = 1105;	// PRIME NUMBER
+	b = 1729;	// PRIME NUMBER
 }
 
 void Generator::deleteRoom(RoomPosition roomPosition) {
 	int index = (roomPosition == LEFT_ROOM) ? 0 : MAX_PLATFORMS_FOR_ROOM;
 	for (int i = index; i < index+MAX_PLATFORMS_FOR_ROOM; i++) {
 		delete platforms[i];
+		platforms[i] = __null;
 	}
 	if (roomPosition == LEFT_ROOM) {
 		for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
 			platforms[i] = platforms[i+MAX_PLATFORMS_FOR_ROOM];
 		}
 	}
+}
+
+// PRIVATE
+int Generator::getPseudoRandomTemplateNumber(int room) {
+	return abs((a*seed + b*room + c) ^ d) % NUMBER_TEMPLATES;
 }
 
 void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
@@ -29,17 +42,16 @@ void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
 		this->spawnEnemies(room, offset);
 		rooms_generated = room;
 	}
-	int index = roomPosition == LEFT_ROOM ? 0 : MAX_PLATFORMS_FOR_ROOM;
+
 	if (roomPosition == LEFT_ROOM) {
+		// SHIFT LEFT_ROOM
 		for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
 			platforms[i+MAX_PLATFORMS_FOR_ROOM] = platforms[i];
 		}
 	}
-	Platform *newPlatformsRoom[MAX_PLATFORMS_FOR_ROOM];
-	getRoomPlatforms((room-1) % 10, offset, newPlatformsRoom, MAX_PLATFORMS_FOR_ROOM);
-	for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
-		platforms[i+index] = newPlatformsRoom[i];
-	}
+	int index_offset = roomPosition == LEFT_ROOM ? 0 : MAX_PLATFORMS_FOR_ROOM;
+	int templateNumber = getPseudoRandomTemplateNumber(room);
+	storeNewRoomPlatforms(platforms, index_offset, templateNumber, offset, MAX_PLATFORMS_FOR_ROOM);
 }
 
 // PRIVATE
