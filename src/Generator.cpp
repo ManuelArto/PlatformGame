@@ -29,29 +29,17 @@ void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
 		this->spawnEnemies(room, offset);
 		rooms_generated = room;
 	}
-	// STATIC ONLY FOR NOW
-	Platform *p1, *p2, *p3;
-	switch (room % 2) {
-	case 1:
-		p1 = new Platform(3+offset, 6, 7);
-		p2 = new Platform(7+offset, 5, 7);
-		p3 = new Platform(25+offset, 6, 9);
-		break;
-	case 0:
-		p1 = new Platform(0+offset, 6, 6);
-		p2 = new Platform(20+offset, 6, 7);
-		p3 = new Platform(25+offset, 4, 9);
-		break;
-	}
 	int index = roomPosition == LEFT_ROOM ? 0 : MAX_PLATFORMS_FOR_ROOM;
 	if (roomPosition == LEFT_ROOM) {
 		for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
 			platforms[i+MAX_PLATFORMS_FOR_ROOM] = platforms[i];
 		}
 	}
-	platforms[0+index] = p1;
-	platforms[1+index] = p2;
-	platforms[2+index] = p3;
+	Platform *newPlatformsRoom[MAX_PLATFORMS_FOR_ROOM];
+	getRoomPlatforms((room-1) % 10, offset, newPlatformsRoom, MAX_PLATFORMS_FOR_ROOM);
+	for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
+		platforms[i+index] = newPlatformsRoom[i];
+	}
 }
 
 // PRIVATE

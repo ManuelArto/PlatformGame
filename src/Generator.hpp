@@ -5,6 +5,7 @@
 #include "HardEnemy.hpp"
 #include "Platform.hpp"
 #include "Bonus.hpp"
+#include "PlatformsData.hpp"
 
 enum RoomPosition {LEFT_ROOM, RIGHT_ROOM};
 

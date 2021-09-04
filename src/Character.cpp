@@ -30,7 +30,7 @@ void Character::move(int input, int width, int height, double time, bool hasPlat
 				if (hasPlatformAbove && !hasPlatformAboveOne && hasPlatformBelow)
 					y -= 2;
 				else if (!jumping && !hasPlatformAbove) {
-					y -= hasPlatformAboveOne ? 1 : 2;
+					y -= (hasPlatformAboveOne || y == 1)  ? 1 : 2;
 					jumping = true;
 					lastjump_time = time;
 				}
