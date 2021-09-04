@@ -35,8 +35,9 @@ public:
 	void update();
 	void clearWindow();
 	void exitWindow();
+	void printGameName();
 	void printLoadingGame();
-	void printGameOver();
+	void printGameOver(int points, double time);
 	int getKeyboardInput();
 	int getWidth();
 	int getHeight();	

@@ -55,7 +55,7 @@ void Controller::run() {
 						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY(), view->getGameHeight()),
 						Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()),
 						Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()));
-			m->shoots(time, player->getX());
+			m->shoots(time, player->getX(), player->getY());
 		}
 		generator->initEasyEnemyIterator();
 		while(generator->hasNextEasyEnemy()) {
@@ -110,9 +110,9 @@ void Controller::run() {
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
-	} while (!quit || player->getLife() > 0); // TODO: change || to &&
+	} while (!quit && player->getLife() > 0); // TODO: change || to &&
 
-	view->printGameOver();
+	view->printGameOver(player->getPoints(), time);
 	view->exitWindow();
 }
 
@@ -206,8 +206,10 @@ void Controller::checkCollisions() {
 		HardEnemy *h = generator->getNextHardEnemy();
 		if (collisions->checkPlayerShoots(h)) {
 			h->decreaseLife(player->getAttack());
-			if (h->getLife() <= 0)
+			if (h->getLife() <= 0) {
+				player->increasePoints(h->getPoints());
 				generator->removeHardEnemy(h);
+			}
 		}
 	}
 	generator->initMediumEnemyIterator();
@@ -215,8 +217,10 @@ void Controller::checkCollisions() {
 		MediumEnemy *m = generator->getNextMediumEnemy();
 		if (collisions->checkPlayerShoots(m)) {
 			m->decreaseLife(player->getAttack());
-			if (m->getLife() <= 0)
+			if (m->getLife() <= 0) {
+				player->increasePoints(h->getPoints());
 				generator->removeMediumEnemy(m);
+			}
 		}
 	}
 	generator->initEasyEnemyIterator();
@@ -224,8 +228,10 @@ void Controller::checkCollisions() {
 		EasyEnemy *e = generator->getNextEasyEnemy();
 		if (collisions->checkPlayerShoots(e)) {
 			e->decreaseLife(player->getAttack());
-			if (e->getLife() <= 0)
+			if (e->getLife() <= 0) {
+				player->increasePoints(h->getPoints());
 				generator->removeEasyEnemy(e);
+			}
 		}
 	}
 	

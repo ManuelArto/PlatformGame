@@ -30,9 +30,11 @@ void View::checkDimensions() {
 */
 
 void View::askName(char *name, const int MAX_NAME_LENGHT) {
+	this->clearWindow();
 	box(stdscr, 0, 0);
+	this->printGameName();
 	this->update();
-	WINDOW *win = subwin(stdscr, 1, 17 + MAX_NAME_LENGHT, 2, 2);
+	WINDOW *win = subwin(stdscr, 1, 17 + MAX_NAME_LENGHT, 12, 2);
 	mvwprintw(win, 0, 0, "Inserisci nome: ");
 	do {
 		wgetstr(win, name);
@@ -109,6 +111,18 @@ void View::exitWindow() {
 	endwin();
 }
 
+void View::printGameName() {
+	int y_offset = 0;
+	mvprintw(START_Y_GAME + y_offset++, 2, R"(/$$$$$$$  /$$             /$$      /$$$$$$                                         /$$$$$$                                           /$$$$$$   /$$$$$$   /$$$$$$    /$$  )");
+	mvprintw(START_Y_GAME + y_offset++, 2, R"(| $$__  $$| $$            | $$     /$$__  $$                                       /$$__  $$                                         /$$__  $$ /$$$_  $$ /$$__  $$ /$$$$  )");
+	mvprintw(START_Y_GAME + y_offset++, 2, R"(| $$  \ $$| $$  /$$$$$$  /$$$$$$  | $$  \__//$$$$$$   /$$$$$$  /$$$$$$/$$$$       | $$  \__/  /$$$$$$  /$$$$$$/$$$$   /$$$$$$       |__/  \ $$| $$$$\ $$|__/  \ $$|_  $$  )");
+	mvprintw(START_Y_GAME + y_offset++, 2, R"(| $$$$$$$/| $$ |____  $$|_  $$_/  | $$$$   /$$__  $$ /$$__  $$| $$_  $$_  $$      | $$ /$$$$ |____  $$| $$_  $$_  $$ /$$__  $$        /$$$$$$/| $$ $$ $$  /$$$$$$/  | $$  )");
+	mvprintw(START_Y_GAME + y_offset++, 2, R"(| $$____/ | $$  /$$$$$$$  | $$    | $$_/  | $$  \ $$| $$  \__/| $$ \ $$ \ $$      | $$|_  $$  /$$$$$$$| $$ \ $$ \ $$| $$$$$$$$       /$$____/ | $$\ $$$$ /$$____/   | $$  )");
+	mvprintw(START_Y_GAME + y_offset++, 2, R"(| $$      | $$ /$$__  $$  | $$ /$$| $$    | $$  | $$| $$      | $$ | $$ | $$      | $$  \ $$ /$$__  $$| $$ | $$ | $$| $$_____/      | $$      | $$ \ $$$| $$        | $$  )");
+	mvprintw(START_Y_GAME + y_offset++, 2, R"(| $$      | $$|  $$$$$$$  |  $$$$/| $$    |  $$$$$$/| $$      | $$ | $$ | $$      |  $$$$$$/|  $$$$$$$| $$ | $$ | $$|  $$$$$$$      | $$$$$$$$|  $$$$$$/| $$$$$$$$ /$$$$$$)");
+	mvprintw(START_Y_GAME + y_offset++, 2, R"(|__/      |__/ \_______/   \___/  |__/     \______/ |__/      |__/ |__/ |__/       \______/  \_______/|__/ |__/ |__/ \_______/      |________/ \______/ |________/|______/)");
+}
+
 void View::printLoadingGame() {
 	this->clearWindow();
 	box(stdscr, 0, 0);
@@ -127,7 +141,7 @@ void View::printLoadingGame() {
 	update();
 }
 
-void View::printGameOver() {
+void View::printGameOver(int points, double time) {
 	this->clearWindow();
 	box(stdscr, 0, 0);
 	int y_offset = 0, x_offset = (width / 2) - 25;
@@ -139,6 +153,8 @@ void View::printGameOver() {
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"( (_)) __(_)_\(_)  \/  | __|  / _ \ \ / /| __| _ \  )");
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(   | (_ |/ _ \ | |\/| | _|  | (_) \ V / | _||   /  )");
 	mvprintw(START_Y_GAME + y_offset++, x_offset, R"(    \___/_/ \_\|_|  |_|___|  \___/ \_/  |___|_|_\  )");
+	y_offset += 1;
+	mvprintw(START_Y_GAME + y_offset++, x_offset+10, "Hai totalizzato %d points in %.2fs", points, time);
 	timeout(4000);
 	getch();
 }
