@@ -24,7 +24,6 @@ PlatformGame 2021
   - Invulnerabilità: immune (cambia colore)
 
 ## TODO
-LIVELLO
 NEMICI:
 	- Check HardEnemy for each template room
 	- ALLA FINE: gestire vita, punti danno ecc..

@@ -10,7 +10,7 @@ private:
 	Generator *generator;
 	Collisions *collisions;
 	double time;
-	int room;
+	int room, level;
 	void printShoots(Character *c, int offset);
 	void manageEnemies();
 	void checkRoomsGeneration();

@@ -172,7 +172,7 @@ void View::printErrorDimensions() {
 void View::printGameInfos(int level, int room, double time, int &y_offset) {
 	move(START_Y_GAME + y_offset++, START_X_GAME + 1);
 	this->printWithAttr((char *)"LEVEL: ", COLOR_PAIR(GAME_INFO_COLOR));
-	printw("%d\t\t", 1);
+	printw("%d\t\t", level);
 	this->printWithAttr((char *)"ROOM: ", COLOR_PAIR(GAME_INFO_COLOR));
 	printw("%d\t\t", room);
 	this->printWithAttr((char *)"TIME: ", COLOR_PAIR(GAME_INFO_COLOR));

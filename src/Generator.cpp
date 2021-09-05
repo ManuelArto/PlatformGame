@@ -34,12 +34,12 @@ int Generator::getPseudoRandomTemplateNumber(int room) {
 	return abs((a*seed + b*room + c) ^ d) % NUMBER_TEMPLATES;
 }
 
-void Generator::createRoom(int room, RoomPosition roomPosition, int width) {
+void Generator::createRoom(int room, RoomPosition roomPosition, int level, int width) {
 	int offset = width * (room-1);
 	// Generate new Bonuses and new Enemies
 	if (room > rooms_generated) {
-		this->createNewBonuses(room, offset);
-		this->spawnEnemies(room, offset);
+		this->createNewBonuses(room, level, offset);
+		this->spawnEnemies(room, level, offset);
 		rooms_generated = room;
 	}
 
@@ -61,7 +61,7 @@ void Generator::addBonus(Bonus *bonus) {
 	tmp->next = bonuses;
 	bonuses = tmp;
 }
-void Generator::createNewBonuses(int room, int offset) {
+void Generator::createNewBonuses(int room, int level, int offset) {
 	// STATIC ONLY FOR NOW
 	Bonus *p1 = new Bonus(1+offset, 7, MINIGUN);
 	this->addBonus(p1);
@@ -118,7 +118,7 @@ p_enemy Generator::addEnemy(p_enemy enemiesHead, Character *enemy) {
 	return tmp;
 }
 
-void Generator::spawnEnemies(int room, int offset) {
+void Generator::spawnEnemies(int room, int level, int offset) {
 	if (room == 1) {
 		HardEnemy *h = new HardEnemy(47+offset, 7);
 		hardEnemies = addEnemy(hardEnemies, h);
@@ -131,7 +131,7 @@ void Generator::spawnEnemies(int room, int offset) {
 bool Generator::canSpawnEasyEnemy(double time) {
 	return (time - lastSpawnEasyEnemy_time > cooldown_spawn_easyenemy);
 }
-void Generator::spawnEasyEnemy(int width, int offset, int player_y, double time) {
+void Generator::spawnEasyEnemy(int width, int offset, int player_y, int level, double time) {
 	EasyEnemy *enemy = new EasyEnemy(width+offset-3, player_y);
 	easyEnemies = addEnemy(easyEnemies, enemy);
 	lastSpawnEasyEnemy_time = time;

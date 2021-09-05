@@ -5,6 +5,7 @@ Controller::Controller(View *view, Generator *generator) {
 	this->generator = generator;
 	time = 0.0;
 	room = 1;
+	level = 1;
 	player = new Player (0, view->getGameHeight()-1);
 	collisions = new Collisions(player);
 }
@@ -66,7 +67,7 @@ void Controller::run() {
 		// DRAW MAP
 		view->clearWindow();
 		view->drawBorders();
-		view->printInfos(player->getName(), room, time, player->getLife(), player->getPoints(), room, player->getInvincibilityTimer(time), player->getMinigunTimer(time));
+		view->printInfos(player->getName(), room, time, player->getLife(), player->getPoints(), level, player->getInvincibilityTimer(time), player->getMinigunTimer(time));
 
 		// PRINT ENTITIES
 		view->printObject(player->noOffsetX(), player->getY(), (char *)"%s", player->getSymbol(), 0, player->hasInvincibility(), player->isDamaged(time));
@@ -89,7 +90,7 @@ void Controller::run() {
 			view->printObject(e->getX(), e->getY(), (char *)"%s", (char *) e->getSymbol(), player->getOffset());
 		}
 
-		// PRINT PLATFORM
+		// PRINT PLATFORMS
 		for (int i = 0; i < generator->getNumberPlatforms(); i++) {
 			Platform *platf = generator->getPlatform(i);
 			if (platf != __null)
@@ -110,7 +111,7 @@ void Controller::run() {
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
-	} while (!quit && player->getLife() > 0); // TODO: change || to &&
+	} while (!quit || player->getLife() > 0); // TODO: change || to &&
 
 	view->printGameOver(player->getPoints(), time);
 	view->exitWindow();
@@ -129,17 +130,18 @@ void Controller::printShoots(Character *c, int offset) {
 
 void Controller::checkRoomsGeneration() {
 	room = (player->getOffset() / view->getGameWidth()) + 1;
+	level = (room-1) / 2 + 1;
 	if (room > generator->getCurrentRoom()) {
 		generator->setCurrentRoom(room);
 		generator->deleteRoom(LEFT_ROOM);
-		generator->createRoom(room+1, RIGHT_ROOM, view->getGameWidth());
+		generator->createRoom(room+1, RIGHT_ROOM, level, view->getGameWidth());
 	} else if (room < generator->getCurrentRoom()) {
 		generator->setCurrentRoom(room);
 		generator->deleteRoom(RIGHT_ROOM);
-		generator->createRoom(room, LEFT_ROOM, view->getGameWidth());
+		generator->createRoom(room, LEFT_ROOM, level, view->getGameWidth());
 	}
 	if (generator->canSpawnEasyEnemy(time))
-		generator->spawnEasyEnemy(view->getGameWidth(), player->getOffset(), player->getY(), time);
+		generator->spawnEasyEnemy(view->getGameWidth(), player->getOffset(), player->getY(), level, time);
 }
 
 void Controller::checkCollisions() {
@@ -305,6 +307,6 @@ void Controller::initSetup() {
 }
 
 void Controller::initGeneration() {
-	generator->createRoom(room, LEFT_ROOM, view->getGameWidth());
-	generator->createRoom(room+1, RIGHT_ROOM, view->getGameWidth());
+	generator->createRoom(room, LEFT_ROOM, level, view->getGameWidth());
+	generator->createRoom(room+1, RIGHT_ROOM, level, view->getGameWidth());
 }

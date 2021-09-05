@@ -33,16 +33,16 @@ private:
 	Platform *platforms[MAX_PLATFORMS_FOR_ROOM*2];
 	p_bonus bonuses;
 	void addBonus(Bonus *bonus);
-	void createNewBonuses(int room, int offset);
+	void createNewBonuses(int room, int level, int offset);
 	p_enemy addEnemy(p_enemy enemiesHead, Character *enemy);
 	p_enemy removeEnemy(p_enemy enemiesHead, Character *enemy);
-	void spawnEnemies(int room, int offset);
+	void spawnEnemies(int room, int level, int offset);
 public:
 	int getPseudoRandomTemplateNumber(int room);
 	Generator();
 	// ROOM
 	void deleteRoom(RoomPosition roomPosition);
-	void createRoom(int room, RoomPosition roomPosition, int width);
+	void createRoom(int room, RoomPosition roomPosition, int level, int width);
 	void setCurrentRoom(int room);
 	int getCurrentRoom();
 	// PLATFORMS
@@ -54,7 +54,7 @@ public:
 	p_bonus getBonuses();
 	// EASY ENEMIES
 	bool canSpawnEasyEnemy(double time);
-	void spawnEasyEnemy(int width, int offset, int player_y, double time);
+	void spawnEasyEnemy(int width, int offset, int player_y, int level, double time);
 	void initEasyEnemyIterator();
 	bool hasNextEasyEnemy();
 	EasyEnemy *getNextEasyEnemy();
