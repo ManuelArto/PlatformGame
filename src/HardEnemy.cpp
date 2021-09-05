@@ -16,7 +16,7 @@ HardEnemy::HardEnemy(int x, int y, int level, int points, int life, int attack, 
 }
 
 void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformAboveOne, bool hasPlatformBelow, bool hasPlatformBelowOne, bool hasPlatformRight, bool hasPlatformLeft, int width, int height) {
-    if(time - lastmove_time > cooldown_movement) {
+    if(time - lastmove_time > cooldown_movement && abs(player_x - x) <= 30) {
         if (y <= player_y-2)
 			movement = KEY_DOWN;
 		else if (y == player_y+1 || (y > player_y+1 && hasPlatformAbove && !hasPlatformAboveOne) && movement != KEY_DOWN) {

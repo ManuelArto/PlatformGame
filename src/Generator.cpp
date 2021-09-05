@@ -4,9 +4,9 @@ Generator::Generator() {
 	currentRoom = 1;
 	rooms_generated = 0;
 	cooldown_spawn_easyenemy = 3.0;
-	easyEnemies = __null;
-	mediumEnemies = __null;
-	hardEnemies = __null;
+	easyEnemies = NULL;
+	mediumEnemies = NULL;
+	hardEnemies = NULL;
 	// PRNG
 	seed = time(0);
 	srand(seed);
@@ -20,7 +20,7 @@ void Generator::deleteRoom(RoomPosition roomPosition) {
 	int index = (roomPosition == LEFT_ROOM) ? 0 : MAX_PLATFORMS_FOR_ROOM;
 	for (int i = index; i < index+MAX_PLATFORMS_FOR_ROOM; i++) {
 		delete platforms[i];
-		platforms[i] = __null;
+		platforms[i] = NULL;
 	}
 	// SHIFT ROOM
 	if (roomPosition == LEFT_ROOM) {
@@ -59,7 +59,7 @@ void Generator::pickRandomPlatformCoordinates(int coordinates[], RoomPosition ro
 	int index_platform;
 	do {
 		index_platform = (rand() % MAX_PLATFORMS_FOR_ROOM) + random_offset;
-	} while (platforms[index_platform] == __null ||
+	} while (platforms[index_platform] == NULL ||
 			Platform::checkPlatformAbove(platforms, getNumberPlatforms(), platforms[index_platform]->getX(), platforms[index_platform]->getY()));
 	int x = platforms[index_platform]->getX() + (rand() % platforms[index_platform]->getLenght());
 	int y = platforms[index_platform]->getY() - 1;
@@ -155,7 +155,11 @@ void Generator::spawnEnemies(RoomPosition roomPosition, int level) {
 }
 
 // EASY ENEMIES
-bool Generator::canSpawnEasyEnemy(double time) {
+bool Generator::canSpawnEasyEnemy(double time, int level) {
+	if (this->cooldown_spawn_easyenemy - (DECREMENT_COOLDOWN_SPAWN_EASYENEMY * (level/2)) > MIN_COOLDOWN_SPAWN_EASYENEMY)
+		this->cooldown_spawn_easyenemy -= DECREMENT_COOLDOWN_SPAWN_EASYENEMY * (level/2);
+	else
+		this->cooldown_spawn_easyenemy = MIN_COOLDOWN_SPAWN_EASYENEMY;
 	return (time - lastSpawnEasyEnemy_time > cooldown_spawn_easyenemy);
 }
 void Generator::spawnEasyEnemy(int width, int offset, int player_y, int level, double time) {
@@ -167,7 +171,7 @@ void Generator::initEasyEnemyIterator() {
 	easyEnemies_iter = easyEnemies;
 }
 bool Generator::hasNextEasyEnemy() {
-	return (easyEnemies_iter != __null);
+	return (easyEnemies_iter != NULL);
 }
 EasyEnemy *Generator::getNextEasyEnemy() {
 	EasyEnemy *tmp = (EasyEnemy *)easyEnemies_iter->enemy;
@@ -186,7 +190,7 @@ void Generator::initMediumEnemyIterator() {
 	mediumEnemies_iter = mediumEnemies;
 }
 bool Generator::hasNextMediumEnemy() {
-	return (mediumEnemies_iter != __null);
+	return (mediumEnemies_iter != NULL);
 }
 MediumEnemy *Generator::getNextMediumEnemy() {
 	MediumEnemy *tmp = (MediumEnemy *)mediumEnemies_iter->enemy;
@@ -205,7 +209,7 @@ void Generator::initHardEnemyIterator() {
 	hardEnemies_iter = hardEnemies;
 }
 bool Generator::hasNextHardEnemy() {
-	return (hardEnemies_iter != __null);
+	return (hardEnemies_iter != NULL);
 }
 HardEnemy *Generator::getNextHardEnemy() {
 	HardEnemy *tmp = (HardEnemy *)hardEnemies_iter->enemy;

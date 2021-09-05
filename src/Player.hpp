@@ -11,7 +11,7 @@ private:
 	bool isInvincible;
 	char *name;
 public:
-	Player(int x, int y, int points=0, int life=100, int attack=10, double cooldown_shoot=0.5, char *symbol=(char *)"S");
+	Player(int x, int y, int points=0, int life=200, int attack=20, double cooldown_shoot=0.3, char *symbol=(char *)"S");
 	void increaseLife(int bonus_life);
 	void increasePoints(int bonus_points);
 	void checkBonusesTimer(double time);

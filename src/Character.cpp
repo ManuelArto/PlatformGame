@@ -12,7 +12,7 @@ Character::Character(int x, int y, int points, int life, int attack, double cool
 	jumping = false;
 	lastjump_time = 0.0;
 	direction = RIGHT;
-	shots = __null;
+	shots = NULL;
 }
 
 void Character::decreaseLife(int damage) {
@@ -59,12 +59,12 @@ void Character::shoots(double time) {
 		shot->x = direction == LEFT ? this->getX()-3 : this->getX()+1;
 		shot->y = y;
 		shot->direction = direction;
-		shot->next = __null;
-		if (shots == __null) {
+		shot->next = NULL;
+		if (shots == NULL) {
 			shots = shot;
 		} else {
 			p_shot iter = shots;
-			while(iter->next != __null)
+			while(iter->next != NULL)
 				iter = iter->next;
 			iter->next = shot;
 		}

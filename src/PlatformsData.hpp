@@ -105,7 +105,7 @@ inline void storeNewRoomPlatforms(Platform *platforms[], int index_offset, int n
 		break;
 	}
 	while (i < MAX_PLATFORMS_FOR_ROOM+index_offset) {
-		platforms[i++] = __null;
+		platforms[i++] = NULL;
 	}
 }
 /*

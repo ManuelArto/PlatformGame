@@ -24,7 +24,6 @@ PlatformGame 2021
   - Invulnerabilità: immune (cambia colore)
 
 ## TODO
-Change __null to NULL
 NEMICI:
 	- Check HardEnemy for each template room
 SOLO ALLA FINE:
@@ -35,25 +34,26 @@ SOLO ALLA FINE:
 Giocatore:
 - Vita: 200
 - Attacco: 20
+- Cooldown_shoot: 0.3
 
 EasyEnemy:
 	- Vita: 20
 	- Attacco: 10
 	- Cooldown_spawning: 5s (ogni 2 livelli si decrementa di 1 secondo, fino a 1)
-	- Cooldown_movement: 0.2s (ogni 2 livelli si decrementa di 0.1, fino ad arrivare a 0)
+	- Cooldown_movement: 0
 MediumEnemy:
 	- Vita: 40
 	- Attacco: 20
 	- Points: 100 (ogni 2 livelli aumenta 25)
 	- Cooldown_movement: 1.0 (ogni 2 livelli si decrementa di 0.2, fino ad arrivare a 0.4)
-	- Cooldown_shoot: 0.5
+	- Cooldown_shoot: 1.0
 	- min_distance_shoot: 30
 HardEnemy:
 	- Vita: 60
 	- Attacco: 30
 	- Points: 150 (ogni 2 livelli aumenta 25)
 	- Cooldown_movement: 0.5 (ogni 2 livelli si decrementa di 0.1 (fino a 0.2))
-	- Cooldown_shoot: 0.5
+	- Cooldown_shoot: 1.0
 	- min_distance_shoot: 30
 
 4 Bonus:

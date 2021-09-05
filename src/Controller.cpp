@@ -92,12 +92,12 @@ void Controller::run() {
 		// PRINT PLATFORMS
 		for (int i = 0; i < generator->getNumberPlatforms(); i++) {
 			Platform *platf = generator->getPlatform(i);
-			if (platf != __null)
+			if (platf != NULL)
 				view->printPlatform(platf->getX(), platf->getY(), platf->getLenght(), player->getOffset());
 		}
 		// PRINT BONUSES
 		p_bonus iter_bonus = generator->getBonuses();
-		while (iter_bonus != __null) {
+		while (iter_bonus != NULL) {
 			Bonus *bonus = iter_bonus->bonus;
 			view->printObject(bonus->getX(), bonus->getY(), "%s", bonus->getSymbol(), player->getOffset());
 			iter_bonus = iter_bonus->next;
@@ -119,7 +119,7 @@ void Controller::run() {
 void Controller::printShoots(Character *c, int offset) {
 	p_shot tmp_shot, shot;
 	shot = c->getShotHead();
-	while(shot != __null) {
+	while(shot != NULL) {
 		view->printObject(shot->x, shot->y, (char *)"%s", (char *)"---", offset);
 		tmp_shot = shot->next;
 		c->updateShot(shot, view->getGameWidth()+offset);
@@ -139,7 +139,7 @@ void Controller::checkRoomsGeneration() {
 		generator->deleteRoom(RIGHT_ROOM);
 		generator->createRoom(room, LEFT_ROOM, level, view->getGameWidth());
 	}
-	if (generator->canSpawnEasyEnemy(time))
+	if (generator->canSpawnEasyEnemy(time, level))
 		generator->spawnEasyEnemy(view->getGameWidth(), player->getOffset(), player->getY(), level, time);
 }
 
@@ -271,7 +271,7 @@ void Controller::checkCollisions() {
 	
 	// Player - Bonuses
 	p_bonus iter_bonus = generator->getBonuses();
-	while (iter_bonus != __null) {
+	while (iter_bonus != NULL) {
 		Bonus *bonus = iter_bonus->bonus;
 		iter_bonus = iter_bonus->next;
 		if (player->getX() == bonus->getX() && player->getY() == bonus->getY()) {

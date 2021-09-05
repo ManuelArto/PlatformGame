@@ -25,6 +25,7 @@ typedef bonus_struct *p_bonus;
 class Generator {
 private:
 	static const int MAX_PLATFORMS_FOR_ROOM = 12, MAX_BONUSES_FOR_ROOM = 3, MAX_ENEMIES_FOR_ROOM = 3;
+	const int DECREMENT_COOLDOWN_SPAWN_EASYENEMY = 1, MIN_COOLDOWN_SPAWN_EASYENEMY = 1;
 	int seed, a, b, c, d;	// USED FOR PRNG (Pseudo Random Number Generator)
 	int currentRoom, rooms_generated;
 	int numberPlatforms = 0;
@@ -54,7 +55,7 @@ public:
 	void deleteBonus(Bonus *bonus);
 	p_bonus getBonuses();
 	// EASY ENEMIES
-	bool canSpawnEasyEnemy(double time);
+	bool canSpawnEasyEnemy(double time, int level);
 	void spawnEasyEnemy(int width, int offset, int player_y, int level, double time);
 	void initEasyEnemyIterator();
 	bool hasNextEasyEnemy();

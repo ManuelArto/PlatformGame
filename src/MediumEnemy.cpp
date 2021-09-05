@@ -14,7 +14,7 @@ MediumEnemy::MediumEnemy(int x, int y, int level, int points, int life, int atta
 }
 
 void MediumEnemy::move(int player_x, double time, int width, int height, bool hasPlatformBelowRight, bool hasPlatformBelowLeft, bool hasPlatformRight, bool hasPlatformLeft) {
-	if(time - lastmove_time > cooldown_movement && abs(player_x - x) <= 20 ) {
+	if(time - lastmove_time > cooldown_movement && abs(player_x - x) <= 30) {
 		if (!hasPlatformBelowLeft && !hasPlatformLeft) {
 			direction = RIGHT;
 		} else if (!hasPlatformBelowRight && !hasPlatformRight) {
