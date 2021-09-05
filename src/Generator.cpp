@@ -87,7 +87,7 @@ void Generator::createNewBonuses(RoomPosition roomPosition, int level) {
 	int coordinates[2];
 	for (int i = 0; i < bonusesToSpawn; i++) {
 		this->pickRandomPlatformCoordinates(coordinates, roomPosition);
-		Bonus *p = new Bonus(coordinates[0], coordinates[1], rand() % 4);
+		Bonus *p = new Bonus(coordinates[0], coordinates[1], level, rand() % 4);
 		this->addBonus(p);
 	}
 }
@@ -144,12 +144,12 @@ void Generator::spawnEnemies(RoomPosition roomPosition, int level) {
 	int coordinates[2];
 	// 1 hardEnemy x Room
 	this->pickRandomPlatformCoordinates(coordinates, roomPosition);
-	HardEnemy *h = new HardEnemy(coordinates[0], coordinates[1]);
+	HardEnemy *h = new HardEnemy(coordinates[0], coordinates[1], level);
 	hardEnemies = addEnemy(hardEnemies, h);
 	// 2 mediumEnemy x Room
 	for (int i = 0; i < 2; i++) {
 		this->pickRandomPlatformCoordinates(coordinates, roomPosition);
-		MediumEnemy *m = new MediumEnemy(coordinates[0], coordinates[1]);
+		MediumEnemy *m = new MediumEnemy(coordinates[0], coordinates[1], level);
 		mediumEnemies = addEnemy(mediumEnemies, m);
 	}
 }
@@ -159,7 +159,7 @@ bool Generator::canSpawnEasyEnemy(double time) {
 	return (time - lastSpawnEasyEnemy_time > cooldown_spawn_easyenemy);
 }
 void Generator::spawnEasyEnemy(int width, int offset, int player_y, int level, double time) {
-	EasyEnemy *enemy = new EasyEnemy(width+offset-4, player_y);
+	EasyEnemy *enemy = new EasyEnemy(width+offset-4, player_y, level);
 	easyEnemies = addEnemy(easyEnemies, enemy);
 	lastSpawnEasyEnemy_time = time;
 }

@@ -1,11 +1,18 @@
 #include "HardEnemy.hpp"
 
-HardEnemy::HardEnemy(int x, int y, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, double min_distance_shoot, char *symbol)
+HardEnemy::HardEnemy(int x, int y, int level, int points, int life, int attack, double cooldown_shoot, double cooldown_movement, double min_distance_shoot, char *symbol)
 					:Character(x, y, points, life, attack, cooldown_shoot, cooldown_movement, symbol) {
-	this->min_distance_shoot = min_distance_shoot;
 	direction = LEFT;
 	lastmove_time = 0.0;
 	findPlatform = false;
+	this->min_distance_shoot = min_distance_shoot;
+	if (this->cooldown_movement - (DECREMENT_COOLDOWN_MOVEMENT * (level/2)) > MIN_COOLDOWN_MOVEMENT)
+		this->cooldown_movement -= DECREMENT_COOLDOWN_MOVEMENT * (level/2);
+	else
+		this->cooldown_movement = MIN_COOLDOWN_MOVEMENT;
+	this->points += INCREMENT_POINTS * (level/2);
+	this->attack += INCREMENT_ATTACK * (level/2);
+	this->life += INCREMENT_LIFE * (level/2);
 }
 
 void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatformAbove, bool hasPlatformAboveOne, bool hasPlatformBelow, bool hasPlatformBelowOne, bool hasPlatformRight, bool hasPlatformLeft, int width, int height) {

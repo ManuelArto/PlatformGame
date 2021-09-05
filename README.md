@@ -37,15 +37,10 @@ Giocatore:
 - Vita: 200
 - Attacco: 20
 
-DATI COME STATICI DELLA CLASSE (increment_value, max/min_value)
-PASSARE LIVELLO A COSTRUTTORE
-Esempio (EasyEnemy -- Cooldown_movement)
-	this->cooldown_movement = max(this->cooldown_movement - (decrement_value * livello/2), min_value)
-
 EasyEnemy:
 	- Vita: 20
 	- Attacco: 10
-	- Cooldown_spawning: 5s (ogni 2 livelli si decrementa di 1 secondo, fino a 1)				
+	- Cooldown_spawning: 5s (ogni 2 livelli si decrementa di 1 secondo, fino a 1)
 	- Cooldown_movement: 0.2s (ogni 2 livelli si decrementa di 0.1, fino ad arrivare a 0)
 MediumEnemy:
 	- Vita: 40

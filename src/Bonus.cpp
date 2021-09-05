@@ -1,6 +1,6 @@
 #include "Bonus.hpp"
 
-Bonus::Bonus(int x, int y, int type_number, int bonus_life, int bonus_points, double minigun_cooldown, double minigun_timer, double invincibility_timer) {
+Bonus::Bonus(int x, int y, int level, int type_number, int bonus_life, int bonus_points, double minigun_cooldown, double minigun_timer, double invincibility_timer) {
     this->x = x;
     this->y = y;
 	this->bonus_life = bonus_life;
@@ -11,15 +11,25 @@ Bonus::Bonus(int x, int y, int type_number, int bonus_life, int bonus_points, do
 	switch (type_number) {
 		case 0:
 			this->type = POINTS;
+			this->bonus_points += (INCREMENT_POINTS * (level/2));
 			break;
 		case 1:
 			this->type = LIFE;
+			this->bonus_life += (INCREMENT_LIFE * (level/2));
 			break;
 		case 2:
 			this->type = INVINCIBILITY;
+			if (this->invincibility_timer + (INCREMENT_INVINCIBILITY_TIMER * (level/2)) < MAX_INVINCIBILITY_TIMER)
+				this->invincibility_timer += INCREMENT_INVINCIBILITY_TIMER * (level/2);
+			else
+				this->invincibility_timer = MAX_INVINCIBILITY_TIMER;
 			break;
 		case 3:
 			this->type = MINIGUN;
+			if (this->minigun_timer + (INCREMENT_MINIGUN_TIMER * (level/2)) < MAX_MINIGUN_TIMER)
+				this->minigun_timer += INCREMENT_MINIGUN_TIMER * (level/2);
+			else
+				this->minigun_timer = MAX_MINIGUN_TIMER;
 			break;
 	}
 }
