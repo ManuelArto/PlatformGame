@@ -3,7 +3,7 @@
 Generator::Generator() {
 	currentRoom = 1;
 	rooms_generated = 0;
-	cooldown_spawn_easyenemy = 3.0;
+	cooldown_spawn_easyenemy = 4.0;
 	easyEnemies = NULL;
 	mediumEnemies = NULL;
 	hardEnemies = NULL;
