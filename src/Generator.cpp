@@ -74,7 +74,7 @@ void Generator::addBonus(Bonus *bonus) {
 }
 void Generator::createNewBonuses(RoomPosition roomPosition, int level) {
 	// PROBABILITY
-	int prob = rand() % 10, bonusesToSpawn;
+	int bonusesToSpawn, prob = rand() % 10;
 	if (prob >= 0 && prob <= 4)
 		bonusesToSpawn = 2;	// 50%
 	else if (prob <= 6)

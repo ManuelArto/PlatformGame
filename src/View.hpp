@@ -10,7 +10,7 @@
 #define PLAYER_INFO_COLOR 3
 #define ERROR_MESSAGE 4
 
-class View{
+class View {
 private:
 	int width, height;
 	const int DELAY = 50;

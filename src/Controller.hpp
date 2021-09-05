@@ -6,8 +6,8 @@
 class Controller {
 private:
 	View *view;
-	Player *player;
 	Generator *generator;
+	Player *player;
 	Collisions *collisions;
 	double time;
 	int room, level;
@@ -16,7 +16,7 @@ private:
 	void checkRoomsGeneration();
 	void checkCollisions();
 	void checkBonusType(Bonus *bonus);
-	void initSetup();
+	void init();
 	void initGeneration();
 public:
 	Controller(View *view, Generator *generator);

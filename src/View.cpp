@@ -17,18 +17,6 @@ void View::createWindow() {
 	gamewin = subwin(stdscr, GAME_HEIGHT+2, GAME_WIDTH+2, START_Y_GAME, START_X_GAME);
 }
 
-/*
-void View::checkDimensions() {
-	while(height < GAME_HEIGHT * 2 || width < GAME_WIDTH * 3) {
-		this->printErrorDimensions();
-		getmaxyx(stdscr, height, width);
-		wresize(gamewin, GAME_HEIGHT, GAME_WIDTH);
-		touchwin(stdscr);
-		touchwin(gamewin);
-	}
-}
-*/
-
 void View::askName(char *name, const int MAX_NAME_LENGHT) {
 	this->clearWindow();
 	box(stdscr, 0, 0);
@@ -75,10 +63,8 @@ void View::printObject(int x, int y, const char* format, char *label, int offset
 	if (x-offset >= 0 && x-offset < GAME_WIDTH-1) {
 		wmove(gamewin, y+1, x+1-offset);
 		unsigned int attrs = 0;
-		if (isDamaged)
-			attrs = A_BLINK;
 		if (hasInvincibility)
-			attrs = attrs | COLOR_PAIR(INVINCIBILITY_COLOR);
+			attrs = COLOR_PAIR(INVINCIBILITY_COLOR);
 		this->printWithAttr(label, attrs, gamewin);
 	}
 }
@@ -158,16 +144,6 @@ void View::printGameOver(int points, double time) {
 	timeout(4000);
 	getch();
 }
-
-/*
-void View::printErrorDimensions() {
-	move(0, 0);
-	this->printWithAttr((char *)"ERROR DIMENSIONS:\nCOLOR_PAIR(",) ERROR_MESSAGE);
-	printw("\tMINIMUN HEIGHT: %d, MINIMUM WIDTH: %d\n\n", GAME_HEIGHT * 2, GAME_WIDTH * 3);
-	printw("\tCurrent height: %d, Current width: %d", height, width);
-	update();
-}
-*/
 
 void View::printGameInfos(int level, int room, double time, int &y_offset) {
 	move(START_Y_GAME + y_offset++, START_X_GAME + 1);

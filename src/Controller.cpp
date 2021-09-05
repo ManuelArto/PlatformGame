@@ -12,7 +12,7 @@ Controller::Controller(View *view, Generator *generator) {
 
 void Controller::run() {
 	bool quit = false;
-	this->initSetup();
+	this->init();
 
 	do {
 		// INPUT MANAGEMENT
@@ -29,9 +29,9 @@ void Controller::run() {
 		// MOVEMENT AND SHOOTING
 		player->move(input, view->getGameWidth(), view->getGameHeight(), time,
 					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()),
-					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()-1),
+					Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()-1),							// ABOVE ONE MORE
 					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY(), view->getGameHeight()),
-					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()+1, view->getGameHeight()),
+					Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()+1, view->getGameHeight()),	// BELOW ONE MORE
 					Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()),
 					Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), player->getX(), player->getY()));
 		generator->initHardEnemyIterator();
@@ -39,9 +39,9 @@ void Controller::run() {
 			HardEnemy *h = generator->getNextHardEnemy();
 			h->follow(player->getX(), player->getY(), time,
 						Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()), 
-						Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()-1), 
+						Platform::checkPlatformAbove(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()-1), 								// ABOVE ONE MORE
 						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY(), view->getGameHeight()),
-						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()+1, view->getGameHeight()),
+						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()+1, view->getGameHeight()),		// BElOW ONE MORE
 						Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
 						Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), h->getX(), h->getY()),
 						view->getGameWidth(), view->getGameHeight());
@@ -51,8 +51,8 @@ void Controller::run() {
 		while(generator->hasNextMediumEnemy()) {
 			MediumEnemy *m = generator->getNextMediumEnemy();
 			m->move(player->getX(), time, view->getGameWidth(), view->getGameHeight(),
-						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY(), view->getGameHeight()),
-						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY(), view->getGameHeight()),
+						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY(), view->getGameHeight()),		// BELOW RIGHT
+						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY(), view->getGameHeight()),		// BELOW LEFT
 						Platform::checkPlatformRight(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()),
 						Platform::checkPlatformLeft(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX(), m->getY()));
 			m->shoots(time, player->getX(), player->getY());
@@ -110,7 +110,7 @@ void Controller::run() {
 
 		view->update();
 		time += (double)view->getDelay() / 1000;
-	} while (!quit || player->getLife() > 0); // TODO: change || to &&
+	} while (!quit && player->getLife() > 0);
 
 	view->printGameOver(player->getPoints(), time);
 	view->exitWindow();
@@ -144,7 +144,7 @@ void Controller::checkRoomsGeneration() {
 }
 
 void Controller::checkCollisions() {
-	// PHYSICAL: Player - EasyEnemy
+	// PHYSICAL DAMAGE: Player - EasyEnemy
 	generator->initEasyEnemyIterator();
 	while(generator->hasNextEasyEnemy()) {
 		EasyEnemy *e = generator->getNextEasyEnemy();
@@ -157,7 +157,7 @@ void Controller::checkCollisions() {
 		}
 	}
 
-	// PHYSICAL: Player - Enemies
+	// PHYSICAL DAMAGE: Player - Enemies
 	generator->initHardEnemyIterator();
 	while(generator->hasNextHardEnemy()) {
 		HardEnemy *h = generator->getNextHardEnemy();
@@ -298,7 +298,7 @@ void Controller::checkBonusType(Bonus *bonus) {
 	}
 }
 
-void Controller::initSetup() {
+void Controller::init() {
 	view->createWindow();
 	view->printLoadingGame();
 	view->askName(player->getName(), player->getMaxNameLenght());

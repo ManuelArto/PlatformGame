@@ -2,7 +2,7 @@
 
 int main() {
 	View *view = new View();
-	Generator *generator = new Generator();
+	Generator *generator = new Generator();		// MODEL
 	Controller *controller = new Controller(view, generator);
 	
 	// LOOP

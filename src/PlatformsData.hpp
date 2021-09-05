@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Platform.hpp"
 
 const int NUMBER_TEMPLATES = 10;

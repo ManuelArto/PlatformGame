@@ -5,7 +5,6 @@ private:
 	double min_distance_shoot;
 public:
     MediumEnemy(int x, int y, int level, int point=100, int life=40, int attack=20, double cooldown_shoot=1.0, double cooldown_movement=1.0, double min_distance_shoot=30, char *symbol=(char *)"M");
-    void follow(int player_x, double time, int width, int height, bool hasPlatformBelowRight, bool hasPlatformBelowLeft, bool hasPlatformRight, bool hasPlatformLeft);
 	void move(int player_x, double time, int width, int height, bool hasPlatformBelowRight, bool hasPlatformBelowLeft, bool hasPlatformRight, bool hasPlatformLeft);
 	// OVERRIDE
 	void shoots(double time, int player_x, int player_y);
