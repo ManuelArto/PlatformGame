@@ -24,7 +24,7 @@ void HardEnemy::follow(int player_x, int player_y, double time, bool hasPlatform
 			if (hasPlatformAbove)
 				findPlatform = false;
 		} else if (x != player_x && !findPlatform) {
-			movement = x < player_x ? KEY_RIGHT : KEY_LEFT;
+			movement = x < player_x ? KEY_RIGHT : KEY_LEFT;	
 		} else if (findPlatform || (x == player_x && y > player_y)) {
 			if (x == width-1)
 				movement = KEY_LEFT;
