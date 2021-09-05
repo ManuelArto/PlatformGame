@@ -27,7 +27,6 @@ PlatformGame 2021
 Change __null to NULL
 NEMICI:
 	- Check HardEnemy for each template room
-	- ALLA FINE: gestire vita, punti danno ecc..
 SOLO ALLA FINE:
 	- Check di tutto il codice, inserimento commenti
 
