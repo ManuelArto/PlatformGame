@@ -27,7 +27,7 @@ bool Collisions::checkShootsDamage(Character *shooter, Character *character, int
 	p_shot shot = shooter->getShotHead();
 	while (shot != NULL && !hit) {
 		if (shot->y == character->getY()) {
-			if (abs(shot->x - character_x) <= 2)
+			if (character_x - shot->x <= 2 && character_x - shot->x >= 0)
 				hit = true;
 		}
 		if (hit)
@@ -87,9 +87,10 @@ void Collisions::checkShootsCollision(Character *enemy) {
 		while (shot_enemy != NULL) {
 			tmp_shot_enemy = shot_enemy->next;
 			if (shot_player->y == shot_enemy->y) {
-				if (abs(shot_player->x - shot_enemy->x) <= 2)
+				if (abs(shot_enemy->x - shot_player->x) <= 2 && abs(shot_enemy->x - shot_player->x) >= 0) {
 					player->deleteShot(shot_player);
 					enemy->deleteShot(shot_enemy);
+				}
 			}
 			shot_enemy = tmp_shot_enemy;
 		}

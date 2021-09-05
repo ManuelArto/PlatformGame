@@ -4,30 +4,24 @@ PlatformGame 2021
 
 ## Gioco
 - Ambiente:
-  - Diviso in livelli (stanze per ogni livello --> poi ti muovi con l'ambiente)
-  - Piattaforme procedural generation con seed iniziale
+  - Diviso in livelli e il giocatore si muove con l'ambiente
+  - Creazione di template e spawning di essi in modo casuale
 - Giocatore:
   - spara
   - si muove a destra e sinistra, salta, sale e scende dalle piattaforme
   - vita (diminuisce, GAME OVER a 0)
   - punti (aumentano quando uccidi nemici e col bonus)
 - Nemici:
-  - spawning su piattaforme o su terreno
+  - generazione su piattaforme o su terreno
   - Tipi:
-	  1. base: tipo missile (aumenta la velocità)
-	  2. medio: spara, si muove solo sulla sua piattaforma di spawn (aumenta la frequenza di fuoco, vita ??)
-	  3. avanzato: spara, si muove verso di te (aumenta frequenza di fuoco e colpi, vita ??)
+	  1. base: missile 
+	  2. medio: spara, si muove solo sulla sua piattaforma di generazione
+	  3. avanzato: spara e si muove verso di te 
 - Bonus:
   - life: aumenta la vita
   - minigun: aumenta frequenza di fuoco
   - points: aumenta i punti
-  - Invulnerabilità: immune (cambia colore)
-
-## TODO
-NEMICI:
-	- Check HardEnemy for each template room
-SOLO ALLA FINE:
-	- Check di tutto il codice, inserimento commenti
+  - Invincibility: immune 
 
 ## Definizione del gioco
 
