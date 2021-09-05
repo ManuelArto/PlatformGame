@@ -29,7 +29,7 @@ NEMICI:
 	- Check HardEnemy for each template room
 	- ALLA FINE: gestire vita, punti danno ecc..
 SOLO ALLA FINE:
-	- Check di tutto il codice, inserimento commenti e eventuale redefined
+	- Check di tutto il codice, inserimento commenti
 
 ## Definizione del gioco
 
@@ -53,12 +53,14 @@ MediumEnemy:
 	- Points: 100 (ogni 2 livelli aumenta 25)
 	- Cooldown_movement: 1.0 (ogni 2 livelli si decrementa di 0.2, fino ad arrivare a 0.4)
 	- Cooldown_shoot: 0.5
+	- min_distance_shoot: 30
 HardEnemy:
 	- Vita: 60
 	- Attacco: 30
 	- Points: 150 (ogni 2 livelli aumenta 25)
 	- Cooldown_movement: 0.5 (ogni 2 livelli si decrementa di 0.1 (fino a 0.2))
 	- Cooldown_shoot: 0.5
+	- min_distance_shoot: 30
 
 4 Bonus:
 (1: 20%, 2: 50%, 3: 10%, 0: 20%)
