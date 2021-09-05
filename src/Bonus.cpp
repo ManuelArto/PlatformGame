@@ -1,14 +1,27 @@
 #include "Bonus.hpp"
 
-Bonus::Bonus(int x, int y, bonus_type type, int bonus_life, int bonus_points, double minigun_cooldown, double minigun_timer, double invincibility_timer) {
+Bonus::Bonus(int x, int y, int type_number, int bonus_life, int bonus_points, double minigun_cooldown, double minigun_timer, double invincibility_timer) {
     this->x = x;
     this->y = y;
-	this->type = type;
 	this->bonus_life = bonus_life;
 	this->bonus_points = bonus_points;
 	this->minigun_cooldown = minigun_cooldown;
 	this->minigun_timer = minigun_timer;
 	this->invincibility_timer = invincibility_timer;
+	switch (type_number) {
+		case 0:
+			this->type = POINTS;
+			break;
+		case 1:
+			this->type = LIFE;
+			break;
+		case 2:
+			this->type = INVINCIBILITY;
+			break;
+		case 3:
+			this->type = MINIGUN;
+			break;
+	}
 }
 
 char *Bonus::getSymbol() {

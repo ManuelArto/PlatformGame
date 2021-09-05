@@ -32,11 +32,12 @@ private:
 	p_enemy easyEnemies, easyEnemies_iter, mediumEnemies, mediumEnemies_iter, hardEnemies, hardEnemies_iter;
 	Platform *platforms[MAX_PLATFORMS_FOR_ROOM*2];
 	p_bonus bonuses;
+	void pickRandomPlatformCoordinates(int coordinates[], RoomPosition roomPosition);
 	void addBonus(Bonus *bonus);
-	void createNewBonuses(int room, int level, int offset);
+	void createNewBonuses(RoomPosition roomPosition, int level);
 	p_enemy addEnemy(p_enemy enemiesHead, Character *enemy);
 	p_enemy removeEnemy(p_enemy enemiesHead, Character *enemy);
-	void spawnEnemies(int room, int level, int offset);
+	void spawnEnemies(RoomPosition roomPosition, int level);
 public:
 	int getPseudoRandomTemplateNumber(int room);
 	Generator();

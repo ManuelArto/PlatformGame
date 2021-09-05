@@ -24,20 +24,15 @@ PlatformGame 2021
   - Invulnerabilità: immune (cambia colore)
 
 ## TODO
+Change __null to NULL
 NEMICI:
+	- MediumEnemy avanti e indietro
 	- Check HardEnemy for each template room
 	- ALLA FINE: gestire vita, punti danno ecc..
-GENERAZIONE:
-	- Nemici su piattaforma random
-	- Bonus su piattaforme random, random per stanza (1: 50%, 2: 20%, 3: 10%, 0: 20%)
 SOLO ALLA FINE:
 	- Check di tutto il codice, inserimento commenti e eventuale redefined
 
 ## Definizione del gioco
-
-NEMICI X ROOM:
-	- 2 mediumEnemy	
-	- 1 hardEnemy	
 
 Giocatore:
 - Vita: 200
@@ -67,6 +62,7 @@ HardEnemy:
 	- Cooldown_shoot: 0.5
 
 4 Bonus:
+(1: 20%, 2: 50%, 3: 10%, 0: 20%)
 - Punti: +50 (ogni 2 livelli aumenta 25)
 - Vita: +30 (ogni 2 livelli aumenta 20)
 - Minigun: 5 secondi		(ogni 2 livelli aumenta di 1, fino a 12)

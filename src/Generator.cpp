@@ -22,9 +22,14 @@ void Generator::deleteRoom(RoomPosition roomPosition) {
 		delete platforms[i];
 		platforms[i] = __null;
 	}
+	// SHIFT ROOM
 	if (roomPosition == LEFT_ROOM) {
 		for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
 			platforms[i] = platforms[i+MAX_PLATFORMS_FOR_ROOM];
+		}
+	} else {
+		for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
+			platforms[i+MAX_PLATFORMS_FOR_ROOM] = platforms[i];
 		}
 	}
 }
@@ -36,38 +41,55 @@ int Generator::getPseudoRandomTemplateNumber(int room) {
 
 void Generator::createRoom(int room, RoomPosition roomPosition, int level, int width) {
 	int offset = width * (room-1);
-	// Generate new Bonuses and new Enemies
-	if (room > rooms_generated) {
-		this->createNewBonuses(room, level, offset);
-		this->spawnEnemies(room, level, offset);
-		rooms_generated = room;
-	}
-
-	if (roomPosition == LEFT_ROOM) {
-		// SHIFT LEFT_ROOM
-		for (int i = 0; i < MAX_PLATFORMS_FOR_ROOM; i++) {
-			platforms[i+MAX_PLATFORMS_FOR_ROOM] = platforms[i];
-		}
-	}
 	int index_offset = roomPosition == LEFT_ROOM ? 0 : MAX_PLATFORMS_FOR_ROOM;
 	int templateNumber = getPseudoRandomTemplateNumber(room);
 	storeNewRoomPlatforms(platforms, index_offset, templateNumber, offset, MAX_PLATFORMS_FOR_ROOM);
+
+	// Generate new Bonuses and new Enemies
+	if (room > rooms_generated) {
+		this->createNewBonuses(roomPosition, level);
+		this->spawnEnemies(roomPosition, level);
+		rooms_generated = room;
+	}
 }
 
 // PRIVATE
+void Generator::pickRandomPlatformCoordinates(int coordinates[], RoomPosition roomPosition) {
+	int random_offset = roomPosition == LEFT_ROOM ? 0 : MAX_PLATFORMS_FOR_ROOM;
+	int index_platform;
+	do {
+		index_platform = (rand() % MAX_PLATFORMS_FOR_ROOM) + random_offset;
+	} while (platforms[index_platform] == __null ||
+			Platform::checkPlatformAbove(platforms, getNumberPlatforms(), platforms[index_platform]->getX(), platforms[index_platform]->getY()));
+	int x = platforms[index_platform]->getX() + (rand() % platforms[index_platform]->getLenght());
+	int y = platforms[index_platform]->getY() - 1;
+	coordinates[0] = x;
+	coordinates[1] = y;
+}
 void Generator::addBonus(Bonus *bonus) {
 	p_bonus tmp = new bonus_struct;
 	tmp->bonus = bonus;
 	tmp->next = bonuses;
 	bonuses = tmp;
 }
-void Generator::createNewBonuses(int room, int level, int offset) {
-	// STATIC ONLY FOR NOW
-	Bonus *p1 = new Bonus(1+offset, 7, MINIGUN);
-	this->addBonus(p1);
-	Bonus *p2 = new Bonus(5+offset, 7, INVINCIBILITY);
-	this->addBonus(p2);
-	rooms_generated = room;
+void Generator::createNewBonuses(RoomPosition roomPosition, int level) {
+	// PROBABILITY
+	int prob = rand() % 10, bonusesToSpawn;
+	if (prob >= 0 && prob <= 4)
+		bonusesToSpawn = 2;	// 50%
+	else if (prob <= 6)
+		bonusesToSpawn = 1;	// 20%
+	else if (prob == 7)
+		bonusesToSpawn = 3;	// 10%
+	else
+		bonusesToSpawn = 0;	// 20%
+
+	int coordinates[2];
+	for (int i = 0; i < bonusesToSpawn; i++) {
+		this->pickRandomPlatformCoordinates(coordinates, roomPosition);
+		Bonus *p = new Bonus(coordinates[0], coordinates[1], rand() % 4);
+		this->addBonus(p);
+	}
 }
 
 void Generator::deleteBonus(Bonus *bonus) {
@@ -118,11 +140,16 @@ p_enemy Generator::addEnemy(p_enemy enemiesHead, Character *enemy) {
 	return tmp;
 }
 
-void Generator::spawnEnemies(int room, int level, int offset) {
-	if (room == 1) {
-		HardEnemy *h = new HardEnemy(47+offset, 7);
-		hardEnemies = addEnemy(hardEnemies, h);
-		MediumEnemy *m = new MediumEnemy(10+offset, 4);
+void Generator::spawnEnemies(RoomPosition roomPosition, int level) {
+	int coordinates[2];
+	// 1 hardEnemy x Room
+	this->pickRandomPlatformCoordinates(coordinates, roomPosition);
+	HardEnemy *h = new HardEnemy(coordinates[0], coordinates[1]);
+	hardEnemies = addEnemy(hardEnemies, h);
+	// 2 mediumEnemy x Room
+	for (int i = 0; i < 2; i++) {
+		this->pickRandomPlatformCoordinates(coordinates, roomPosition);
+		MediumEnemy *m = new MediumEnemy(coordinates[0], coordinates[1]);
 		mediumEnemies = addEnemy(mediumEnemies, m);
 	}
 }
@@ -132,7 +159,7 @@ bool Generator::canSpawnEasyEnemy(double time) {
 	return (time - lastSpawnEasyEnemy_time > cooldown_spawn_easyenemy);
 }
 void Generator::spawnEasyEnemy(int width, int offset, int player_y, int level, double time) {
-	EasyEnemy *enemy = new EasyEnemy(width+offset-3, player_y);
+	EasyEnemy *enemy = new EasyEnemy(width+offset-4, player_y);
 	easyEnemies = addEnemy(easyEnemies, enemy);
 	lastSpawnEasyEnemy_time = time;
 }
