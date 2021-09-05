@@ -26,7 +26,6 @@ PlatformGame 2021
 ## TODO
 Change __null to NULL
 NEMICI:
-	- MediumEnemy avanti e indietro
 	- Check HardEnemy for each template room
 	- ALLA FINE: gestire vita, punti danno ecc..
 SOLO ALLA FINE:

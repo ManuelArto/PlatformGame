@@ -6,13 +6,15 @@ MediumEnemy::MediumEnemy(int x, int y, int points, int life, int attack, double 
 	lastmove_time = 0.0;
 }
 
-void MediumEnemy::follow(int player_x, double time, int width, int height, bool hasPlatformBelowRight, bool hasPlatformBelowLeft, bool hasPlatformRight, bool hasPlatformLeft) {
+void MediumEnemy::move(int player_x, double time, int width, int height, bool hasPlatformBelowRight, bool hasPlatformBelowLeft, bool hasPlatformRight, bool hasPlatformLeft) {
 	if(time - lastmove_time > cooldown_movement) {
-		if (x < player_x && hasPlatformBelowRight) {
-			move(KEY_RIGHT, width, height, time, hasPlatformRight=hasPlatformRight, hasPlatformLeft=hasPlatformLeft);
-		} else if (x > player_x && hasPlatformBelowLeft) {
-			move(KEY_LEFT, width, height, time, hasPlatformRight=hasPlatformRight, hasPlatformLeft=hasPlatformLeft);
+		if (!hasPlatformBelowLeft && !hasPlatformLeft) {
+			direction = RIGHT;
+		} else if (!hasPlatformBelowRight && !hasPlatformRight) {
+			direction = LEFT;
 		}
+		int movement = direction == LEFT ? KEY_LEFT : KEY_RIGHT;
+		Character::move(movement, width, height, time, hasPlatformRight=hasPlatformRight, hasPlatformLeft=hasPlatformLeft);
 		lastmove_time = time;
 	}
 }

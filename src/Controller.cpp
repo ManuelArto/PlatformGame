@@ -50,7 +50,7 @@ void Controller::run() {
 		generator->initMediumEnemyIterator();
 		while(generator->hasNextMediumEnemy()) {
 			MediumEnemy *m = generator->getNextMediumEnemy();
-			m->follow(player->getX(), time,
+			m->move(player->getX(), time,
 						view->getGameWidth(), view->getGameHeight(),
 						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()+1, m->getY(), view->getGameHeight()),
 						Platform::checkPlatformBelow(generator->getPlatforms(), generator->getNumberPlatforms(), m->getX()-1, m->getY(), view->getGameHeight()),
