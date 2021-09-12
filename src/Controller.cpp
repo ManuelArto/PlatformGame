@@ -183,7 +183,7 @@ void Controller::checkCollisions() {
 	generator->initHardEnemyIterator();
 	while(generator->hasNextHardEnemy()) {
 		HardEnemy *h = generator->getNextHardEnemy();
-		if (collisions->checkEnemyShoots(h)) {
+		if (collisions->checkShootsDamage(h, player)) {
 			if (!player->hasInvincibility() && !player->isDamaged(time)) {
 				player->decreaseLife(h->getAttack());
 				player->setLastDamageTime(time);
@@ -193,7 +193,7 @@ void Controller::checkCollisions() {
 	generator->initMediumEnemyIterator();
 	while(generator->hasNextMediumEnemy()) {
 		MediumEnemy *m = generator->getNextMediumEnemy();
-		if (collisions->checkEnemyShoots(m)) {
+		if (collisions->checkShootsDamage(m, player)) {
 			if (!player->hasInvincibility() && !player->isDamaged(time)) {
 				player->decreaseLife(m->getAttack());
 				player->setLastDamageTime(time);
@@ -205,7 +205,7 @@ void Controller::checkCollisions() {
 	generator->initHardEnemyIterator();
 	while(generator->hasNextHardEnemy()) {
 		HardEnemy *h = generator->getNextHardEnemy();
-		if (collisions->checkPlayerShoots(h)) {
+		if (collisions->checkShootsDamage(player, h)) {
 			h->decreaseLife(player->getAttack());
 			if (h->getLife() <= 0) {
 				player->increasePoints(h->getPoints());
@@ -216,7 +216,7 @@ void Controller::checkCollisions() {
 	generator->initMediumEnemyIterator();
 	while(generator->hasNextMediumEnemy()) {
 		MediumEnemy *m = generator->getNextMediumEnemy();
-		if (collisions->checkPlayerShoots(m)) {
+		if (collisions->checkShootsDamage(player, m)) {
 			m->decreaseLife(player->getAttack());
 			if (m->getLife() <= 0) {
 				player->increasePoints(m->getPoints());
@@ -227,7 +227,7 @@ void Controller::checkCollisions() {
 	generator->initEasyEnemyIterator();
 	while(generator->hasNextEasyEnemy()) {
 		EasyEnemy *e = generator->getNextEasyEnemy();
-		if (collisions->checkPlayerShoots(e)) {
+		if (collisions->checkShootsDamage(player, e)) {
 			e->decreaseLife(player->getAttack());
 			if (e->getLife() <= 0) {
 				player->increasePoints(e->getPoints());

@@ -6,7 +6,7 @@
 #include "HardEnemy.hpp"
 #include "Platform.hpp"
 #include "Bonus.hpp"
-#include "PlatformsData.hpp"
+#include "PlatformsData.cpp"
 
 enum RoomPosition {LEFT_ROOM, RIGHT_ROOM};
 
@@ -24,11 +24,10 @@ typedef bonus_struct *p_bonus;
 
 class Generator {
 private:
-	static const int MAX_PLATFORMS_FOR_ROOM = 12, MAX_BONUSES_FOR_ROOM = 3, MAX_ENEMIES_FOR_ROOM = 3;
+	static const int MAX_PLATFORMS_FOR_ROOM = 12;
 	const int DECREMENT_COOLDOWN_SPAWN_EASYENEMY = 1, MIN_COOLDOWN_SPAWN_EASYENEMY = 1;
 	int seed, a, b, c, d;	// USED FOR PRNG (Pseudo Random Number Generator)
 	int currentRoom, rooms_generated;
-	int numberPlatforms = 0;
 	double cooldown_spawn_easyenemy, lastSpawnEasyEnemy_time;
 	p_enemy easyEnemies, easyEnemies_iter, mediumEnemies, mediumEnemies_iter, hardEnemies, hardEnemies_iter;
 	Platform *platforms[MAX_PLATFORMS_FOR_ROOM*2];
@@ -39,8 +38,8 @@ private:
 	p_enemy addEnemy(p_enemy enemiesHead, Character *enemy);
 	p_enemy removeEnemy(p_enemy enemiesHead, Character *enemy);
 	void spawnEnemies(RoomPosition roomPosition, int level);
-public:
 	int getPseudoRandomTemplateNumber(int room);
+public:
 	Generator();
 	// ROOM
 	void deleteRoom(RoomPosition roomPosition);

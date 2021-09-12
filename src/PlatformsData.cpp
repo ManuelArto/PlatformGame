@@ -2,7 +2,7 @@
 
 const int NUMBER_TEMPLATES = 10;
 
-inline void storeNewRoomPlatforms(Platform *platforms[], int index_offset, int number_template, int offset, const int MAX_PLATFORMS_FOR_ROOM) {
+static void storeNewRoomPlatforms(Platform *platforms[], int index_offset, int number_template, int offset, const int MAX_PLATFORMS_FOR_ROOM) {
 
 	int i = index_offset;
 	switch (number_template) {

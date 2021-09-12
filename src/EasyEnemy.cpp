@@ -6,7 +6,7 @@ EasyEnemy::EasyEnemy(int x, int y, int level, int points, int life, int attack, 
 	this->attack += INCREMENT_ATTACK * (level/2);
 }
 
-// OVERRIDE
+// OVERLOAD
 void EasyEnemy::move(int input, int width, int height, double time) {
 	if(time - lastmove_time > cooldown_movement){
 		lastmove_time = time;

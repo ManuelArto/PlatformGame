@@ -12,36 +12,26 @@ bool Collisions::checkEasyEnemyPhysicalDamage(Character *enemy) {
 	bool sameY = (enemy->getY() == player->getY());
 	return sameY && (enemy->getX() == player->getX() || enemy->getX() == player->getX()-1);
 }
-
-bool Collisions::checkEnemyShoots(Character *enemy) {
-	return this->checkShootsDamage(enemy, player, player->getX());
-}
-
-bool Collisions::checkPlayerShoots(Character *enemy) {
-	return this->checkShootsDamage(player, enemy, enemy->getX());
-}
-
-// PRIVATE
-bool Collisions::checkShootsDamage(Character *shooter, Character *character, int character_x) {
+bool Collisions::checkShootsDamage(Character *shooter, Character *character) {
 	bool hit = false;
-	p_shot shot = shooter->getShotHead();
-	while (shot != NULL && !hit) {
+	p_shot next_shot, shot = shooter->getShotHead();
+	while (shot != NULL) {
+		next_shot = shot->next;
 		if (shot->y == character->getY()) {
-			if (character_x - shot->x <= 2 && character_x - shot->x >= 0)
+			if (abs(character->getX() - shot->x) <= 2 && abs(character->getX() - shot->x) >= 0)
 				hit = true;
 		}
 		if (hit)
 			shooter->deleteShot(shot);
-		else
-			shot = shot->next;
+		shot = next_shot;
 	}
 	return hit;
 }
 
 void Collisions::checkShootsPlatformsCollision(Character *character, Platform *platforms[], int numberPlatforms) {
-	p_shot tmp_shot, shot = character->getShotHead();
+	p_shot next_shot, shot = character->getShotHead();
 	while (shot != NULL) {
-		tmp_shot = shot->next;
+		next_shot = shot->next;
 		for (int i = 0; i < numberPlatforms; i++) {
 			if (platforms[i] != NULL) {
 				if (shot->y == platforms[i]->getY()) {
@@ -58,7 +48,7 @@ void Collisions::checkShootsPlatformsCollision(Character *character, Platform *p
 				}
 			}
 		}
-		shot = tmp_shot;
+		shot = next_shot;
 	}
 }
 
@@ -80,21 +70,21 @@ bool Collisions::checkEasyEnemyCollision(EasyEnemy *enemy, Platform *platforms[]
 }
 
 void Collisions::checkShootsCollision(Character *enemy) {
-	p_shot tmp_shot_player, shot_player = player->getShotHead();
+	p_shot next_shot_player, shot_player = player->getShotHead();
 	while (shot_player != NULL) {
-		tmp_shot_player = shot_player->next;
-		p_shot tmp_shot_enemy, shot_enemy = enemy->getShotHead();
+		next_shot_player = shot_player->next;
+		p_shot next_shot_enemy, shot_enemy = enemy->getShotHead();
 		while (shot_enemy != NULL) {
-			tmp_shot_enemy = shot_enemy->next;
+			next_shot_enemy = shot_enemy->next;
 			if (shot_player->y == shot_enemy->y) {
 				if (abs(shot_enemy->x - shot_player->x) <= 2 && abs(shot_enemy->x - shot_player->x) >= 0) {
 					player->deleteShot(shot_player);
 					enemy->deleteShot(shot_enemy);
 				}
 			}
-			shot_enemy = tmp_shot_enemy;
+			shot_enemy = next_shot_enemy;
 		}
-		shot_player = tmp_shot_player;
+		shot_player = next_shot_player;
 	}
 }
 

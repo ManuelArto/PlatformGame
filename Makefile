@@ -20,7 +20,7 @@ controller.o: ${SRC_DIR}/Controller.cpp ${SRC_DIR}/Controller.hpp ${SRC_DIR}/Vie
 view.o: ${SRC_DIR}/View.cpp ${SRC_DIR}/View.hpp
 	g++ ${CPPFLAGS} -c ${SRC_DIR}/View.cpp
 
-generator.o: ${SRC_DIR}/Generator.cpp ${SRC_DIR}/Generator.hpp ${SRC_DIR}/Platform.hpp ${SRC_DIR}/Bonus.hpp
+generator.o: ${SRC_DIR}/Generator.cpp ${SRC_DIR}/Generator.hpp ${SRC_DIR}/Platform.hpp ${SRC_DIR}/Bonus.hpp ${SRC_DIR}/PlatformsData.cpp
 	g++ ${CPPFLAGS} -c ${SRC_DIR}/Generator.cpp
 
 player.o: ${SRC_DIR}/Player.cpp ${SRC_DIR}/Player.hpp ${SRC_DIR}/Character.hpp
