@@ -9,7 +9,7 @@ The game concludes when the player's life reaches zero, after which their score 
 
 For more information, please consult the project report: [click here](Report.pdf)
 
-<video src='ScreenRecording.mp4'/>
+https://github.com/ManuelArto/PlatformGame/assets/43347768/d79d8bc1-b766-47f2-97a6-8e640cab550a
 
 ## How to Run
 In the project folder:
