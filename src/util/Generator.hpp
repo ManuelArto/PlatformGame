@@ -1,12 +1,12 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "EasyEnemy.hpp"
-#include "MediumEnemy.hpp"
-#include "HardEnemy.hpp"
-#include "Platform.hpp"
-#include "Bonus.hpp"
-#include "PlatformsData.cpp"
+#include "../model/characters/EasyEnemy.hpp"
+#include "../model/characters/MediumEnemy.hpp"
+#include "../model/characters/HardEnemy.hpp"
+#include "../model/Platform.hpp"
+#include "../model/Bonus.hpp"
+#include "../template/PlatformsData.cpp"
 
 enum RoomPosition {LEFT_ROOM, RIGHT_ROOM};
 

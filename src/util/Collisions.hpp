@@ -1,9 +1,9 @@
 #include <cmath>
 
-#include "Player.hpp"
-#include "EasyEnemy.hpp"
-#include "Platform.hpp"
-#include "Bonus.hpp"
+#include "../model/characters/Player.hpp"
+#include "../model/characters/EasyEnemy.hpp"
+#include "../model/Platform.hpp"
+#include "../model/Bonus.hpp"
 
 class Collisions {
 private:

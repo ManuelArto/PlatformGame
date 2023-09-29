@@ -1,7 +1,7 @@
 #include "View.hpp"
-#include "Player.hpp"
-#include "Generator.hpp"
-#include "Collisions.hpp"
+#include "model/characters/Player.hpp"
+#include "util/Generator.hpp"
+#include "util/Collisions.hpp"
 
 class Controller {
 private:

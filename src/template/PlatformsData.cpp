@@ -1,4 +1,4 @@
-#include "Platform.hpp"
+#include "../model/Platform.hpp"
 
 const int NUMBER_TEMPLATES = 10;
 
