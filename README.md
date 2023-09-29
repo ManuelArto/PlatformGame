@@ -1,4 +1,4 @@
-<img src="logo.png" width=80%><br>
+<img src="images/logo.png" width=60%><br>
 
 ## Introduction
 A game consisting of platforms that the player uses to navigate within it, either to dodge enemies or collect bonuses.
@@ -8,6 +8,8 @@ As the player progresses through the levels, enemies become increasingly aggress
 The game concludes when the player's life reaches zero, after which their score is displayed on the screen.
 
 For more information, please consult the project report: [click here](Report.pdf)
+
+<video src='ScreenRecording.mp4'/>
 
 ## How to Run
 In the project folder:
